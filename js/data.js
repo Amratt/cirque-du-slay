@@ -14,8 +14,8 @@ const PLAYER_SCALE = ARENA_V2 ? 1.3 : 1;  // player ~60 px tall on a 720p deskto
 const ENEMY_SCALE = ARENA_V2 ? 1.05 : 1;   // regular enemies + their hit radius
 const BOSS_SCALE = ARENA_V2 ? 1.6 : 1;   // bosses + their hit radius
 // game feel (world px / radians / seconds / ms). Bob is on top of the walk sheets' own bounce; at zoom 1.8 1 world px = 1.8 screen px
-const FEEL = { bobPx:7, bobPxNoSheet:7, tilt:.14 /* ~8 deg */, stepHz:3.4, turnSquash:.16, hitFlash:.08, stagger:.15, staggerSlow:.1, staggerPush:140, hitShake:.004, bossHitStop:.05,
-  deathHold:700, deathHoldBoss:1400, deathFade:450, deathTopple:1.2 /* rad */, deathFps:9 };
+const FEEL = { bobPx:7, bobPxNoSheet:7, tilt:.14 /* ~8 deg */, stepHz:3.4, turnSquash:.16, hitFlash:.06, stagger:.15, staggerSlow:.1, staggerPush:140, hitShake:.004, bossHitStop:.05,
+  deathHold:700, deathHoldBoss:1200, deathFade:450, deathFadeBoss:1100, bossOutro:3600 /* ms before the shop opens */, deathTopple:1.2 /* rad */, deathFps:9 };
 // Pet Master teleport lands this far from the player (was anywhere in 70% of the arena, which strands short-range builds; Nebula: 205 s shotgun fight)
 const PETMASTER_TP = [260,460];
 // Hero v2: A7/A10 are drawn shorter inside their 128x256 frames (~215/235 px vs ~254); scale them up to match the others

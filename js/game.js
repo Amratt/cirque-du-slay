@@ -177,7 +177,7 @@ class Game extends Phaser.Scene {
         const b=this.pool.img((w.special&&w.ptex&&this.textures.exists(w.ptex))?w.ptex:'bullet',x,y,12).setTint(w.proj||(n>1?0xffa040:0xffff80)).setRotation(a); if(n>1) b.setScale(.8);
         this.bullets.push({spr:b,x,y,vx:Math.cos(a)*720,vy:Math.sin(a)*720,life:(s.rng*U_RANGE+40)/720,s,dmgMul:n>1?1/n*1.6:1}); } } }
   hit(e,s,ang,mul=1){ if(e.dead) return; if(e.inv){ this.floatText(e.x,e.y-e.r,'IMMUNE',0xaaaaaa,14); return; }
-    const crit = Math.random()<s.cc; let d = s.dmg*mul*(crit?s.cd:1)*(e.vulnMul||1); e.hp -= d; if(!e.boss||this.time.now-(e.lastFlash||0)>250){ e.flash=FEEL.hitFlash; e.lastFlash=this.time.now; } e.squash=.12;   // BUG-006: bosses pulse a red tint, max 4x/s. BUG-031: squash was swallowed by this comment
+    const crit = Math.random()<s.cc; let d = s.dmg*mul*(crit?s.cd:1)*(e.vulnMul||1); e.hp -= d; if(!e.boss||this.time.now-(e.lastFlash||0)>250){ e.flashUntil=this.time.now+FEEL.hitFlash*1000; e.lastFlash=this.time.now; } e.squash=.12;   // BUG-006: bosses pulse a red tint, max 4x/s. BUG-031: squash was swallowed by this comment
     if(e.base && e.hasHit===undefined) e.hasHit=hasAnim(this,e.base,'hit');
     if(e.base && e.hasHit && !(e.spr._busy && e.spr._st!=='hit')) setAnim(this,e.spr,e.base,'hit');   // never interrupts a windup/death
     this.burst(e.x,e.y,crit?0xffe000:0xffffff,crit?5:2,160);   // (was swallowed by the comment above, like BUG-031)
@@ -215,8 +215,9 @@ class Game extends Phaser.Scene {
     if(e.big||e.boss) this.cameras.main.shake(120,.006); this.stopFor(e.boss?.12:.02);
     this.dieOnScreen(e); }
   // death without rewards (wave clear / boss summons): death sheet, hold, fade - never an instant pop. Also used by killEnemy.
-  dieOnScreen(e){ e.dead=true; const sp=e.spr; if(!sp||!sp.active) return; sp.clearTint(); this.tweens.killTweensOf(sp); sp.setDepth(8.5);
-    const fade=()=>this.tweens.add({targets:sp,alpha:0,y:sp.y+4,delay:e.boss?FEEL.deathHoldBoss:FEEL.deathHold,duration:FEEL.deathFade,onComplete:()=>sp.destroy()});
+  dieOnScreen(e){ e.dead=true; const sp=e.spr; if(!sp||!sp.active) return; sp.clearTint(); e.flashUntil=0;
+    if(e.boss){ this.cameras.main.shake(400,.012); this.cameras.main.flash(180,255,240,220); this.burst(sp.x,sp.y,0xffd040,30,260,3,1200); this.burst(sp.x,sp.y,0xff4060,30,220,3,1200); this.burst(sp.x,sp.y,0x40c0ff,20,200,3,1200); this.tweens.add({targets:sp,scaleX:sp.scaleX*1.15,scaleY:sp.scaleY*1.15,yoyo:true,duration:140}); }   /* pop + confetti */ this.tweens.killTweensOf(sp); sp.setDepth(8.5);
+    const fade=()=>this.tweens.add({targets:sp,alpha:0,y:sp.y+4,delay:e.boss?FEEL.deathHoldBoss:FEEL.deathHold,duration:e.boss?FEEL.deathFadeBoss:FEEL.deathFade,onComplete:()=>sp.destroy()});
     const dir=(sp.flipX?1:-1); this.tweens.add({targets:sp,rotation:e.boss?0:dir*FEEL.deathTopple*.35,x:sp.x-dir*10,duration:260,ease:'Quad.out'});   // knocked back + topples
     if(e.base&&hasAnim(this,e.base,'death')){ sp._busy=false; sp._st=null; setAnim(this,sp,e.base,'death'); if(sp.anims.currentAnim) sp.anims.msPerFrame=1000/FEEL.deathFps; sp.once('animationcomplete',()=>{ this.burst(sp.x,sp.y,0xffffff,e.boss?30:8,e.boss?200:70,2,e.boss?900:500); fade(); }); }
     else this.tweens.add({targets:sp,alpha:0,scaleX:sp.scaleX*1.5,scaleY:sp.scaleY*.3,duration:FEEL.deathFade,onComplete:()=>sp.destroy()}); }
@@ -251,12 +252,13 @@ class Game extends Phaser.Scene {
         this.clampArena(e, e.r);
         if(d<e.r+PLAYER_R) this.hurtPlayer(e.dmg);
         const rot = e.ai==='chase'&&e.id>'E10'||e.id==='E11'||e.id==='E12' ? 0 : Math.sin(this.time.now/150+e.x)*.15; // side-to-side
+        if(!e.spr._busy) setAnim(this,e.spr,e.base,'walk');   // back to the walk loop after a one-shot hit (was frozen on the last hit frame)
         if(Math.abs(vx)>4){ const f=vx<0; if(f!==e.spr.flipX) e.squash=Math.max(e.squash||0,.1); e.spr.setFlipX(f); }   // face movement direction; squash on turn
         const ph=this.time.now/130+e.x*.01, sq=(e.squash>0?(e.squash-=dt,.18):0), st=Math.sin(ph*2)*.06;   // walk squash & stretch + hit squash
         if(e.spawnT>0){ e.spawnT-=dt; e.spr.setScale(1-e.spawnT*3.6); } else e.spr.setScale(1+st+sq,1-st-sq);
         const step=this.time.now/1000*Math.PI*(e.def.walkHz||FEEL.stepHz)+e.x*.01;   // procedural walk bob (2-4 px) + tilt, synced to the ~10 fps walk sheet
         e.spr.setPosition(e.x, e.y - Math.abs(Math.sin(step))*(e.hasWalk?FEEL.bobPx:FEEL.bobPxNoSheet)).setRotation(rot*.3 + Math.sin(step)*FEEL.tilt); }   // subtle: the walk sheets already bounce
-      if(e.flash>0){ e.flash-=dt; e.spr.setTintFill(0xffffff); } else if(!e.inv) e.spr.clearTint(); }   // ~60 ms white flash, then cleared
+      if(this.time.now<(e.flashUntil||0)){ if(e.boss) e.spr.setTint(0xffc0c0); else e.spr.setTintFill(0xffffff); } /* bosses: shape-keeping tint, never a fill */ else if(!e.inv) e.spr.clearTint(); }   // ~60 ms white flash, then cleared
     // cheap separation
     const L=this.enemies; for(let i=0;i<L.length;i++){ const a=L[i]; if(a.dead||a.boss) continue; for(let j=i+1;j<L.length;j++){ const b=L[j]; if(b.dead||b.boss) continue;
       const dx=b.x-a.x, dy=b.y-a.y, m=dx*dx+dy*dy, rr=(a.r+b.r)*.9; if(m<rr*rr&&m>0.01){ const k=(rr-Math.sqrt(m))/2/Math.sqrt(m); a.x-=dx*k; a.y-=dy*k; b.x+=dx*k; b.y+=dy*k; } } }
@@ -355,7 +357,7 @@ class Game extends Phaser.Scene {
       else if(e.st==='tp'){ e.inv=true; if(e.t>.8){ this.burst(e.x,e.y,0xff4000,20,180); const aa=Math.random()*Math.PI*2, rr=Phaser.Math.Between(PETMASTER_TP[0],PETMASTER_TP[1]); e.x=this.pl.x+Math.cos(aa)*rr; e.y=this.pl.y+Math.sin(aa)*rr; this.clampArena(e,60); this.burst(e.x,e.y,0xff4000,20,180); e.st='charge'; e.t=0; } }
       e.spr.setPosition(e.x,e.y).setAlpha(e.inv?.6:1); }
     if(e.id==='E20'){ // The Unknown Cousins
-      const rage = e.rage>0; if(rage){ e.rage-=dt; e.spr.setTint(0xff5050); } else if(!e.flash) e.spr.clearTint();
+      const rage = e.rage>0; if(rage){ e.rage-=dt; e.spr.setTint(0xff5050); } else if(!(this.time.now<(e.flashUntil||0))) e.spr.clearTint();
       e.ringT=(e.ringT||0)+dt;
       if(e.st==='c1'){ e.blink=(e.blink||0)+dt; e.shot=(e.shot||0)+dt;
         if(e.blink>2.2){ e.blink=0; this.burst(e.x,e.y,0xffffff,12,150); const aa=Math.random()*Math.PI*2, rr=Phaser.Math.Between(200,420); e.x=p.x+Math.cos(aa)*rr; e.y=p.y+Math.sin(aa)*rr; this.clampArena(e,e.r); this.burst(e.x,e.y,0x80ffff,12,150); }
@@ -379,7 +381,7 @@ class Game extends Phaser.Scene {
     Save.save(); this.showBanner(`+${B.gt} GOLDEN TICKET${B.gt>1?'S':''}`,GOLD); Sfx.bossDeath(); this.time.delayedCall(500,()=>Sfx.ticket());
     // pet master summons die with him
     for(const x of this.enemies) if(!x.dead&&!x.boss) this.dieOnScreen(x);
-    this.time.delayedCall(900,()=>{ this.setBossBars([]); this.endWave(); }); }
+    this.time.delayedCall(FEEL.bossOutro,()=>{ this.setBossBars([]); this.endWave(); }); }   // wait for the boss death to play out before the shop
   // ---------------------------------------------------------------- main loop
   // boss fights: pull the camera toward the boss and zoom out (down to ZOOM_MIN_BOSS) so player and boss stay on screen together
   bossCam(dt){ const cam=this.cameras.main, base=this.baseZoom||CAM_ZOOM, bs=this.enemies.filter(e=>e.boss&&!e.dead); let z=base, ox=0, oy=0;
