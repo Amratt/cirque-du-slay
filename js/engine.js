@@ -10,7 +10,7 @@ const ANIM_SUFFIX = /_(idle|walk|move|sheet|hit|death|windup|alt|attack[a-z0-9_]
 function fitBox(key){ const base = key && key.replace(ANIM_SUFFIX,''), b = base!==key && SPRITE_MANIFEST[base];   // animation sheets always use their base sprite's box
   if(b && b.size && b.fit!==false) return b; return SPRITE_MANIFEST[key]; }
 function fitFactor(obj){ const m = fitBox(obj.texture && obj.texture.key); if(!m||m.fit===false||!m.size||!obj.frame) return 1;
-  return Math.min(m.size[0]/obj.frame.realWidth, m.size[1]/obj.frame.realHeight); }
+  return Math.min(m.size[0]/obj.frame.realWidth, m.size[1]/obj.frame.realHeight)*(obj._xs||1); }
 // optional manifest 'outline' (colour) on a base sprite: soft rim glow for low-contrast art (WebGL preFX; no-op on Canvas)
 function applyOutline(obj){ if(!obj.preFX) return; const m=fitBox(obj.texture&&obj.texture.key); const col=m&&m.outline; if(obj._outlined===col) return; if(obj._glow){ obj.preFX&&obj.preFX.remove(obj._glow); obj._glow=null; }
   obj._outlined=col; if(col && obj.preFX) obj._glow=obj.preFX.addGlow(Phaser.Display.Color.HexStringToColor(col).color,2,0,false,.1,10); }
@@ -84,7 +84,15 @@ function curtains(sc,bgKey,alpha=.55){ const g = sc.add.graphics(); g.fillStyle(
   g.fillStyle(0xf3c75a,1).fillRect(0,0,W,6); return g; }
 
 // ---- Scene transitions: fade out -> start; every scene fades/slides in via enterFx()
+// BUG-030: DisplayList.removeAll(true) means skipCallback in Phaser 3.8x, NOT destroy, so old interactive buttons survived as invisible ghosts.
+// clearUI destroys every child (and its tweens/input) before a rebuild.
+function clearUI(sc){ const list=sc.children.list.slice(); for(const o of list){ sc.tweens.killTweensOf(o); if(o.list) o.list.forEach(c=>sc.tweens.killTweensOf(c)); o.destroy(); }
+  // Phaser 3.80 quirk: objects created and destroyed within one frame linger in the input plugin's queues; purge dead entries
+  const ip=sc.input; for(const q of ['_list','_pendingInsertion','_pendingRemoval','_over','_draggable']){ const v=ip[q]; if(Array.isArray(v)){ const keep=v.filter(o=>o&&o.scene); v.length=0; v.push(...keep); } } }
+// spend: affordability guard used by every buy/unlock/upgrade callback; never lets a balance go below 0
+function spend(obj,key,cost){ if(!(cost>=0) || (obj[key]||0)<cost){ Sfx.deny&&Sfx.deny(); return false; } obj[key]-=cost; return true; }
 function goScene(sc,key,data){ if(sc._leaving) return; sc._leaving=true; sc.input.enabled=false;
   sc.cameras.main.fadeOut(220,10,4,6); sc.cameras.main.once('camerafadeoutcomplete',()=>sc.scene.start(key,data)); }
 function enterFx(sc,slide){ sc._leaving=false; const cam=sc.cameras.main; cam.fadeIn(260,10,4,6);
   if(slide){ cam.scrollY=-40; sc.tweens.add({targets:cam,scrollY:0,duration:300,ease:'Cubic.out'}); } }
+function mulberry(a){ return ()=>{ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }

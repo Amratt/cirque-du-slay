@@ -2,6 +2,10 @@
 const U_SPEED = 55;   // px per "unit/sec" for movement speeds
 const U_RANGE = 28;   // px per range unit
 // LORE: Augustin's diary pages unlock only after their boss (story order). Other fragments drop at FRAG_DROP_CHANCE per kill (max 1 per wave).
+const ARENA_V2 = false;        // BUG-024 (pending Star Lord review): single ring floor + zoom. false = v1.1 tiled floor, no zoom
+const CAM_ZOOM = ARENA_V2 ? 1.6 : 1;     // HUD stays 1:1 on its own camera
+const PLAYER_SCALE = ARENA_V2 ? 1.25 : 1;    // BUG-024: player drawn this much larger than its manifest box; hit radius scales with it
+const PLAYER_R = Math.round(16*PLAYER_SCALE);
 const FAST_WAVE_T = 10;   // ?fast=1 wave length (BUG-008); ?gold=N sets starting balloons
 // Animation frame skips for known art defects. Each skip only applies while the frame still matches 'when'
 // (a frame-content check), so it silently does nothing once Drax ships a cleaned sheet. when: 'white' | 'always'

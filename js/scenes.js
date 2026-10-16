@@ -16,7 +16,7 @@ class Boot extends Phaser.Scene {
     for(const e of al){ const f=typeof e.file==='string'?[e.file]:[e.file.ogg,e.file.mp3].filter(Boolean); this.load.audio(e.key, f.map(x=>V('assets/audio/'+x))); } this.missing=[];
     for(const [k,v] of Object.entries(man)){ const url=V('assets/sprites/'+v.file);
       if(v.frameWidth) this.load.spritesheet(k,url,{frameWidth:v.frameWidth,frameHeight:v.frameHeight||v.frameWidth}); else this.load.image(k,url); }
-    this.load.on('loaderror',f=>this.missing.push(f.key));
+    window.ASSET_MISSING=this.missing; this.load.on('loaderror',f=>this.missing.push(f.key));
     this.load.once('complete',()=>{ if(this.missing.length) console.info('[assets] fallback (placeholder/synth) for:',this.missing.join(', '));
       for(const k of Object.keys(man)) if(this.textures.exists(k)) SPRITE_REAL[k]=1;
       this.makePlaceholders();
@@ -127,7 +127,7 @@ class CharSelect extends Phaser.Scene {
   constructor(){ super('CharSelect'); }
   create(){ enterFx(this); this.sel = Save.d.selected; this.build(); }
   build(){
-    this.children.removeAll(true); curtains(this,'ui_char_select_bg_blank');
+    clearUI(this); curtains(this,'ui_char_select_bg_blank');
     txt(this,W/2,60,'Choose Your Character',44,GOLD);
     counter(this,W-190,40,'ticket',`${Save.d.gt} GT`,GOLD);
     const ch = CHARS.find(c=>c.id===this.sel), unlocked = Save.d.unlocked.includes(ch.id);
@@ -157,7 +157,7 @@ class CharSelect extends Phaser.Scene {
     if(ch.unlock!=='gt'){ msg.setText(`${ch.name} unlocks for free by beating boss ${ch.unlock}.`); }
     else {
       layer.add(button(this,W/2-130,H/2-20,220,60,`Use ${ch.gt} GT`,()=>{
-        if(Save.d.unlocked.includes(ch.id)) return; if(Save.d.gt>=ch.gt){ Save.d.gt-=ch.gt; Save.d.unlocked.push(ch.id); Save.d.selected=ch.id; Save.save(); msg.setText(`Congratulations! ${ch.name} has been unlocked.`); this.time.delayedCall(1200,()=>this.build()); }
+        if(Save.d.unlocked.includes(ch.id)) return; if(spend(Save.d,'gt',ch.gt)){ Save.d.unlocked.push(ch.id); Save.d.selected=ch.id; Save.save(); msg.setText(`Congratulations! ${ch.name} has been unlocked.`); this.time.delayedCall(1200,()=>this.build()); }
         else msg.setText("You don't have enough Golden Tickets."); },{depth:51}));
       layer.add(button(this,W/2+130,H/2-20,220,60,ch.usd?`$${ch.usd}`:'N/A',()=>msg.setText('The transaction was canceled. Try again.\n(Payments not available in browser build)'),{enabled:!!ch.usd,depth:51}));
     }
@@ -189,7 +189,7 @@ class Upgrade extends Phaser.Scene {
       const v = s[k]; this.rows[k].val.setText(['cc','ls'].includes(k)?(v*100).toFixed(1)+'%':k==='cd'?(v*100).toFixed(0)+'%':k==='as'?v.toFixed(2)+'s':(+v.toFixed(2))+''); } }
   roll(){ if(this.rolling) return; const u = Save.ups(this.charId); const open = STAT_KEYS.filter(k=>u[k]<5);
     if(!open.length) return; if(Save.d.gt<1){ const t=txt(this,W/2,H-120,"You don't have enough Golden Tickets.",22,'#ff6060'); this.time.delayedCall(1500,()=>t.destroy()); return; }
-    Save.d.gt--; const pick = Phaser.Utils.Array.GetRandom(open); this.rolling=true; this.pending=pick; Save.save(); let n=0;
+    if(!spend(Save.d,'gt',1)) return; const pick = Phaser.Utils.Array.GetRandom(open); this.rolling=true; this.pending=pick; Save.save(); let n=0;
     // flashing reveal that stops abruptly on the chosen stat
     const tok=this.rollTok=(this.rollTok||0)+1; const ev = this.rollEv = this.time.addEvent({delay:70,repeat:22,callback:()=>{ if(tok!==this.rollTok||!this.pending) return; n++; for(const k of STAT_KEYS) this.rows[k].lab.setFillStyle(0,0);
       const k = n>=22?pick:Phaser.Utils.Array.GetRandom(STAT_KEYS); this.rows[k].lab.setFillStyle(0xb3001b,.75); Sfx.tone(500+n*30,.04,'square',.1);
@@ -226,7 +226,7 @@ class Shop extends Phaser.Scene {
     return {type:Phaser.Utils.Array.GetRandom(types), rar:r, cost:SHOP_COST[r]+Math.floor(this.run.wave*TUNE.shopWaveCost), sold:false}; });
     const own=this.run.weapons.filter(w=>w.rar<2); if(own.length && Math.random()<TUNE.dupOfferChance){ const w=Phaser.Utils.Array.GetRandom(own); Object.assign(this.offers[1],{type:w.type,rar:w.rar,cost:SHOP_COST[w.rar]+Math.floor(this.run.wave*TUNE.shopWaveCost)}); }
     this.items = Phaser.Utils.Array.Shuffle(SHOP_ITEMS.slice()).slice(0,3).map(it=>Object.assign({},it,{cost:Math.round(it.cost+this.run.wave*SHOP_ITEM_COST_STEP),sold:false})); }
-  build(){ this.children.removeAll(true); curtains(this,'ui_shop_bg_blank'); const run=this.run;
+  build(){ clearUI(this); curtains(this,'ui_shop_bg_blank'); const run=this.run;
     txt(this,W/2,60,'Weapon Shop',48,GOLD); txt(this,W/2,108,`Wave ${run.wave} cleared!  Next: Wave ${run.wave+1}${WAVES[run.wave+1].boss?'  ⚠ BOSS':''}`,22);
     counter(this,24,44,'balloon',run.balloons,'#ff8090');
     this.offers.forEach((o,i)=>{ const x = W/2 + (i?220:-220), y = 300, s = weaponStats(o.type,o.rar);
@@ -236,15 +236,15 @@ class Shop extends Phaser.Scene {
       txt(this,x+40,y-50,`DMG ${s.dmg}  ·  ${s.as}s\nCrit ${Math.round(s.cc*100)}% x${s.cd}\nRange ${s.rng} · KB ${s.kb}\nLifesteal ${Math.round(s.ls*100)}%`,17,'#ddd',{align:'left'});
       txt(this,x,y+40,WEAPONS[o.type].desc,16,'#aaa');
       const full = run.weapons.length>=6;
-      button(this,x,y+100,240,54,o.sold?'Bought':full?'Slots full':`Buy  🎈${o.cost}`,()=>{ run.balloons-=o.cost; run.weapons.push({type:o.type,rar:o.rar}); o.sold=true; Sfx.buy(); this.build(); },
+      button(this,x,y+100,240,54,o.sold?'Bought':full?'Slots full':`Buy  🎈${o.cost}`,()=>{ if(o.sold||run.weapons.length>=6||!spend(run,'balloons',o.cost)) return; run.weapons.push({type:o.type,rar:o.rar}); o.sold=true; Sfx.buy(); this.build(); },
         {enabled:!o.sold&&!full&&run.balloons>=o.cost,size:22}); });
     // stat items (late-game balloon sink)
     txt(this,1150,180,'Stat Items',20,GOLD);
-    this.items.forEach((it,i)=>button(this,1150,230+i*70,210,58,it.sold?'Bought':`${it.label}\n🎈${it.cost}`,()=>{ run.balloons-=it.cost; it.sold=true;
+    this.items.forEach((it,i)=>button(this,1150,230+i*70,210,58,it.sold?'Bought':`${it.label}\n🎈${it.cost}`,()=>{ if(it.sold||!spend(run,'balloons',it.cost)) return; it.sold=true;
         for(const [k,v] of Object.entries(it.mod||{})) run.mods[k]=(run.mods[k]||1)*v; for(const [k,v] of Object.entries(it.add||{})) run.adds[k]=(run.adds[k]||0)+v; Sfx.buy(); this.build(); },
       {enabled:!it.sold&&run.balloons>=it.cost,size:15}));
     const rc = TUNE.rerollBase+this.rerolls*TUNE.rerollStep;
-    button(this,W/2-150,500,260,50,`Reroll  🎈${rc}`,()=>{ run.balloons-=rc; this.rerolls++; this.rollOffers(); this.build(); },{enabled:run.balloons>=rc,size:20});
+    button(this,W/2-150,500,260,50,`Reroll  🎈${rc}`,()=>{ if(!spend(run,'balloons',rc)) return; this.rerolls++; this.rollOffers(); this.build(); },{enabled:run.balloons>=rc,size:20});
     button(this,W/2+150,500,260,50,'Watch Ad (n/a)',()=>{},{enabled:false,size:20});
     // inventory + infuse
     txt(this,W/2,565,`Your weapons (${run.weapons.length}/6 + special)`,20,GOLD);

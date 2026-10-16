@@ -860,8 +860,8 @@
    "desc": "from art: ",
    "frameRate": 10,
    "loop": true,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 6
   },
   "e_E1_death": {
@@ -874,8 +874,8 @@
    "desc": "from art: ",
    "frameRate": 12,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 7
   },
   "e_E2_walk": {
@@ -888,8 +888,8 @@
    "desc": "from art: ",
    "frameRate": 10,
    "loop": true,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 6
   },
   "e_E2_death": {
@@ -902,8 +902,8 @@
    "desc": "from art: ",
    "frameRate": 12,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 7
   },
   "e_E3_walk": {
@@ -916,8 +916,8 @@
    "desc": "from art: ",
    "frameRate": 10,
    "loop": true,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 6
   },
   "e_E3_death": {
@@ -930,8 +930,8 @@
    "desc": "from art: ",
    "frameRate": 12,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 7
   },
   "e_E4_walk": {
@@ -944,8 +944,8 @@
    "desc": "from art: ",
    "frameRate": 10,
    "loop": true,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 6
   },
   "e_E4_death": {
@@ -958,8 +958,8 @@
    "desc": "from art: ",
    "frameRate": 12,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 7
   },
   "e_E6_walk": {
@@ -972,8 +972,8 @@
    "desc": "from art: ",
    "frameRate": 10,
    "loop": true,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 6
   },
   "e_E6_death": {
@@ -986,8 +986,8 @@
    "desc": "from art: ",
    "frameRate": 12,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 7
   },
   "e_E7_walk": {
@@ -1000,8 +1000,8 @@
    "desc": "from art: ",
    "frameRate": 10,
    "loop": true,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 6
   },
   "e_E7_death": {
@@ -1014,8 +1014,8 @@
    "desc": "from art: ",
    "frameRate": 12,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 7
   },
   "e_E8_walk": {
@@ -1028,8 +1028,8 @@
    "desc": "from art: ",
    "frameRate": 10,
    "loop": true,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 6
   },
   "e_E8_death": {
@@ -1042,8 +1042,8 @@
    "desc": "from art: ",
    "frameRate": 12,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 7
   },
   "e_E9_walk": {
@@ -1056,8 +1056,8 @@
    "desc": "from art: ",
    "frameRate": 10,
    "loop": true,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 6
   },
   "e_E9_death": {
@@ -1070,8 +1070,8 @@
    "desc": "from art: ",
    "frameRate": 12,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 7
   },
   "e_E11_walk": {
@@ -1084,8 +1084,8 @@
    "desc": "from art: ",
    "frameRate": 10,
    "loop": true,
-   "frameWidth": 96,
-   "frameHeight": 128,
+   "frameWidth": 192,
+   "frameHeight": 256,
    "frameCount": 6
   },
   "e_E11_death": {
@@ -1098,8 +1098,8 @@
    "desc": "from art: ",
    "frameRate": 12,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 128,
+   "frameWidth": 192,
+   "frameHeight": 256,
    "frameCount": 7
   },
   "e_E12_walk": {
@@ -1112,8 +1112,8 @@
    "desc": "from art: ",
    "frameRate": 10,
    "loop": true,
-   "frameWidth": 96,
-   "frameHeight": 128,
+   "frameWidth": 192,
+   "frameHeight": 256,
    "frameCount": 6
   },
   "e_E12_death": {
@@ -1126,8 +1126,8 @@
    "desc": "from art: ",
    "frameRate": 12,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 128,
+   "frameWidth": 192,
+   "frameHeight": 256,
    "frameCount": 7
   },
   "e_E13_walk": {
@@ -1140,8 +1140,8 @@
    "desc": "from art: ",
    "frameRate": 10,
    "loop": true,
-   "frameWidth": 96,
-   "frameHeight": 128,
+   "frameWidth": 192,
+   "frameHeight": 256,
    "frameCount": 6
   },
   "e_E13_death": {
@@ -1154,8 +1154,8 @@
    "desc": "from art: ",
    "frameRate": 12,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 128,
+   "frameWidth": 192,
+   "frameHeight": 256,
    "frameCount": 7
   },
   "e_E14_walk": {
@@ -1168,8 +1168,8 @@
    "desc": "from art: ",
    "frameRate": 10,
    "loop": true,
-   "frameWidth": 128,
-   "frameHeight": 128,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 6
   },
   "e_E14_death": {
@@ -1182,8 +1182,8 @@
    "desc": "from art: ",
    "frameRate": 12,
    "loop": false,
-   "frameWidth": 128,
-   "frameHeight": 128,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 7
   },
   "truck_move": {
@@ -1686,8 +1686,8 @@
    "desc": "from art: ",
    "frameRate": 15,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 3
   },
   "e_E7_hit": {
@@ -1700,8 +1700,8 @@
    "desc": "from art: ",
    "frameRate": 15,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 3
   },
   "e_E8_hit": {
@@ -1714,8 +1714,8 @@
    "desc": "from art: ",
    "frameRate": 15,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 3
   },
   "e_E9_hit": {
@@ -1728,8 +1728,8 @@
    "desc": "from art: ",
    "frameRate": 15,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 3
   },
   "e_E11_hit": {
@@ -1742,8 +1742,8 @@
    "desc": "from art: ",
    "frameRate": 15,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 128,
+   "frameWidth": 192,
+   "frameHeight": 256,
    "frameCount": 3
   },
   "e_E12_hit": {
@@ -1756,8 +1756,8 @@
    "desc": "from art: ",
    "frameRate": 15,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 128,
+   "frameWidth": 192,
+   "frameHeight": 256,
    "frameCount": 3
   },
   "e_E13_hit": {
@@ -1770,8 +1770,8 @@
    "desc": "from art: ",
    "frameRate": 15,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 128,
+   "frameWidth": 192,
+   "frameHeight": 256,
    "frameCount": 3
   },
   "p_A3_hit": {
@@ -2064,8 +2064,8 @@
    "desc": "from art: ",
    "frameRate": 15,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 3
   },
   "e_E2_hit": {
@@ -2078,8 +2078,8 @@
    "desc": "from art: ",
    "frameRate": 15,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 3
   },
   "e_E3_hit": {
@@ -2092,8 +2092,8 @@
    "desc": "from art: ",
    "frameRate": 15,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 3
   },
   "e_E4_hit": {
@@ -2106,8 +2106,8 @@
    "desc": "from art: ",
    "frameRate": 15,
    "loop": false,
-   "frameWidth": 96,
-   "frameHeight": 96,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 3
   },
   "p_A2_hit": {
@@ -2176,8 +2176,8 @@
    "desc": "from art: ",
    "frameRate": 15,
    "loop": false,
-   "frameWidth": 128,
-   "frameHeight": 128,
+   "frameWidth": 192,
+   "frameHeight": 192,
    "frameCount": 3
   },
   "truck_hit": {

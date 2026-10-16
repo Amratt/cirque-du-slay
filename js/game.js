@@ -12,25 +12,72 @@ class Game extends Phaser.Scene {
     this.enemies=[]; this.bullets=[]; this.eshots=[]; this.pickups=[]; this.warnings=[]; this.hazards=[]; this.weapons=[];
     this.over=false; this.paused=false; this.pauseLayer=null; this.time.paused=false; this.state='wave';
     this.drawArena();
-    this.pkey='p_'+this.charId; this.player = this.add.sprite(CX,CY,this.pkey).setDepth(10); setAnim(this,this.player,this.pkey,'idle');
+    this.pkey='p_'+this.charId; this.player = this.add.sprite(CX,CY,this.pkey).setDepth(10); this.player._xs=PLAYER_SCALE; setAnim(this,this.player,this.pkey,'idle');
     this.pl = {x:CX,y:CY,vx:0,vy:0,hp:100,max:100,ifr:0,stun:0,face:1};
-    this.cameras.main.setBounds(0,0,WORLD,WORLD).startFollow(this.player,false,.09,.09);   // smoothed follow
+    this.cameras.main.setBounds(0,0,WORLD,WORLD).startFollow(this.player,false,.09,.09).setZoom(CAM_ZOOM);   // smoothed follow
+    // HUD camera: everything with scrollFactor 0 renders unzoomed on uiCam, the world on the main camera
+    if(CAM_ZOOM!==1){ this.uiCam = this.cameras.add(0,0,W,H); this.routeCams(); this.events.on('preupdate',()=>this.routeCams()); this.scale.on('resize',()=>this.uiCam.setSize(W,H)); }
     if(QS.has('fps')) this.fpsT = txt(this,W-90,80,'',16,'#7f7').setScrollFactor(0).setDepth(3000);
     this.fx = this.add.graphics().setDepth(20);
     this.buildHUD(); this.setupInput();
     this.startWave();
   }
+  routeCams(){ const mb=this.cameras.main.id, ub=this.uiCam.id; for(const o of this.children.list){ const ui=o.scrollFactorX===0; if(o._camUI===ui) continue; o._camUI=ui; o.cameraFilter = ui ? mb : ub; } }
   // ---------------------------------------------------------------- arena
+  // BUG-024 v2: one procedural circus-ring floor, no tiling: dark sawdust, faint raked rings, red/cream striped curb, vignette, noise
+  bakeRing(){ const D=R*2+4, c=document.createElement('canvas'); c.width=c.height=D; const x=c.getContext('2d'), m=D/2, rnd=mulberry(11);
+    x.beginPath(); x.arc(m,m,m,0,Math.PI*2); x.clip();
+    let g=x.createRadialGradient(m,m,0,m,m,m); g.addColorStop(0,'#5a3a24'); g.addColorStop(.7,'#45291a'); g.addColorStop(1,'#2a160e'); x.fillStyle=g; x.fillRect(0,0,D,D);
+    for(let i=0;i<40;i++){ const px=rnd()*D, py=rnd()*D, pr=80+rnd()*220, gg=x.createRadialGradient(px,py,0,px,py,pr), a=.04+rnd()*.05;
+      gg.addColorStop(0,rnd()<.5?`rgba(0,0,0,${a})`:`rgba(255,210,150,${a})`); gg.addColorStop(1,'rgba(0,0,0,0)'); x.fillStyle=gg; x.fillRect(px-pr,py-pr,pr*2,pr*2); }
+    for(let r=40;r<m-90;r+=22+rnd()*18){ x.lineWidth=1+rnd()*3; x.strokeStyle=`rgba(${rnd()<.5?'0,0,0':'255,220,170'},${.03+rnd()*.04})`; x.beginPath(); x.arc(m+(rnd()-.5)*6,m+(rnd()-.5)*6,r,0,Math.PI*2); x.stroke(); }
+    const id=x.getImageData(0,0,D,D), d=id.data; for(let k=0;k<d.length;k+=4){ const n=(rnd()-.5)*22; d[k]+=n; d[k+1]+=n*.9; d[k+2]+=n*.7; } x.putImageData(id,0,0);
+    for(let i=0;i<9000;i++){ const a=rnd()*Math.PI*2, r=Math.sqrt(rnd())*(m-80); x.fillStyle=rnd()<.5?'rgba(220,170,110,.25)':'rgba(20,10,5,.3)'; x.fillRect(m+Math.cos(a)*r,m+Math.sin(a)*r,1+rnd()*2,1); }
+    const n=48, r0=m-74, r1=m-30; for(let i=0;i<n;i++){ const a0=i/n*Math.PI*2, a1=(i+1)/n*Math.PI*2; x.beginPath(); x.arc(m,m,r1,a0,a1); x.arc(m,m,r0,a1,a0,true); x.closePath(); x.fillStyle=i%2?'#e8d8b4':'#9e1c22'; x.fill(); }
+    x.lineWidth=5; x.strokeStyle='#d4a648'; x.beginPath(); x.arc(m,m,r0,0,Math.PI*2); x.stroke(); x.beginPath(); x.arc(m,m,r1,0,Math.PI*2); x.stroke();
+    g=x.createRadialGradient(m,m,m*.35,m,m,m); g.addColorStop(0,'rgba(0,0,0,0)'); g.addColorStop(.8,'rgba(0,0,0,.35)'); g.addColorStop(1,'rgba(0,0,0,.65)'); x.fillStyle=g; x.fillRect(0,0,D,D);
+    g=x.createRadialGradient(m,m,0,m,m,m*.5); g.addColorStop(0,'rgba(255,220,160,.10)'); g.addColorStop(1,'rgba(255,220,160,0)'); x.fillStyle=g; x.fillRect(0,0,D,D);
+    this.textures.addCanvas('arena_floor_ring',c); }
+  // (unused) BUG-024 v1 tile-blend bake, kept for reference. Drax's tile is edge-seamless but has a hard internal cross seam (offset-swap artefact); it is hidden by blending in a half-offset copy along the cross,
+  // laid with a random sub-tile offset, then broken up with soft light pools, a radial spotlight, ring bands and a vignette.
+  bakeFloor(){ const src=this.textures.get('arena_tile').getSourceImage(), T=256, D=R*2+4;
+    const tc=document.createElement('canvas'); tc.width=tc.height=T; const tx=tc.getContext('2d'); tx.drawImage(src,0,0,T,T);
+    const a=tx.getImageData(0,0,T,T), sc=document.createElement('canvas'); sc.width=sc.height=T; const sx=sc.getContext('2d');
+    for(const [ox,oy] of [[-T/2,-T/2],[T/2,-T/2],[-T/2,T/2],[T/2,T/2]]) sx.drawImage(tc,ox,oy);
+    const s=sx.getImageData(0,0,T,T), o=tx.createImageData(T,T);
+    for(let y=0;y<T;y++) for(let x=0;x<T;x++){ const e=Math.min(Math.abs(x-T/2+.5),Math.abs(y-T/2+.5))/(T*.12), w=e>=1?1:e*e*(3-2*e), k=(y*T+x)*4;
+      for(let c=0;c<4;c++) o.data[k+c]=a.data[k+c]*w+s.data[k+c]*(1-w); }
+    // flatten low-frequency light so tile repeats don't form bright/dark blocks: tile - blur(tile, wrapped) + mean
+    tx.putImageData(o,0,0); const bc=document.createElement('canvas'); bc.width=bc.height=T*3; const bx=bc.getContext('2d');
+    for(let i=0;i<3;i++) for(let j=0;j<3;j++) bx.drawImage(tc,i*T,j*T); const b2=document.createElement('canvas'); b2.width=b2.height=T; const b2x=b2.getContext('2d');
+    b2x.filter='blur(36px)'; b2x.drawImage(bc,-T,-T); const bl=b2x.getImageData(0,0,T,T).data, mean=[0,0,0];
+    for(let k=0;k<bl.length;k+=4) for(let c=0;c<3;c++) mean[c]+=bl[k+c]/(T*T);
+    if(bl[3]>0) for(let k=0;k<bl.length;k+=4) for(let c=0;c<3;c++) o.data[k+c]=Math.max(0,Math.min(255,o.data[k+c]-bl[k+c]+mean[c]));
+    tx.putImageData(o,0,0);
+    const c=document.createElement('canvas'); c.width=c.height=D; const x=c.getContext('2d');
+    x.beginPath(); x.arc(D/2,D/2,D/2,0,Math.PI*2); x.clip();
+    const pat=x.createPattern(tc,'repeat'); x.save(); x.translate(37,91); x.scale(1.8,1.8); x.fillStyle=pat; x.fillRect(-60,-60,D,D); x.restore();
+    // a second, rotated, faint layer hides the repeat grid
+    x.save(); x.globalAlpha=.5; x.translate(D/2,D/2); x.rotate(.6); x.scale(1.37,1.37); x.fillStyle=pat; x.fillRect(-D,-D,D*2,D*2); x.restore();
+    const rnd=mulberry(7); for(let i=0;i<26;i++){ const px=rnd()*D, py=rnd()*D, pr=120+rnd()*260, g=x.createRadialGradient(px,py,0,px,py,pr), dark=rnd()<.5;
+      g.addColorStop(0,dark?'rgba(0,0,0,.16)':'rgba(255,230,190,.09)'); g.addColorStop(1,'rgba(0,0,0,0)'); x.fillStyle=g; x.fillRect(px-pr,py-pr,pr*2,pr*2); }
+    let g=x.createRadialGradient(D/2,D/2,0,D/2,D/2,D*.42); g.addColorStop(0,'rgba(255,225,170,.16)'); g.addColorStop(1,'rgba(255,225,170,0)'); x.fillStyle=g; x.fillRect(0,0,D,D);
+    x.lineWidth=26; x.strokeStyle='rgba(120,20,25,.22)'; x.beginPath(); x.arc(D/2,D/2,D*.47,0,Math.PI*2); x.stroke();
+    x.lineWidth=6; x.strokeStyle='rgba(255,215,140,.18)'; x.beginPath(); x.arc(D/2,D/2,D*.445,0,Math.PI*2); x.stroke();
+    g=x.createRadialGradient(D/2,D/2,D*.3,D/2,D/2,D/2); g.addColorStop(0,'rgba(0,0,0,0)'); g.addColorStop(.75,'rgba(0,0,0,.25)'); g.addColorStop(1,'rgba(0,0,0,.6)'); x.fillStyle=g; x.fillRect(0,0,D,D);
+    this.textures.addCanvas('arena_floor_baked',c); }
   drawArena(){
     // floor: tiling texture 'arena_tile' clipped to the ring; audience + wall: 'arena_ring' (transparent centre)
     this.cameras.main.setBackgroundColor('#12060a');
     // bake tiled floor clipped to a circle once (a masked tileSprite is too slow on low-end/software GL)
-    if(!this.textures.exists('arena_floor_baked')){ const t=this.textures.get('arena_tile').getSourceImage(), D=R*2+4, c=document.createElement('canvas'); c.width=c.height=D;
-      const x=c.getContext('2d'); x.beginPath(); x.arc(D/2,D/2,D/2,0,Math.PI*2); x.clip(); x.fillStyle=x.createPattern(t,'repeat'); x.fillRect(0,0,D,D);
-      this.textures.addCanvas('arena_floor_baked',c); }
-    this.add.image(CX,CY,'arena_floor_baked').setDepth(0);
-    const lines=this.add.graphics().setDepth(0.5); lines.lineStyle(3,0x000000,.18).strokeCircle(CX,CY,R*.66).strokeCircle(CX,CY,R*.33).lineBetween(CX-R,CY,CX+R,CY).lineBetween(CX,CY-R,CX,CY+R);
-    this.add.image(CX,CY,'arena_ring').setDisplaySize(WORLD,WORLD).setDepth(1);
+    const ringArt = ARENA_V2 && !(window.ASSET_MISSING||[]).includes('arena_ring');   // Drax's art/arena_ring.png, once imported, is the whole arena as one image
+    if(ringArt){ this.add.image(CX,CY,'arena_ring').setDisplaySize(R/.44,R/.44).setDepth(0); }   // playable radius R = 44% of image width (ring border outside it)
+    else if(ARENA_V2){ if(!this.textures.exists('arena_floor_ring')) this.bakeRing(); this.add.image(CX,CY,'arena_floor_ring').setDepth(0); }
+    else { if(!this.textures.exists('arena_floor_baked')){ const t=this.textures.get('arena_tile').getSourceImage(), D=R*2+4, c=document.createElement('canvas'); c.width=c.height=D;
+      const x=c.getContext('2d'); x.beginPath(); x.arc(D/2,D/2,D/2,0,Math.PI*2); x.clip(); x.fillStyle=x.createPattern(t,'repeat'); x.fillRect(0,0,D,D); this.textures.addCanvas('arena_floor_baked',c); }
+      this.add.image(CX,CY,'arena_floor_baked').setDepth(0); }
+    if(!ARENA_V2){ const lines=this.add.graphics().setDepth(0.5); lines.lineStyle(3,0x000000,.18).strokeCircle(CX,CY,R*.66).strokeCircle(CX,CY,R*.33).lineBetween(CX-R,CY,CX+R,CY).lineBetween(CX,CY-R,CX,CY+R); }
+    if(!ringArt) this.add.image(CX,CY,'arena_ring').setDisplaySize(WORLD,WORLD).setDepth(1);
     this.ropes = this.add.graphics().setDepth(30); // used by Juggler
     this.redFlash = this.add.rectangle(0,0,W,H,0xff0000,0).setOrigin(0).setScrollFactor(0).setDepth(900);
   }
@@ -172,7 +219,7 @@ class Game extends Phaser.Scene {
           e.phase+=dt; if(e.phase>2.8 && d<550){ e.phase=0; this.lob(e.x,e.y,p.x+Phaser.Math.Between(-90,90),p.y+Phaser.Math.Between(-90,90),e.dmg); } }
         e.x += (vx+e.kx)*dt; e.y += (vy+e.ky)*dt; e.kx*=.82; e.ky*=.82;
         this.clampArena(e, e.r);
-        if(d<e.r+16) this.hurtPlayer(e.dmg);
+        if(d<e.r+PLAYER_R) this.hurtPlayer(e.dmg);
         const rot = e.ai==='chase'&&e.id>'E10'||e.id==='E11'||e.id==='E12' ? 0 : Math.sin(this.time.now/150+e.x)*.15; // side-to-side
         if(Math.abs(vx)>4) e.spr.setFlipX(vx<0);                              // face movement direction
         const ph=this.time.now/130+e.x*.01, sq=(e.squash>0?(e.squash-=dt,.18):0), st=Math.sin(ph*2)*.06;   // walk squash & stretch + hit squash
@@ -185,7 +232,7 @@ class Game extends Phaser.Scene {
     this.enemies = this.enemies.filter(e=>!e.dead||e.spr.active&&false); }
   lob(x,y,tx,ty,dmg,radius=60,delay=900,col=0xff6000){ const w=this.add.circle(tx,ty,radius,col,.18).setStrokeStyle(2,col,.8).setDepth(3);
     const b=this.add.image(x,y,'firedrop').setDepth(14); this.tweens.add({targets:b,x:tx,y:ty,duration:delay,onComplete:()=>{ b.destroy(); w.destroy();
-      this.burst(tx,ty,col,16,radius*3); Sfx.noise(.15,.25,200); if(dist(tx,ty,this.pl.x,this.pl.y)<radius+12) this.hurtPlayer(dmg); }}); }
+      this.burst(tx,ty,col,16,radius*3); Sfx.noise(.15,.25,200); if(dist(tx,ty,this.pl.x,this.pl.y)<radius+PLAYER_R-4) this.hurtPlayer(dmg); }}); }
   clampArena(o,r){ const dx=o.x-CX, dy=o.y-CY, d=Math.hypot(dx,dy), m=R-r; if(d>m){ o.x=CX+dx/d*m; o.y=CY+dy/d*m; return true; } return false; }
   // ---------------------------------------------------------------- waves
   startWave(){ const wv=this.run.wave, def=WAVES[wv]; this.buildWeapons(); this.pl.hp=this.pl.max; this.pl.x=CX; this.pl.y=CY;
@@ -252,7 +299,7 @@ class Game extends Phaser.Scene {
         if(this.clampArena(e,e.r)||e.t>1.6){ e.st='turn'; e.t=0; e.vulnMul=1.5; } }
       else if(e.st==='turn'){ e.rot = Phaser.Math.Angle.RotateTo(e.rot,a,.9*dt); e.x+=Math.cos(e.rot)*e.spd*.3*dt; e.y+=Math.sin(e.rot)*e.spd*.3*dt;
         if(e.t>1.8){ e.st='aim'; e.t=0; e.vulnMul=1; this.windup(e); } }
-      this.clampArena(e,e.r); e.spr.setPosition(e.x,e.y).setRotation(e.rot); if(d<e.r+18) this.hurtPlayer(e.st==='ram'?e.dmg*2:e.dmg); }
+      this.clampArena(e,e.r); e.spr.setPosition(e.x,e.y).setRotation(e.rot); if(d<e.r+PLAYER_R+2) this.hurtPlayer(e.st==='ram'?e.dmg*2:e.dmg); }
     if(e.id==='E10'){ // The Juggler
       const ropeY=[CY-R*.55, CY-R*.15]; this.ropes.clear();
       if(e.st==='rope'){ ropeY.forEach((y,i)=>{ const hw=Math.sqrt(R*R-(y-CY)**2); this.ropes.lineStyle(i===e.rope?5:3,0xf3e0b0,.9).lineBetween(CX-hw,y,CX+hw,y); });
@@ -265,7 +312,7 @@ class Game extends Phaser.Scene {
       else if(e.st==='toBox'||e.st==='toEdge'){ const tx = e.st==='toBox'?e.box.x:CX-e.side*(R-40), ty = e.st==='toBox'?e.box.y:CY;
         const aa=Math.atan2(ty-e.y,tx-e.x); e.x+=Math.cos(aa)*e.spd*1.1*dt; e.y+=Math.sin(aa)*e.spd*1.1*dt; e.spr.setRotation(Math.sin(this.time.now/80)*.15);
         if(dist(e.x,e.y,tx,ty)<20){ if(e.st==='toBox'){ e.st='toEdge'; e.boxS.destroy(); } else { e.st='rope'; e.t=0; e.rope=1-e.rope; e.spr.setRotation(0); } }
-        if(d<e.r+16) this.hurtPlayer(e.dmg*.5); }
+        if(d<e.r+PLAYER_R) this.hurtPlayer(e.dmg*.5); }
       e.spr.setPosition(e.x,e.y); }
     if(e.id==='E15'){ // The Pet Master
       const g=e.ringG; g.clear();
@@ -289,7 +336,7 @@ class Game extends Phaser.Scene {
             const pa=Math.atan2(p.y-e.y,p.x-e.x); if(d<280 && Math.abs(Phaser.Math.Angle.Wrap(pa-e.wa))<.35){ this.hurtPlayer(e.dmg); this.tweens.add({targets:p,x:e.x+Math.cos(pa)*60,y:e.y+Math.sin(pa)*60,duration:250}); } } }
         else { if(d>80){ e.x+=Math.cos(a)*sp*dt; e.y+=Math.sin(a)*sp*dt; } if(d<260&&e.whip<=0){ e.whip=2.2; e.whipT=.5; e.wa=a; this.windup(e); } }
         if(e.ringT>6.6&&!e.wu){ e.wu=1; this.windup(e); } if(e.ringT>7){ e.ringT=0; e.wu=0; this.enemyShot(e.x,e.y,a,200,0,0xff40ff,{tex:'ring',r:16,life:6,ring:'tele',spin:1}); }
-        if(d<e.r+16) this.hurtPlayer(e.dmg*.5); }
+        if(d<e.r+PLAYER_R) this.hurtPlayer(e.dmg*.5); }
       this.clampArena(e,e.r); e.spr.setPosition(e.x,e.y); }
   }
   revealUnlock(c){ (this.run.reveals=this.run.reveals||[]).push(c.id); }   // shown as a card in the Shop (or End) so it never interrupts combat
@@ -329,7 +376,7 @@ class Game extends Phaser.Scene {
       if(b.life<=0||dist(b.x,b.y,CX,CY)>R){ this.pool.release(b.spr); b.dead=true; } } this.bullets=this.bullets.filter(b=>!b.dead);
     for(const s of this.eshots){ s.x+=s.vx*dt; s.y+=s.vy*dt; s.life-=dt; s.spr.setPosition(s.x,s.y); if(s.spin) s.spr.rotation+=dt*6;
       if(s.ring && dist(s.x,s.y,CX,CY)>R-20){ const nx=(s.x-CX)/R, ny=(s.y-CY)/R, dot=s.vx*nx+s.vy*ny; s.vx-=2*dot*nx; s.vy-=2*dot*ny; } // rings roll & bounce
-      if(!this.over && dist(s.x,s.y,p.x,p.y)<s.r+14){ if(s.ring==='stun'){ p.stun=1.3; } else if(s.ring==='tele'){ this.burst(p.x,p.y,0xff40ff,14,150); const aa=Math.random()*Math.PI*2, rr=Math.random()*R*.8; p.x=CX+Math.cos(aa)*rr; p.y=CY+Math.sin(aa)*rr; }
+      if(!this.over && dist(s.x,s.y,p.x,p.y)<s.r+PLAYER_R-2){ if(s.ring==='stun'){ p.stun=1.3; } else if(s.ring==='tele'){ this.burst(p.x,p.y,0xff40ff,14,150); const aa=Math.random()*Math.PI*2, rr=Math.random()*R*.8; p.x=CX+Math.cos(aa)*rr; p.y=CY+Math.sin(aa)*rr; }
         else this.hurtPlayer(s.dmg); s.life=0; }
       if(s.life<=0||(!s.ring&&dist(s.x,s.y,CX,CY)>R)){ if(s.pooled) this.pool.release(s.spr); else s.spr.destroy(); s.dead=true; } } this.eshots=this.eshots.filter(s=>!s.dead);
     if(!this.over) for(const k of this.pickups){ if(k.dead) continue; const d=dist(k.x,k.y,p.x,p.y);

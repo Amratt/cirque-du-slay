@@ -62,7 +62,7 @@ class Codex extends Phaser.Scene {
   constructor(){ super('Codex'); }
   init(d){ this.tab=(d&&d.tab)||'chars'; this.pg=0; }
   create(){ enterFx(this); this.input.keyboard.on('keydown-ESC',()=>goScene(this,'Menu')); this.build(); }
-  build(){ this.children.removeAll(true); curtains(this,'ui_char_select_bg_blank');
+  build(){ clearUI(this); curtains(this,'ui_char_select_bg_blank');
     const x=Lore.c(), frs=LORE.fragments||[], best=Object.keys(LORE.bestiary||{});
     txt(this,W/2,50,'CODEX',48,GOLD);
     const tabs=[['chars',`Characters ${Save.d.unlocked.length}/${CHARS.length}`],['beasts',`Bestiary ${best.filter(id=>this.known(id)).length}/${best.length}`],['frags',`Fragments ${x.frags.length}/${frs.length}`]];
