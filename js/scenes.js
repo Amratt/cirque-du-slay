@@ -14,7 +14,8 @@ class Boot extends Phaser.Scene {
     let al = this.cache.json.get('audioManifest')||[]; if(!Array.isArray(al)) al = al.sounds||al.audio||Object.entries(al).map(([k,v])=>Object.assign({key:k},v));
     al = al.filter(e=>e&&e.key&&e.file); Sfx.setup(this.game, al);
     for(const e of al){ const f=typeof e.file==='string'?[e.file]:[e.file.ogg,e.file.mp3].filter(Boolean); this.load.audio(e.key, f.map(x=>V('assets/audio/'+x))); } this.missing=[];
-    for(const [k,v] of Object.entries(man)){ const url=V('assets/sprites/'+v.file);
+    const hi=arenaHiOK(this.game);
+    for(const [k,v] of Object.entries(man)){ if(v.tier==='hi'&&!hi) continue; const url=V('assets/sprites/'+v.file);   // hi-res arena only where it can be afforded
       if(v.frameWidth) this.load.spritesheet(k,url,{frameWidth:v.frameWidth,frameHeight:v.frameHeight||v.frameWidth}); else this.load.image(k,url); }
     window.ASSET_MISSING=this.missing; this.load.on('loaderror',f=>this.missing.push(f.key));
     this.load.once('complete',()=>{ if(this.missing.length) console.info('[assets] fallback (placeholder/synth) for:',this.missing.join(', '));

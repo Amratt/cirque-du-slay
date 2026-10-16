@@ -20,6 +20,11 @@ const FEEL = { bobPx:7, bobPxNoSheet:7, tilt:.14 /* ~8 deg */, stepHz:3.4, turnS
 const PETMASTER_TP = [260,460];
 // Hero v2: A7/A10 are drawn shorter inside their 128x256 frames (~215/235 px vs ~254); scale them up to match the others
 const HERO_NORM = { A7:254/215, A10:254/235 };
+// arena floor resolution tiers. 'hi' assets (manifest tier:'hi') load only on desktops whose GPU takes >=4096 textures:
+//   grid: arena_t<row><col> (ARENA_GRID x ARENA_GRID tiles, e.g. 4x4 of 1024)  >  arena_ring_4k (single 4096)  >  arena_ring (2048, everyone incl. phones)
+const ARENA_GRID = 4;
+function arenaHiOK(game){ const r=game&&game.renderer, mt=(r&&r.getMaxTextureSize)?r.getMaxTextureSize():2048, touch=game&&game.device.input.touch&&Math.min(innerWidth,innerHeight)<600;
+  return !touch && mt>=4096 && !new URLSearchParams(location.search).has('lowres'); }
 // ring dressing (Drax decals; blend from manifest, these override strength)
 const DRESS = { scatterCount:170, scatterAlpha:.72, scatterSize:[44,70], ringAlpha:.8, ringSize:1.15,
   spotCount:3, spotAlpha:.55, spotTint:0xffd8a0, spotSize:640, floorTint:0xb4aaa0, vignetteAlpha:.7 };    // BUG-024: player drawn this much larger than its manifest box; hit radius scales with it

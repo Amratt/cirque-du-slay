@@ -84,7 +84,9 @@ class Game extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('#12060a');
     // bake tiled floor clipped to a circle once (a masked tileSprite is too slow on low-end/software GL)
     const ringArt = ARENA_V2 && !(window.ASSET_MISSING||[]).includes('arena_ring');   // Drax's art/arena_ring.png, once imported, is the whole arena as one image
-    if(ringArt){ this.add.image(CX,CY,'arena_ring').setDisplaySize(R/.44,R/.44).setDepth(0).setTint(DRESS.floorTint); }   // floor darkened a touch so characters pop   // playable radius R = 44% of image width (ring border outside it)
+    if(ringArt){ const D=R/.44, ok=k=>this.textures.exists(k)&&!(window.ASSET_MISSING||[]).includes(k), n=ARENA_GRID, grid=ok('arena_t00')&&ok(`arena_t${n-1}${n-1}`);
+      if(grid){ const s=D/n; for(let r=0;r<n;r++) for(let c=0;c<n;c++) this.add.image(CX-D/2+c*s,CY-D/2+r*s,`arena_t${r}${c}`).setOrigin(0).setDisplaySize(s+1,s+1).setDepth(0).setTint(DRESS.floorTint); this.arenaTier='grid'+n; }   // +1 px overlap hides tile seams
+      else { const k=ok('arena_ring_4k')?'arena_ring_4k':'arena_ring'; this.add.image(CX,CY,k).setDisplaySize(D,D).setDepth(0).setTint(DRESS.floorTint); this.arenaTier=k; } }   // floor darkened a touch so characters pop   // playable radius R = 44% of image width (ring border outside it)
     else if(ARENA_V2){ if(!this.textures.exists('arena_floor_ring')) this.bakeRing(); this.add.image(CX,CY,'arena_floor_ring').setDepth(0); }
     else { if(!this.textures.exists('arena_floor_baked')){ const t=this.textures.get('arena_tile').getSourceImage(), D=R*2+4, c=document.createElement('canvas'); c.width=c.height=D;
       const x=c.getContext('2d'); x.beginPath(); x.arc(D/2,D/2,D/2,0,Math.PI*2); x.clip(); x.fillStyle=x.createPattern(t,'repeat'); x.fillRect(0,0,D,D); this.textures.addCanvas('arena_floor_baked',c); }
