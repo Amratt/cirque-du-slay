@@ -318,7 +318,7 @@ class Game extends Phaser.Scene {
   spawnBoss(id){ const B=BOSSES[id], mk=(tex,x,y,hp,name,r)=>{ const e={id,boss:true,name,base:tex,spr:this.bossSprite(tex,x,y),x,y,r:Math.round(r*BOSS_SCALE),hp,max:hp,dmg:B.dmg,spd:B.spd*U_SPEED,t:0,st:'',kx:0,ky:0,flash:0};
       this.enemies.push(e); return e; };
     let list=[];
-    if(id==='E5'){ const e=mk('truck',CX,CY-R+120,B.hp*bossMult('E5'),B.name,40); e.st='chase'; e.rot=Math.PI/2; list=[e]; }
+    if(id==='E5'){ const sx=this.pl.x<CX?this.pl.x+420:this.pl.x-420, e=mk('truck',sx,this.pl.y,B.hp*bossMult('E5'),B.name,40); e.st='chase'; e.rot=sx>this.pl.x?Math.PI:0; this.clampArena(e,e.r); list=[e];   /* enters beside the player (in frame), facing them */ }
     if(id==='E10'){ const e=mk('juggler',CX-R*.6,CY-300,B.hp*bossMult('E10'),B.name,24); e.st='rope'; e.rope=0; e.dir=1; e.inv=true; list=[e]; }
     if(id==='E15'){ const e=mk('petmaster',CX,CY-300,B.hp*bossMult('E15'),B.name,26); e.st='charge'; e.inv=false; e.ringG=this.add.graphics().setDepth(16); list=[e]; }
     if(id==='E20'){ const h=B.hp*bossMult('E20')*.6; const a=mk('cousin1',CX-250,CY-300,h,'Cousin 1: The Trickster',22), b=mk('cousin2',CX+250,CY-300,h,'Cousin 2: The Hunter',22);
@@ -338,7 +338,7 @@ class Game extends Phaser.Scene {
       else if(e.st==='aim'){ e.rot = Phaser.Math.Angle.RotateTo(e.rot,a,3*dt); e.spr.x+=Phaser.Math.Between(-3,3); if(Math.random()<.4) this.burst(e.x-Math.cos(e.rot)*50,e.y-Math.sin(e.rot)*50,0x777777,1,60,2,600);
         if(e.t>1.1){ e.st='ram'; e.t=0; e.passed=false; } }
       else if(e.st==='ram'){ const v=e.spd*4.2; e.x+=Math.cos(e.rot)*v*dt; e.y+=Math.sin(e.rot)*v*dt;
-        const away=Math.cos(e.rot)*(e.x-p.x)+Math.sin(e.rot)*(e.y-p.y)>0, leash=away&&d>TRUCK_RAM_LEASH;   /* only once it has passed the player */ if(leash){ for(let i=0;i<3;i++) this.burst(e.x-Math.cos(e.rot)*40,e.y-Math.sin(e.rot)*40,0x8a7a60,2,90,2,500); Sfx.noise(.12,.25,500); }   /* skid: brake about one screen-width past the player instead of running to the ring edge */
+        const away=Math.cos(e.rot)*(e.x-p.x)+Math.sin(e.rot)*(e.y-p.y)>0, rz=(this.baseZoom||CAM_ZOOM)*CAM_MIN_ZOOM_FRAC, lx=Math.min(TRUCK_RAM_LEASH,W/2/rz-60), ly=Math.min(TRUCK_RAM_LEASH,H/2/rz-60), ux=(e.x-p.x)/lx, uy=(e.y-p.y)/ly, leash=away&&(ux*ux+uy*uy>1);   /* elliptical leash = visible half-extent at the zoom floor (wide screen, short screen) */   /* only once it has passed the player */ if(leash){ for(let i=0;i<3;i++) this.burst(e.x-Math.cos(e.rot)*40,e.y-Math.sin(e.rot)*40,0x8a7a60,2,90,2,500); Sfx.noise(.12,.25,500); }   /* skid: brake about one screen-width past the player instead of running to the ring edge */
         if(leash||this.clampArena(e,e.r)||e.t>1.6){ e.st='turn'; e.t=0; e.vulnMul=1.5; } }
       else if(e.st==='turn'){ e.rot = Phaser.Math.Angle.RotateTo(e.rot,a,.9*dt); e.x+=Math.cos(e.rot)*e.spd*.3*dt; e.y+=Math.sin(e.rot)*e.spd*.3*dt;
         if(e.t>1.8){ e.st='aim'; e.t=0; e.vulnMul=1; this.windup(e); } }
