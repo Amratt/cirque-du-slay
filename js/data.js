@@ -3,9 +3,20 @@ const U_SPEED = 55;   // px per "unit/sec" for movement speeds
 const U_RANGE = 28;   // px per range unit
 // LORE: Augustin's diary pages unlock only after their boss (story order). Other fragments drop at FRAG_DROP_CHANCE per kill (max 1 per wave).
 const ARENA_V2 = true;        // BUG-024 (approved by Star Lord): single ring floor + zoom. false = v1.1 tiled floor, no zoom
-const CAM_ZOOM = ARENA_V2 ? 1.6 : 1;     // HUD stays 1:1 on its own camera
-const PLAYER_SCALE = ARENA_V2 ? 1.25 : 1;    // BUG-024: player drawn this much larger than its manifest box; hit radius scales with it
-const PLAYER_R = Math.round(16*PLAYER_SCALE);
+// Drax's projectiles (manifest 'projectiles'): which enemy throws what, and how it moves. mode: 'face' = still rotated to travel dir,
+// 'spin' = still spun in code, 'anim' = play the looping sheet (ring/ball spin slowly by design)
+const PROJ_BY = { E1:'proj_pie',E2:'proj_pie',E3:'proj_pie',E4:'proj_pie', E8:'proj_ember',E9:'proj_ember', E11:'proj_ball',E12:'proj_ball', E14:'proj_peanut',
+  E10:'proj_pin', E20:'proj_ring', cousin1:'proj_ring', cousin2:'proj_ring', _ranged:'proj_pin', _any:'proj_confetti' };
+const PROJ_MODE = { proj_pie:['face'], proj_pin:['spin'], proj_peanut:['spin'], proj_ember:['anim','proj_ember_anim'], proj_confetti:['anim','proj_confetti_anim'], proj_ring:['anim','proj_ring_spin'], proj_ball:['anim','proj_ball_spin'] };
+const CAM_ZOOM = ARENA_V2 ? 1.8 : 1;     // desktop gameplay zoom; HUD stays 1:1 on its own camera
+const CAM_ZOOM_MOBILE = 2.0;              // touch / short screens (canvas is scaled down ~0.55 there)
+const PLAYER_SCALE = ARENA_V2 ? 1.3 : 1;  // player ~60 px tall on a 720p desktop view; hit radius follows
+const ENEMY_SCALE = ARENA_V2 ? 1.05 : 1;   // regular enemies + their hit radius
+const BOSS_SCALE = ARENA_V2 ? 1.0 : 1;   // bosses + their hit radius
+// ring dressing (Drax decals; blend from manifest, these override strength)
+const DRESS = { scatterCount:170, scatterAlpha:.72, scatterSize:[44,70], ringAlpha:.8, ringSize:1.15,
+  spotCount:3, spotAlpha:.55, spotTint:0xffd8a0, spotSize:640, floorTint:0xb4aaa0, vignetteAlpha:.7 };    // BUG-024: player drawn this much larger than its manifest box; hit radius scales with it
+const PLAYER_R = Math.round(16*Math.sqrt(PLAYER_SCALE)*1.1);   // body radius (sprite box has lots of headroom, so it grows slower than the art)
 const FAST_WAVE_T = 10;   // ?fast=1 wave length (BUG-008); ?gold=N sets starting balloons
 // Animation frame skips for known art defects. Each skip only applies while the frame still matches 'when'
 // (a frame-content check), so it silently does nothing once Drax ships a cleaned sheet. when: 'white' | 'always'

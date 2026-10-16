@@ -9,7 +9,7 @@ class Boot extends Phaser.Scene {
     for(const sec of ['sprites','animations','anims','sheets']){ const x=raw[sec]; if(!x) continue;
       for(const [k,v] of Array.isArray(x)? x.map(e=>[e.key,e]) : Object.entries(x)){ if(!k||!v||!v.file) continue;
         const e=Object.assign({},v); e.frameWidth=e.frameWidth||null; if(!e.frameCount&&e.frames>1) e.frameCount=e.frames; if(!e.frameRate&&e.fps) e.frameRate=e.fps; man[k]=Object.assign(man[k]||{},e); } }
-    window.SPRITE_MANIFEST = man;
+    window.SPRITE_MANIFEST = man; window.DECALS = raw.decals||{};
     // audio: tolerant list / {sounds:[...]} / {key:entry}; each sound loads [ogg, mp3]; missing => synth fallback
     let al = this.cache.json.get('audioManifest')||[]; if(!Array.isArray(al)) al = al.sounds||al.audio||Object.entries(al).map(([k,v])=>Object.assign({key:k},v));
     al = al.filter(e=>e&&e.key&&e.file); Sfx.setup(this.game, al);
@@ -60,6 +60,10 @@ class Boot extends Phaser.Scene {
     tex('candy',26,16,g=>{ g.fillStyle(0xff60c0,1).fillCircle(13,8,6).fillTriangle(0,2,0,14,8,8).fillTriangle(26,2,26,14,18,8); g.fillStyle(0xffffff,1).fillRect(11,3,3,10); });
     tex('popcorn',22,26,g=>{ g.fillStyle(0xfff2a0,1).fillCircle(6,7,5).fillCircle(11,4,5).fillCircle(16,7,5); g.fillStyle(0xffffff,1).fillRect(3,9,16,16); g.fillStyle(0xe02020,1).fillRect(5,9,3,16).fillRect(11,9,3,16).fillRect(17,9,2,16); });
     tex('bullet',10,10,g=>{ g.fillStyle(0xffffff,1).fillCircle(5,5,4); });
+    // procedural enemy projectiles (replaced automatically if Drax ships proj_* art in the manifest)
+    if(!this.textures.exists('proj_pie')) tex('proj_pie',18,18,g=>{ g.fillStyle(0x6a3a14,1).fillCircle(9,9,8.5); g.fillStyle(0xd9a050,1).fillCircle(9,9,7.5); g.fillStyle(0xfff4e0,1).fillCircle(9,9,5.5); g.fillStyle(0xff6fa0,1).fillCircle(9,8,2.2); g.fillStyle(0xffffff,.8).fillCircle(7,6,1.6); });
+    if(!this.textures.exists('proj_pin')) tex('proj_pin',10,24,g=>{ g.fillStyle(0x2a1010,1).fillEllipse(5,17,10,13).fillEllipse(5,6,7,9).fillRect(3,6,4,8); g.fillStyle(0xfaf4e8,1).fillEllipse(5,17,8,11).fillEllipse(5,6,5,7).fillRect(3.5,6,3,8); g.fillStyle(0xd02030,1).fillRect(3,10,4,2).fillRect(3,13,4,1.5); });
+    if(!this.textures.exists('proj_spark')) tex('proj_spark',16,16,g=>{ g.fillStyle(0xffffff,.35).fillCircle(8,8,7.5); g.fillStyle(0xffffff,1); g.fillTriangle(8,0,10,8,6,8).fillTriangle(8,16,10,8,6,8).fillTriangle(0,8,8,6,8,10).fillTriangle(16,8,8,6,8,10); g.fillCircle(8,8,3.2); });
     tex('eshot',14,14,g=>{ g.fillStyle(0xffffff,1).fillCircle(7,7,6); g.fillStyle(0x000000,.25).fillCircle(9,9,3); });
     tex('warn',30,30,g=>{ g.lineStyle(6,0xff0000,1).lineBetween(4,4,26,26).lineBetween(26,4,4,26); });
     tex('puff',16,16,g=>{ g.fillStyle(0xffffff,1).fillCircle(8,8,8); });

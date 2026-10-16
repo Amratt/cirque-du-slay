@@ -2193,6 +2193,472 @@
    "frameWidth": 256,
    "frameHeight": 256,
    "frameCount": 3
+  },
+  "proj_pie": {
+   "file": "proj_pie.png",
+   "size": [
+    22,
+    22
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: Projectile: cream pie"
+  },
+  "proj_pin": {
+   "file": "proj_pin.png",
+   "size": [
+    22,
+    22
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: Projectile: juggling pin"
+  },
+  "proj_ember": {
+   "file": "proj_ember.png",
+   "size": [
+    22,
+    22
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: Projectile: fireball / ember"
+  },
+  "proj_confetti": {
+   "file": "proj_confetti.png",
+   "size": [
+    22,
+    22
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: Projectile: confetti burst"
+  },
+  "proj_ring": {
+   "file": "proj_ring.png",
+   "size": [
+    22,
+    22
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: Projectile: hoop / ring"
+  },
+  "proj_ball": {
+   "file": "proj_ball.png",
+   "size": [
+    22,
+    22
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: Projectile: striped circus ball"
+  },
+  "proj_peanut": {
+   "file": "proj_peanut.png",
+   "size": [
+    22,
+    22
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: Projectile: peanut"
+  },
+  "proj_pin_spin": {
+   "file": "proj_pin_spin.png",
+   "size": [
+    22,
+    22
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 64,
+   "frameHeight": 64,
+   "frameCount": 4
+  },
+  "proj_ember_anim": {
+   "file": "proj_ember_anim.png",
+   "size": [
+    22,
+    22
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 64,
+   "frameHeight": 64,
+   "frameCount": 4
+  },
+  "proj_confetti_anim": {
+   "file": "proj_confetti_anim.png",
+   "size": [
+    22,
+    22
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 64,
+   "frameHeight": 64,
+   "frameCount": 4
+  },
+  "proj_ring_spin": {
+   "file": "proj_ring_spin.png",
+   "size": [
+    22,
+    22
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 64,
+   "frameHeight": 64,
+   "frameCount": 4
+  },
+  "proj_ball_spin": {
+   "file": "proj_ball_spin.png",
+   "size": [
+    22,
+    22
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 64,
+   "frameHeight": 64,
+   "frameCount": 4
+  },
+  "proj_peanut_spin": {
+   "file": "proj_peanut_spin.png",
+   "size": [
+    22,
+    22
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 64,
+   "frameHeight": 64,
+   "frameCount": 4
+  },
+  "popcorn_01": {
+   "file": "decals/popcorn_01.png",
+   "size": [
+    64,
+    64
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "scatter on floor, random rotation"
+  },
+  "popcorn_02": {
+   "file": "decals/popcorn_02.png",
+   "size": [
+    64,
+    64
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "scatter on floor, random rotation"
+  },
+  "popcorn_03": {
+   "file": "decals/popcorn_03.png",
+   "size": [
+    64,
+    64
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "scatter on floor, random rotation"
+  },
+  "popcorn_04": {
+   "file": "decals/popcorn_04.png",
+   "size": [
+    64,
+    64
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "scatter on floor, random rotation"
+  },
+  "confetti_01": {
+   "file": "decals/confetti_01.png",
+   "size": [
+    64,
+    64
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "scatter on floor, random rotation"
+  },
+  "confetti_02": {
+   "file": "decals/confetti_02.png",
+   "size": [
+    64,
+    64
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "scatter on floor, random rotation"
+  },
+  "confetti_03": {
+   "file": "decals/confetti_03.png",
+   "size": [
+    64,
+    64
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "scatter on floor, random rotation"
+  },
+  "confetti_04": {
+   "file": "decals/confetti_04.png",
+   "size": [
+    64,
+    64
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "scatter on floor, random rotation"
+  },
+  "ticket_01": {
+   "file": "decals/ticket_01.png",
+   "size": [
+    64,
+    64
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "scatter on floor, random rotation"
+  },
+  "ticket_02": {
+   "file": "decals/ticket_02.png",
+   "size": [
+    64,
+    64
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "scatter on floor, random rotation"
+  },
+  "ticket_03": {
+   "file": "decals/ticket_03.png",
+   "size": [
+    64,
+    64
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "scatter on floor, random rotation"
+  },
+  "ring_circle": {
+   "file": "decals/ring_circle.png",
+   "size": [
+    512,
+    512
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "arena center ring, under actors"
+  },
+  "spotlight_pool": {
+   "file": "decals/spotlight_pool.png",
+   "size": [
+    512,
+    512
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "light pool, under actors"
+  },
+  "vignette": {
+   "file": "decals/vignette.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "fit": false,
+   "orient": "decal",
+   "desc": "stretch to screen, top layer, scrollFactor 0"
+  }
+ },
+ "projectiles": {
+  "proj_pie": {
+   "file": "proj_pie.png",
+   "used_by": "E1, E2, E3, E4 (clowns)",
+   "anim": null
+  },
+  "proj_pin": {
+   "file": "proj_pin.png",
+   "used_by": "juggler + ranged enemies",
+   "anim": "proj_pin_spin"
+  },
+  "proj_ember": {
+   "file": "proj_ember.png",
+   "used_by": "E8, E9 (flamethrowers)",
+   "anim": "proj_ember_anim"
+  },
+  "proj_confetti": {
+   "file": "proj_confetti.png",
+   "used_by": "generic burst / any",
+   "anim": "proj_confetti_anim"
+  },
+  "proj_ring": {
+   "file": "proj_ring.png",
+   "used_by": "cousin1, cousin2",
+   "anim": "proj_ring_spin"
+  },
+  "proj_ball": {
+   "file": "proj_ball.png",
+   "used_by": "E11 (seal), E12 (monkey)",
+   "anim": "proj_ball_spin"
+  },
+  "proj_peanut": {
+   "file": "proj_peanut.png",
+   "used_by": "E14 (elephant)",
+   "anim": "proj_peanut_spin"
+  }
+ },
+ "decals": {
+  "popcorn_01": {
+   "file": "decals/popcorn_01.png",
+   "size": [
+    64,
+    64
+   ],
+   "blend": "normal",
+   "alpha": 0.6,
+   "note": "scatter on floor, random rotation"
+  },
+  "popcorn_02": {
+   "file": "decals/popcorn_02.png",
+   "size": [
+    64,
+    64
+   ],
+   "blend": "normal",
+   "alpha": 0.6,
+   "note": "scatter on floor, random rotation"
+  },
+  "popcorn_03": {
+   "file": "decals/popcorn_03.png",
+   "size": [
+    64,
+    64
+   ],
+   "blend": "normal",
+   "alpha": 0.6,
+   "note": "scatter on floor, random rotation"
+  },
+  "popcorn_04": {
+   "file": "decals/popcorn_04.png",
+   "size": [
+    64,
+    64
+   ],
+   "blend": "normal",
+   "alpha": 0.6,
+   "note": "scatter on floor, random rotation"
+  },
+  "confetti_01": {
+   "file": "decals/confetti_01.png",
+   "size": [
+    64,
+    64
+   ],
+   "blend": "normal",
+   "alpha": 0.6,
+   "note": "scatter on floor, random rotation"
+  },
+  "confetti_02": {
+   "file": "decals/confetti_02.png",
+   "size": [
+    64,
+    64
+   ],
+   "blend": "normal",
+   "alpha": 0.6,
+   "note": "scatter on floor, random rotation"
+  },
+  "confetti_03": {
+   "file": "decals/confetti_03.png",
+   "size": [
+    64,
+    64
+   ],
+   "blend": "normal",
+   "alpha": 0.6,
+   "note": "scatter on floor, random rotation"
+  },
+  "confetti_04": {
+   "file": "decals/confetti_04.png",
+   "size": [
+    64,
+    64
+   ],
+   "blend": "normal",
+   "alpha": 0.6,
+   "note": "scatter on floor, random rotation"
+  },
+  "ticket_01": {
+   "file": "decals/ticket_01.png",
+   "size": [
+    64,
+    64
+   ],
+   "blend": "normal",
+   "alpha": 0.6,
+   "note": "scatter on floor, random rotation"
+  },
+  "ticket_02": {
+   "file": "decals/ticket_02.png",
+   "size": [
+    64,
+    64
+   ],
+   "blend": "normal",
+   "alpha": 0.6,
+   "note": "scatter on floor, random rotation"
+  },
+  "ticket_03": {
+   "file": "decals/ticket_03.png",
+   "size": [
+    64,
+    64
+   ],
+   "blend": "normal",
+   "alpha": 0.6,
+   "note": "scatter on floor, random rotation"
+  },
+  "ring_circle": {
+   "file": "decals/ring_circle.png",
+   "size": [
+    512,
+    512
+   ],
+   "blend": "normal",
+   "alpha": 0.5,
+   "note": "arena center ring, under actors"
+  },
+  "spotlight_pool": {
+   "file": "decals/spotlight_pool.png",
+   "size": [
+    512,
+    512
+   ],
+   "blend": "add",
+   "alpha": 0.35,
+   "note": "light pool, under actors"
+  },
+  "vignette": {
+   "file": "decals/vignette.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "blend": "multiply",
+   "alpha": 0.7,
+   "note": "stretch to screen, top layer, scrollFactor 0"
   }
  }
 }
