@@ -7,7 +7,7 @@ class Game extends Phaser.Scene {
   constructor(){ super('Game'); }
   init(d){ this.charId = d.charId||'A1'; this.ch = CHARS.find(c=>c.id===this.charId);
     this.run = {charId:this.charId, weapons:[], balloons:(+new URLSearchParams(location.search).get('gold')||0), wave:1, kills:0, gt:0, unlocks:[], bossesBeaten:0, mods:{}, adds:{}}; }
-  create(){
+  create(){ this.bossDying=[];
     window.CDS = this; Sfx.init(); enterFx(this); this.pool = new Pool(this); this.hitStop=0; this.fpsLog=[];
     this.enemies=[]; this.bullets=[]; this.eshots=[]; this.pickups=[]; this.warnings=[]; this.hazards=[]; this.weapons=[];
     this.over=false; this.paused=false; this.pauseLayer=null; this.time.paused=false; this.state='wave';
@@ -222,7 +222,8 @@ class Game extends Phaser.Scene {
     if(e.big||e.boss) this.cameras.main.shake(120,.006); this.stopFor(e.boss?.12:.02);
     this.dieOnScreen(e); }
   // death without rewards (wave clear / boss summons): death sheet, hold, fade - never an instant pop. Also used by killEnemy.
-  dieOnScreen(e){ e.dead=true; const sp=e.spr; if(!sp||!sp.active) return;
+  dieOnScreen(e){ e.dead=true; const sp=e.spr; if(e.boss){ (this.bossDying=this.bossDying||[]).push({x:e.x,y:e.y,until:this.time.now+FEEL.deathHoldBoss+FEEL.deathFadeBoss+400}); }   /* keep the boss camera framing through the whole death + fade */
+    if(!sp||!sp.active) return;
     this.corpses=(this.corpses||[]).filter(c=>c.active); this.corpses.push(sp); while(this.corpses.length>PERF.maxCorpses){ const o=this.corpses.shift(); this.tweens.killTweensOf(o); o.destroy(); }   // corpse cap sp.clearTint(); e.flashUntil=0;
     if(e.boss){ this.cameras.main.shake(400,.012); this.cameras.main.flash(180,255,240,220); this.burst(sp.x,sp.y,0xffd040,30,260,3,1200); this.burst(sp.x,sp.y,0xff4060,30,220,3,1200); this.burst(sp.x,sp.y,0x40c0ff,20,200,3,1200); this.tweens.add({targets:sp,scaleX:sp.scaleX*1.15,scaleY:sp.scaleY*1.15,yoyo:true,duration:140}); }   /* pop + confetti */ this.tweens.killTweensOf(sp); sp.setDepth(8.5);
     const fade=()=>this.tweens.add({targets:sp,alpha:0,y:sp.y+4,delay:e.boss?FEEL.deathHoldBoss:FEEL.deathHold,duration:e.boss?FEEL.deathFadeBoss:FEEL.deathFade,onComplete:()=>sp.destroy()});
@@ -392,7 +393,7 @@ class Game extends Phaser.Scene {
     this.time.delayedCall(FEEL.bossOutro,()=>{ this.setBossBars([]); this.endWave(); }); }   // wait for the boss death to play out before the shop
   // ---------------------------------------------------------------- main loop
   // boss fights: pull the camera toward the boss and zoom out (down to ZOOM_MIN_BOSS) so player and boss stay on screen together
-  bossCam(dt){ const cam=this.cameras.main, base=this.baseZoom||CAM_ZOOM, bs=this.enemies.filter(e=>e.boss&&!e.dead); let z=base, ox=0, oy=0;
+  bossCam(dt){ const cam=this.cameras.main, base=this.baseZoom||CAM_ZOOM, bs=this.enemies.filter(e=>e.boss&&!e.dead).concat((this.bossDying=(this.bossDying||[]).filter(d=>d.until>this.time.now))); let z=base, ox=0, oy=0;
     if(bs.length){ let mx=0,my=0; for(const b of bs){ const dx=b.x-this.pl.x, dy=b.y-this.pl.y; if(Math.abs(dx)>Math.abs(mx)) mx=dx; if(Math.abs(dy)>Math.abs(my)) my=dy; }
       const top=HUD_SAFE.top, bot=HUD_SAFE.bottom; ox=-mx*.5; z=Math.min(base, Math.max(base*.45, Math.min(W/(Math.abs(mx)+420), (H-top-bot)/(Math.abs(my)+300)))); oy=-my*.5 + (bot-top)/2/z; }   // BUG-032: frame both inside the HUD-safe band
     const k=1-Math.exp(-dt*7); cam.setZoom(cam.zoom+(z-cam.zoom)*k); cam.followOffset.x+=(ox-cam.followOffset.x)*k; cam.followOffset.y+=(oy-cam.followOffset.y)*k; }
