@@ -6,10 +6,26 @@
 html,body{margin:0;height:100%;background:#0b0507;overflow:hidden;touch-action:none;font-family:Georgia,serif}
 #game{width:100%;height:100%}
 #rotate{display:none;position:fixed;inset:0;background:#0b0507;color:#f3c75a;font:22px Georgia;align-items:center;justify-content:center;text-align:center;z-index:9}
-@media (orientation:portrait) and (max-width:900px){#rotate{display:flex}}
+#rotate.show{display:flex;flex-direction:column;gap:22px}
+#rotate button{font:20px Georgia;padding:12px 22px;background:#3a0a10;color:#fff;border:2px solid #f3c75a;border-radius:10px}
 </style></head><body>
 <div id="game"></div>
-<div id="rotate">Rotate your device to landscape 🎪</div>
+<div id="rotate"><div>Rotate your device to landscape 🎪</div><button id="playAnyway" type="button">Tap to play anyway</button></div>
+<script>
+// Orientation gate (iOS Safari safe): innerWidth/innerHeight, rechecked on every resize/rotation signal plus a delayed recheck; never hard-blocks.
+(function(){ var el=document.getElementById('rotate'), dismissed=false, t=null;
+  function check(){ var vv=window.visualViewport, w=vv?vv.width:window.innerWidth, h=vv?vv.height:window.innerHeight;
+    var iw=window.innerWidth, ih=window.innerHeight, portrait=!(iw>ih) && Math.min(iw,ih)<=900 && !(w>h);
+    el.classList.toggle('show', portrait && !dismissed);
+    if(window.GAME && GAME.scale && GAME.scale.refresh) GAME.scale.refresh(); }
+  function soon(){ check(); clearTimeout(t); t=setTimeout(check,300); setTimeout(check,800); }
+  ['resize','orientationchange','pageshow','focus'].forEach(function(ev){ window.addEventListener(ev,soon); });
+  if(window.visualViewport) visualViewport.addEventListener('resize',soon);
+  if(screen.orientation && screen.orientation.addEventListener) screen.orientation.addEventListener('change',soon);
+  document.getElementById('playAnyway').addEventListener('click',function(e){ e.stopPropagation(); dismissed=true; check(); });
+  el.addEventListener('pointerdown',function(e){ e.stopPropagation(); }); el.addEventListener('touchstart',function(e){ if(e.target.id!=='playAnyway') e.preventDefault(); },{passive:false});
+  window.__orientCheck=check; check(); })();
+</script>
 <script src="lib/phaser.min.js"></script>
 <script src="js/data.js"></script>
 <script src="js/audio.js"></script>
