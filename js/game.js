@@ -113,7 +113,7 @@ class Game extends Phaser.Scene {
     this.rbC = sf(counter(this,88,70,'balloon','0','#ff8090')); this.rbT = this.rbC.label;
     this.waveT = sf(txt(this,W/2,24,'',26,GOLD)); this.timerT = sf(txt(this,W/2,66,'',28,'#fff',{stroke:'#000',strokeThickness:4}));
     this.pauseBtn = sf(iconButton(this,W-40,38,'II',()=>this.togglePause(),56));
-    this.bossArrow = sf(this.add.graphics()).setDepth(1001); this.bossBars = []; this.banner = sf(txt(this,W/2,150,'',50,BLOOD,{strokeThickness:8})).setAlpha(0); this.sayT = sf(txt(this,W/2,H-140,'',26,'#fff',{wordWrap:{width:1000},backgroundColor:'#000000aa',padding:{x:14,y:8}})).setAlpha(0).setDepth(1000); this.fragThisWave=false; this.revealQ=[];
+    this.bossArrow = sf(this.add.graphics()).setDepth(1001); this.bossBars = []; this.banner = sf(txt(this,W/2,72,'',36,BLOOD,{strokeThickness:7})).setAlpha(0);   /* top HUD band, never over the player */ this.sayT = sf(txt(this,W/2,H-140,'',26,'#fff',{wordWrap:{width:1000},backgroundColor:'#000000aa',padding:{x:14,y:8}})).setAlpha(0).setDepth(1000); this.fragThisWave=false; this.revealQ=[];
     this.joyBase = sf(this.add.circle(0,0,60,0xffffff,.15).setStrokeStyle(3,0xffffff,.5)).setVisible(false);
     this.joyKnob = sf(this.add.circle(0,0,26,0xf3c75a,.6)).setVisible(false);
   }
@@ -125,7 +125,7 @@ class Game extends Phaser.Scene {
   updateHUD(){ const p=this.pl, w = Math.min(600, p.max*2);   // bar length grows with Max HP (GDD); fill is cropped to HP%
     this.hpBg.setDisplaySize(w+8,28); this.hpBar.setDisplaySize(w,20); const fw=this.hpBar.frame.realWidth; this.hpBar.setCrop(0,0,fw*Phaser.Math.Clamp(p.hp/p.max,0,1),this.hpBar.frame.realHeight);
     this.hpT.setPosition(96+w/2,26).setText(`${Math.ceil(p.hp)} / ${Math.round(p.max)}`); this.rbT.setText(this.run.balloons);
-    this.waveT.setText(`WAVE ${this.run.wave}/20`); this.timerT.setColor(this.state==='boss'?'#ff5a5a':'#fff').setText(this.state==='boss'?'BOSS FIGHT':this.state==='wave'?Math.ceil(Math.max(0,this.timeLeft)):'');
+    this.waveT.setText(`WAVE ${this.run.wave}/20`); this.timerT.setVisible(this.banner.alpha<.05).setColor(this.state==='boss'?'#ff5a5a':'#fff').setText(this.state==='boss'?'BOSS FIGHT':this.state==='wave'?Math.ceil(Math.max(0,this.timeLeft)):'');
     for(const e of this.enemies) if(e.bar) e.bar.width = Math.max(0,e.barW*e.hp/e.max); }
   togglePause(){ if(this.over||this.state==='shop') return; this.paused=!this.paused;
     this.time.paused=this.paused; if(this.paused) this.tweens.pauseAll(); else this.tweens.resumeAll();   // BUG-002: freeze timers + tweens (lobs, boss intro, shop timer)
@@ -222,12 +222,12 @@ class Game extends Phaser.Scene {
     if(e.big||e.boss) this.cameras.main.shake(120,.006); this.stopFor(e.boss?.12:.02);
     this.dieOnScreen(e); }
   // death without rewards (wave clear / boss summons): death sheet, hold, fade - never an instant pop. Also used by killEnemy.
-  dieOnScreen(e){ e.dead=true; const sp=e.spr; if(e.boss){ (this.bossDying=this.bossDying||[]).push({x:e.x,y:e.y,until:this.time.now+FEEL.deathHoldBoss+FEEL.deathFadeBoss+400}); }   /* keep the boss camera framing through the whole death + fade */
+  dieOnScreen(e){ e.dead=true; const sp=e.spr; if(e.boss){ (this.bossDying=this.bossDying||[]).push({x:sp?sp.x:e.x,y:sp?sp.y:e.y,until:this.time.now+FEEL.deathHoldBoss+FEEL.deathFadeBoss+400}); }   /* keep the boss camera framing through the whole death + fade */
     if(!sp||!sp.active) return;
     this.corpses=(this.corpses||[]).filter(c=>c.active); if(!e.boss) this.corpses.push(sp); /* bosses are exempt from the corpse cap: the wave-clear deaths were evicting the dying boss */ while(this.corpses.length>PERF.maxCorpses){ const o=this.corpses.shift(); this.tweens.killTweensOf(o); o.destroy(); }   /* corpse cap */ sp.clearTint(); e.flashUntil=0;
-    if(e.boss){ this.cameras.main.shake(400,.012); this.cameras.main.flash(180,255,240,220); this.burst(sp.x,sp.y,0xffd040,30,260,3,1200); this.burst(sp.x,sp.y,0xff4060,30,220,3,1200); this.burst(sp.x,sp.y,0x40c0ff,20,200,3,1200); this.tweens.add({targets:sp,scaleX:sp.scaleX*1.15,scaleY:sp.scaleY*1.15,yoyo:true,duration:140}); }   /* pop + confetti */ this.tweens.killTweensOf(sp); sp.setDepth(8.5);
-    const fade=()=>this.tweens.add({targets:sp,alpha:0,y:sp.y+4,delay:e.boss?FEEL.deathHoldBoss:FEEL.deathHold,duration:e.boss?FEEL.deathFadeBoss:FEEL.deathFade,onComplete:()=>sp.destroy()});
-    const dir=(sp.flipX?1:-1); this.tweens.add({targets:sp,rotation:e.boss?0:dir*FEEL.deathTopple*.35,x:sp.x-dir*10,duration:260,ease:'Quad.out'});   // knocked back + topples
+    if(e.boss){ this.cameras.main.shake(400,.012); this.cameras.main.flash(180,255,240,220); this.burst(sp.x,sp.y,0xffd040,30,260,3,1200); this.burst(sp.x,sp.y,0xff4060,30,220,3,1200); this.burst(sp.x,sp.y,0x40c0ff,20,200,3,1200); }   /* no scale pop: boss stays put */   /* pop + confetti */ this.tweens.killTweensOf(sp); sp.setDepth(8.5);
+    const fade=()=>this.tweens.add({targets:sp,alpha:0,y:sp.y+(e.boss?0:4),delay:e.boss?FEEL.deathHoldBoss:FEEL.deathHold,duration:e.boss?FEEL.deathFadeBoss:FEEL.deathFade,onComplete:()=>sp.destroy()});
+    const dir=(sp.flipX?1:-1); if(!e.boss) this.tweens.add({targets:sp,rotation:e.boss?0:dir*FEEL.deathTopple*.35,x:sp.x-dir*10,duration:260,ease:'Quad.out'});   // knocked back + topples
     if(e.base&&hasAnim(this,e.base,'death')){ sp._busy=false; sp._st=null; setAnim(this,sp,e.base,'death'); if(sp.anims.currentAnim) sp.anims.msPerFrame=1000/FEEL.deathFps; sp.once('animationcomplete',()=>{ this.burst(sp.x,sp.y,0xffffff,e.boss?30:8,e.boss?200:70,2,e.boss?900:500); fade(); }); }
     else this.tweens.add({targets:sp,alpha:0,scaleX:sp.scaleX*1.5,scaleY:sp.scaleY*.3,duration:FEEL.deathFade,onComplete:()=>sp.destroy()}); }
   dropPickup(kind,x,y){ const s=this.add.image(x,y,kind).setDepth(8); if(kind==='balloon') this.tweens.add({targets:s,y:y-6,yoyo:true,repeat:-1,duration:600+Math.random()*300,ease:'Sine.inOut'});
@@ -393,9 +393,13 @@ class Game extends Phaser.Scene {
     this.time.delayedCall(FEEL.bossOutro,()=>{ this.setBossBars([]); this.endWave(); }); }   // wait for the boss death to play out before the shop
   // ---------------------------------------------------------------- main loop
   // boss fights: pull the camera toward the boss and zoom out (down to ZOOM_MIN_BOSS) so player and boss stay on screen together
-  bossCam(dt){ const cam=this.cameras.main, base=this.baseZoom||CAM_ZOOM, bs=this.enemies.filter(e=>e.boss&&!e.dead).concat((this.bossDying=(this.bossDying||[]).filter(d=>d.until>this.time.now))); let z=base, ox=0, oy=0;
+  bossCam(dt){ const cam=this.cameras.main, base=this.baseZoom||CAM_ZOOM, bs=this.enemies.filter(e=>e.boss&&!e.dead); this.bossDying=(this.bossDying||[]).filter(d=>d.until>this.time.now); let z=base, ox=0, oy=0;
     if(bs.length){ let mx=0,my=0; for(const b of bs){ const dx=b.x-this.pl.x, dy=b.y-this.pl.y; if(Math.abs(dx)>Math.abs(mx)) mx=dx; if(Math.abs(dy)>Math.abs(my)) my=dy; }
       const top=HUD_SAFE.top, bot=HUD_SAFE.bottom; ox=-mx*.5; z=Math.min(base, Math.max(base*.45, Math.min(W/(Math.abs(mx)+420), (H-top-bot)/(Math.abs(my)+300)))); oy=-my*.5 + (bot-top)/2/z; }   // BUG-032: frame both inside the HUD-safe band
+    cam.useBounds = !(bs.length||this.bossDying.length);   /* world bounds clamped the boss framing (truck pushed to the top edge); free the camera during boss fights */
+    const dd=this.bossDying[0]; if(dd&&!bs.length){ /* boss death: stop following, centre on the death spot until the fade ends */
+      if(cam._follow){ this._camLock=1; cam.stopFollow(); } const kk=1-Math.exp(-dt*9); cam.setZoom(cam.zoom+(base*.9-cam.zoom)*kk); cam.centerOn(cam.midPoint.x+(dd.x-cam.midPoint.x)*kk, cam.midPoint.y+(dd.y-cam.midPoint.y)*kk); return; }
+    if(this._camLock){ this._camLock=0; cam.followOffset.set(0,0); cam.startFollow(this.player,false,.09,.09); }
     const k=1-Math.exp(-dt*7); cam.setZoom(cam.zoom+(z-cam.zoom)*k); cam.followOffset.x+=(ox-cam.followOffset.x)*k; cam.followOffset.y+=(oy-cam.followOffset.y)*k; }
   drawBossArrows(){ const g=this.bossArrow; g.clear(); const v=this.cameras.main.worldView, m=34;
     for(const e of this.enemies){ if(!e.boss||e.dead||e.hidden) continue; if(Phaser.Geom.Rectangle.Contains(v,e.x,e.y)) continue;   // BUG-007: off-screen boss indicator
@@ -410,7 +414,7 @@ class Game extends Phaser.Scene {
       const k=1-Math.exp(-dt*((tx||ty)?14:10)); p.vx+=(tx-p.vx)*k; p.vy+=(ty-p.vy)*k;      // acceleration / easing
       p.x+=p.vx*dt; p.y+=p.vy*dt; if(Math.abs(p.vx)>8){ const nf=Math.sign(p.vx); if(nf!==p.face) p.sq=FEEL.turnSquash; p.face=nf; }
       this.clampArena(p,18); p.ifr-=dt; const sp=Math.hypot(p.vx,p.vy), moving=sp>20;
-      setAnim(this,this.player,this.pkey,moving?'walk':'idle');
+      setAnim(this,this.player,this.pkey,moving?'walk':'idle'); this.player.anims.timeScale = moving ? Phaser.Math.Clamp(sp/150,.7,1.6) : 1;   /* stride cadence tracks ground speed, so feet don't skate */
       const walkAnim=hasAnim(this,this.pkey,moving?'walk':'idle'); const ph=time/1000*Math.PI*FEEL.stepHz, bob = moving ? Math.abs(Math.sin(ph))*(walkAnim?FEEL.bobPx:FEEL.bobPxNoSheet) : 0;   // step-synced bounce, subtle over the walk sheet
       if(p.sq>0) p.sq-=dt; const br = (p.sq>0?-.14*p.sq/.12:0) + (moving? Math.sin(ph*2)*.04 : Math.sin(time/400)*.02);
       this.player.setPosition(p.x,p.y-bob).setFlipX(p.face<0).setScale(1-br,1+br).setRotation(moving? p.vx/p.ms*.05 + Math.sin(ph)*FEEL.tilt : 0);
