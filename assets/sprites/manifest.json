@@ -774,11 +774,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 12,
+   "frameRate": 15,
    "loop": false,
    "frameWidth": 128,
    "frameHeight": 256,
-   "frameCount": 2
+   "frameCount": 3
   },
   "p_A1_death": {
    "file": "p_A1_death.png",
@@ -788,11 +788,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 128,
    "frameHeight": 256,
-   "frameCount": 6
+   "frameCount": 7
   },
   "p_A6_idle": {
    "file": "p_A6_idle.png",
@@ -830,11 +830,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 12,
+   "frameRate": 15,
    "loop": false,
    "frameWidth": 128,
    "frameHeight": 256,
-   "frameCount": 2
+   "frameCount": 3
   },
   "p_A6_death": {
    "file": "p_A6_death.png",
@@ -844,11 +844,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 128,
    "frameHeight": 256,
-   "frameCount": 6
+   "frameCount": 7
   },
   "e_E1_walk": {
    "file": "e_E1_walk.png",
@@ -872,11 +872,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 96,
    "frameHeight": 96,
-   "frameCount": 4
+   "frameCount": 7
   },
   "e_E2_walk": {
    "file": "e_E2_walk.png",
@@ -900,11 +900,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 96,
    "frameHeight": 96,
-   "frameCount": 4
+   "frameCount": 7
   },
   "e_E3_walk": {
    "file": "e_E3_walk.png",
@@ -928,11 +928,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 96,
    "frameHeight": 96,
-   "frameCount": 4
+   "frameCount": 7
   },
   "e_E4_walk": {
    "file": "e_E4_walk.png",
@@ -956,11 +956,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 96,
    "frameHeight": 96,
-   "frameCount": 4
+   "frameCount": 7
   },
   "e_E6_walk": {
    "file": "e_E6_walk.png",
@@ -984,11 +984,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 96,
    "frameHeight": 96,
-   "frameCount": 4
+   "frameCount": 7
   },
   "e_E7_walk": {
    "file": "e_E7_walk.png",
@@ -1012,11 +1012,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 96,
    "frameHeight": 96,
-   "frameCount": 4
+   "frameCount": 7
   },
   "e_E8_walk": {
    "file": "e_E8_walk.png",
@@ -1040,11 +1040,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 96,
    "frameHeight": 96,
-   "frameCount": 4
+   "frameCount": 7
   },
   "e_E9_walk": {
    "file": "e_E9_walk.png",
@@ -1068,11 +1068,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 96,
    "frameHeight": 96,
-   "frameCount": 4
+   "frameCount": 7
   },
   "e_E11_walk": {
    "file": "e_E11_walk.png",
@@ -1096,11 +1096,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 96,
    "frameHeight": 128,
-   "frameCount": 4
+   "frameCount": 7
   },
   "e_E12_walk": {
    "file": "e_E12_walk.png",
@@ -1124,11 +1124,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 96,
    "frameHeight": 128,
-   "frameCount": 4
+   "frameCount": 7
   },
   "e_E13_walk": {
    "file": "e_E13_walk.png",
@@ -1152,11 +1152,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 96,
    "frameHeight": 128,
-   "frameCount": 4
+   "frameCount": 7
   },
   "e_E14_walk": {
    "file": "e_E14_walk.png",
@@ -1180,11 +1180,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 128,
    "frameHeight": 128,
-   "frameCount": 4
+   "frameCount": 7
   },
   "truck_move": {
    "file": "truck_move.png",
@@ -1222,11 +1222,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 256,
    "frameHeight": 256,
-   "frameCount": 6
+   "frameCount": 8
   },
   "juggler_idle": {
    "file": "juggler_idle.png",
@@ -1264,11 +1264,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 256,
    "frameHeight": 256,
-   "frameCount": 6
+   "frameCount": 8
   },
   "petmaster_idle": {
    "file": "petmaster_idle.png",
@@ -1306,11 +1306,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 256,
    "frameHeight": 256,
-   "frameCount": 6
+   "frameCount": 8
   },
   "cousin1_idle": {
    "file": "cousin1_idle.png",
@@ -1348,11 +1348,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 128,
    "frameHeight": 256,
-   "frameCount": 6
+   "frameCount": 8
   },
   "cousin2_idle": {
    "file": "cousin2_idle.png",
@@ -1390,11 +1390,11 @@
    ],
    "orient": "see art manifest",
    "desc": "from art: ",
-   "frameRate": 10,
+   "frameRate": 12,
    "loop": false,
    "frameWidth": 128,
    "frameHeight": 256,
-   "frameCount": 6
+   "frameCount": 8
   },
   "p_A2_idle": {
    "file": "p_A2_idle.png",
@@ -1675,6 +1675,524 @@
    "frameWidth": 128,
    "frameHeight": 256,
    "frameCount": 8
+  },
+  "e_E6_hit": {
+   "file": "e_E6_hit.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 3
+  },
+  "e_E7_hit": {
+   "file": "e_E7_hit.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 3
+  },
+  "e_E8_hit": {
+   "file": "e_E8_hit.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 3
+  },
+  "e_E9_hit": {
+   "file": "e_E9_hit.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 3
+  },
+  "e_E11_hit": {
+   "file": "e_E11_hit.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 128,
+   "frameCount": 3
+  },
+  "e_E12_hit": {
+   "file": "e_E12_hit.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 128,
+   "frameCount": 3
+  },
+  "e_E13_hit": {
+   "file": "e_E13_hit.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 128,
+   "frameCount": 3
+  },
+  "p_A3_hit": {
+   "file": "p_A3_hit.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "p_A3_death": {
+   "file": "p_A3_death.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 7
+  },
+  "p_A4_hit": {
+   "file": "p_A4_hit.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "p_A4_death": {
+   "file": "p_A4_death.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 7
+  },
+  "p_A5_hit": {
+   "file": "p_A5_hit.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "p_A5_death": {
+   "file": "p_A5_death.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 7
+  },
+  "p_A7_hit": {
+   "file": "p_A7_hit.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "p_A7_death": {
+   "file": "p_A7_death.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 7
+  },
+  "p_A8_hit": {
+   "file": "p_A8_hit.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "p_A8_death": {
+   "file": "p_A8_death.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 7
+  },
+  "p_A9_hit": {
+   "file": "p_A9_hit.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "p_A9_death": {
+   "file": "p_A9_death.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 7
+  },
+  "p_A10_hit": {
+   "file": "p_A10_hit.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "p_A10_death": {
+   "file": "p_A10_death.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 7
+  },
+  "p_A11_hit": {
+   "file": "p_A11_hit.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "p_A11_death": {
+   "file": "p_A11_death.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 7
+  },
+  "p_A12_hit": {
+   "file": "p_A12_hit.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "p_A12_death": {
+   "file": "p_A12_death.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 7
+  },
+  "juggler_hit": {
+   "file": "juggler_hit.png",
+   "size": [
+    56,
+    64
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 256,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "petmaster_hit": {
+   "file": "petmaster_hit.png",
+   "size": [
+    110,
+    110
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 256,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "e_E1_hit": {
+   "file": "e_E1_hit.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 3
+  },
+  "e_E2_hit": {
+   "file": "e_E2_hit.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 3
+  },
+  "e_E3_hit": {
+   "file": "e_E3_hit.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 3
+  },
+  "e_E4_hit": {
+   "file": "e_E4_hit.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 3
+  },
+  "p_A2_hit": {
+   "file": "p_A2_hit.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "p_A2_death": {
+   "file": "p_A2_death.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 7
+  },
+  "cousin1_hit": {
+   "file": "cousin1_hit.png",
+   "size": [
+    50,
+    60
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "cousin2_hit": {
+   "file": "cousin2_hit.png",
+   "size": [
+    50,
+    60
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 3
+  },
+  "e_E14_hit": {
+   "file": "e_E14_hit.png",
+   "size": [
+    52,
+    52
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 128,
+   "frameCount": 3
+  },
+  "truck_hit": {
+   "file": "truck_hit.png",
+   "size": [
+    110,
+    64
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 15,
+   "loop": false,
+   "frameWidth": 256,
+   "frameHeight": 256,
+   "frameCount": 3
   }
  }
 }

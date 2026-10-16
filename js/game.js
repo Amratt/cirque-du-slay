@@ -114,7 +114,8 @@ class Game extends Phaser.Scene {
         this.bullets.push({spr:b,x,y,vx:Math.cos(a)*720,vy:Math.sin(a)*720,life:(s.rng*U_RANGE+40)/720,s,dmgMul:n>1?1/n*1.6:1}); } } }
   hit(e,s,ang,mul=1){ if(e.dead) return; if(e.inv){ this.floatText(e.x,e.y-e.r,'IMMUNE',0xaaaaaa,14); return; }
     const crit = Math.random()<s.cc; let d = s.dmg*mul*(crit?s.cd:1)*(e.vulnMul||1); e.hp -= d; if(!e.boss||this.time.now-(e.lastFlash||0)>250){ e.flash=.07; e.lastFlash=this.time.now; }   // BUG-006: bosses pulse a red tint, max 4x/s e.squash=.12;
-    if(e.base) setAnim(this,e.spr,e.base,'hit'); this.burst(e.x,e.y,crit?0xffe000:0xffffff,crit?5:2,160);
+    if(e.base && e.hasHit===undefined) e.hasHit=hasAnim(this,e.base,'hit');
+    if(e.base && e.hasHit && !(e.spr._busy && e.spr._st!=='hit')) setAnim(this,e.spr,e.base,'hit');   // never interrupts a windup/death this.burst(e.x,e.y,crit?0xffe000:0xffffff,crit?5:2,160);
     if(crit||e.boss) this.stopFor(crit?.03:.015);
     if(Math.random()<s.ls){ this.pl.hp=Math.min(this.pl.max,this.pl.hp+2); }
     if(!e.boss){ e.kx += Math.cos(ang)*s.kb*60; e.ky += Math.sin(ang)*s.kb*60; }
@@ -145,7 +146,7 @@ class Game extends Phaser.Scene {
     else { const n = Phaser.Math.Between(e.def.rb[0],e.def.rb[1]); for(let i=0;i<n;i++) this.dropPickup('balloon',e.x+Phaser.Math.Between(-14,14),e.y+Phaser.Math.Between(-14,14));
       const r=Math.random(); if(r<.10) this.dropPickup('popcorn',e.x,e.y); else if(r<.25) this.dropPickup('candy',e.x,e.y); }
     if(e.big||e.boss) this.cameras.main.shake(120,.006); this.stopFor(e.boss?.12:.02);
-    if(e.base && hasAnim(this,e.base,'death')){ e.spr._busy=false; setAnim(this,e.spr,e.base,'death'); e.spr.clearTint(); const sp=e.spr; sp.once('animationcomplete',()=>{ this.burst(sp.x,sp.y,0xffffff,e.boss?30:8,e.boss?200:70,2,e.boss?900:500); this.tweens.add({targets:sp,alpha:0,delay:150,duration:250,onComplete:()=>sp.destroy()}); }); }
+    if(e.base && hasAnim(this,e.base,'death')){ e.spr._busy=false; setAnim(this,e.spr,e.base,'death'); e.spr.clearTint(); const sp=e.spr; sp.once('animationcomplete',()=>{ this.burst(sp.x,sp.y,0xffffff,e.boss?30:8,e.boss?200:70,2,e.boss?900:500); this.tweens.add({targets:sp,alpha:0,delay:450,duration:300,onComplete:()=>sp.destroy()}); }); }   // hold the last death frame briefly
     else this.tweens.add({targets:e.spr,alpha:0,scaleX:e.spr.scaleX*1.5,scaleY:e.spr.scaleY*.3,duration:250,onComplete:()=>e.spr.destroy()}); }
   dropPickup(kind,x,y){ const s=this.add.image(x,y,kind).setDepth(8); if(kind==='balloon') this.tweens.add({targets:s,y:y-6,yoyo:true,repeat:-1,duration:600+Math.random()*300,ease:'Sine.inOut'});
     this.pickups.push({kind,spr:s,x,y}); }
@@ -157,7 +158,7 @@ class Game extends Phaser.Scene {
   enemyShot(x,y,ang,spd,dmg,tint,opts={}){ const s=this.pool.img(opts.tex||'eshot',x,y,13).setTint(tint); if(opts.scale) s.setScale(opts.scale);
     this.eshots.push(Object.assign({spr:s,x,y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,dmg,life:4,r:7,pooled:true},opts)); }
   hurtPlayer(d,fromX,fromY){ if(this.pl.ifr>0||this.over||GOD) return; this.pl.hp-=d; this.pl.ifr=.45; Sfx.hurt(); this.cameras.main.shake(90,.004); this.stopFor(.06);
-    this.player.setTintFill(0xffffff); this.time.delayedCall(60,()=>this.player.setTint(0xff4040)); this.time.delayedCall(160,()=>this.player.clearTint());
+    if(!hasAnim(this,this.pkey,'hit')){ this.player.setTintFill(0xffffff); this.time.delayedCall(60,()=>this.player.setTint(0xff4040)); this.time.delayedCall(160,()=>this.player.clearTint()); }   // hit sheets carry their own flash
     setAnim(this,this.player,this.pkey,'hit'); if(this.pl.hp<=0) this.playerDie(); }
   updateEnemies(dt){ const p=this.pl;
     for(const e of this.enemies){ if(e.dead) continue; if(e.boss){ this.updateBoss(e,dt); }
@@ -177,7 +178,7 @@ class Game extends Phaser.Scene {
         const ph=this.time.now/130+e.x*.01, sq=(e.squash>0?(e.squash-=dt,.18):0), st=Math.sin(ph*2)*.06;   // walk squash & stretch + hit squash
         if(e.spawnT>0){ e.spawnT-=dt; e.spr.setScale(1-e.spawnT*3.6); } else e.spr.setScale(1+st+sq,1-st-sq);
         e.spr.setPosition(e.x, e.y + (e.id.length===3? -Math.abs(Math.sin(this.time.now/160+e.x))*6 : 0)).setRotation(rot); }
-      if(e.flash>0){ e.flash-=dt; if(e.boss) e.spr.setTint(0xff9a9a); else e.spr.setTintFill(0xffffff); } else if(!e.inv) e.spr.clearTint(); }
+      if(e.flash>0){ e.flash-=dt; if(e.hasHit){} else if(e.boss) e.spr.setTint(0xff9a9a); else e.spr.setTintFill(0xffffff); } else if(!e.inv) e.spr.clearTint(); }   // hit sheets bake their own white/red flash
     // cheap separation
     const L=this.enemies; for(let i=0;i<L.length;i++){ const a=L[i]; if(a.dead||a.boss) continue; for(let j=i+1;j<L.length;j++){ const b=L[j]; if(b.dead||b.boss) continue;
       const dx=b.x-a.x, dy=b.y-a.y, m=dx*dx+dy*dy, rr=(a.r+b.r)*.9; if(m<rr*rr&&m>0.01){ const k=(rr-Math.sqrt(m))/2/Math.sqrt(m); a.x-=dx*k; a.y-=dy*k; b.x+=dx*k; b.y+=dy*k; } } }

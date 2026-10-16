@@ -286,10 +286,10 @@ class Showcase extends Phaser.Scene {
   constructor(){ super('Showcase'); }
   create(){ enterFx(this); this.add.rectangle(W/2,H/2,W,H,0x0b0507); if(SPRITE_REAL.menu_bg_blank) coverImage(this,'menu_bg_blank',.25);
     const L=[];
-    CHARS.forEach(c=>L.push({base:'p_'+c.id,label:`${c.id}  ${c.name}`,group:'Heroes',seq:[['idle',1.8],['walk',1.8]]}));
-    Object.entries(ENEMIES).forEach(([id,e])=>L.push({base:'e_'+id,label:`${id}  ${e.name}`,group:'Enemies',seq:[['walk',1.6],['death',1.4]]}));
+    CHARS.forEach(c=>L.push({base:'p_'+c.id,label:`${c.id}  ${c.name}`,group:'Heroes',seq:[['idle',1.3],['walk',1.3],['hit',.6]]}));
+    Object.entries(ENEMIES).forEach(([id,e])=>L.push({base:'e_'+id,label:`${id}  ${e.name}`,group:'Enemies',seq:[['walk',1.2],['hit',.6],['death',1.4]]}));
     [['truck','E5  The Clown Truck'],['juggler','E10  The Juggler'],['petmaster','E15  The Pet Master'],['cousin1','E20-A  Cousin 1: The Trickster'],['cousin2','E20-B  Cousin 2: The Hunter']]
-      .forEach(([b,n])=>L.push({base:b,label:n,group:'Bosses',seq:[[b==='truck'?'move':'idle',2],['windup',1.2],['death',1.8]]}));
+      .forEach(([b,n])=>L.push({base:b,label:n,group:'Bosses',seq:[[b==='truck'?'move':'idle',1.5],['windup',1.1],['hit',.6],['death',1.8]]}));
     this.list=L; this.i=-1; window.SHOWCASE={done:false,total:L.length,idx:0};
     this.title=txt(this,W/2,60,'',30,GOLD); this.name=txt(this,W/2,H-110,'',40,'#fff'); this.state=txt(this,W/2,H-60,'',24,'#ffb0b0'); this.prog=txt(this,W-20,H-20,'',16,'#999').setOrigin(1,1);
     this.add.ellipse(W/2,H/2+200,260,40,0x000000,.5); this.next(); }
@@ -304,7 +304,7 @@ class Showcase extends Phaser.Scene {
         this.spr.clearTint(); this.spr.off('animationcomplete');
         if(k){ this.spr.play(k,true); refit(this.spr);
           if(st==='windup'){ const back=animFor(this,it.base,it.base==='truck'?'move':'idle'); this.spr.play({key:k,repeat:1}); this.spr.once('animationcomplete',()=>{ if(this.spr&&back){ this.spr.play(back); refit(this.spr); } }); }   // telegraph twice (ends on the sheet's baked red flash), then back to the loop
-          if(st==='death'){ this.spr.play({key:k,repeat:1,repeatDelay:350}); } }
+ }   // death plays once and holds its last frame
         else { this.spr.anims.stop(); this.spr.setTexture(it.base); } }); t+=d; });
     this.time.delayedCall(t*1000+300,()=>this.next()); }
 }
