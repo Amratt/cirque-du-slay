@@ -459,16 +459,6 @@
    "frameCount": 4,
    "frameRate": 6
   },
-  "ui_title": {
-   "file": "ui_title.png",
-   "size": [
-    560,
-    300
-   ],
-   "orient": "logo, transparent bg",
-   "desc": "Main menu title logo (optional; text title if absent)",
-   "fit": false
-  },
   "egg_shot": {
    "file": "egg_shot.png",
    "size": [
@@ -2727,6 +2717,16 @@
    "tier": "hi",
    "orient": "arena hi-res",
    "desc": "desktop-only arena floor"
+  },
+  "ui_title_logo": {
+   "file": "ui_title_logo.png",
+   "size": [
+    560,
+    300
+   ],
+   "orient": "logo, transparent bg",
+   "desc": "Title logo, menu Option B (814x733)",
+   "fit": false
   }
  },
  "projectiles": {

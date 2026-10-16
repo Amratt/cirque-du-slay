@@ -104,7 +104,7 @@ class Menu extends Phaser.Scene {
   create(){
     enterFx(this); this.add.rectangle(W/2,H/2,W,H,0x0b0507); if(SPRITE_REAL.menu_bg_blank) coverImage(this,'menu_bg_blank',.9); else curtains(this);
     const t1 = txt(this,W/2,150,'CIRQUE',96,BLOOD,{strokeThickness:10}), t2 = txt(this,W/2,240,'du SLAY',88,BLOOD,{strokeThickness:10});
-    if((window.SPRITE_REAL||{}).ui_title){ t1.setVisible(false); t2.setVisible(false); const lg=this.add.image(W/2,190,'ui_title'); lg.setScale(Math.min(560/lg.width,300/lg.height));
+    if((window.SPRITE_REAL||{}).ui_title_logo){ t1.setVisible(false); t2.setVisible(false); const lg=this.add.image(640,222,'ui_title_logo'); lg.setScale(430/lg.height);   /* Drax menu Option B */
       this.tweens.add({targets:lg,scale:lg.scale*1.05,angle:{from:-1.5,to:1.5},yoyo:true,repeat:-1,duration:1000,ease:'Sine.inOut'}); }
     [t1,t2].forEach((t,i)=>{ t.setShadow(4,4,'#000',6,true,true);
       this.tweens.add({targets:t,scale:{from:1,to:1.06},angle:{from:-1.5,to:1.5},yoyo:true,repeat:-1,duration:900+i*200,ease:'Sine.inOut'}); });
@@ -113,11 +113,11 @@ class Menu extends Phaser.Scene {
       this.tweens.add({targets:d,y:'+=140',scaleY:4,alpha:0,duration:1600,onComplete:()=>d.destroy()}); }});
     const ch = CHARS.find(c=>c.id===Save.d.selected);
     const play=()=>Lore.c().introDone?goScene(this,'Game',{charId:ch.id}):goScene(this,'Story',{kind:'intro',charId:ch.id});
-    button(this,W/2,365,320,60,'New Game',play);
-    button(this,W/2,435,320,60,'Characters',()=>goScene(this,'CharSelect'));
-    button(this,W/2,505,320,60,'Codex',()=>goScene(this,'Codex'));
-    button(this,W/2,575,320,60,'Settings',()=>goScene(this,'Settings',{back:'Menu'}));
-    txt(this,W/2,640,`Playing as ${ch.name}  ·  ${ch.sw} (${ch.w})`,22,GOLD);
+    button(this,W/2,488,320,60,'New Game',play);
+    button(this,W/2,550,320,60,'Characters',()=>goScene(this,'CharSelect'));
+    button(this,W/2,612,320,60,'Codex',()=>goScene(this,'Codex'));
+    button(this,W/2,674,320,60,'Settings',()=>goScene(this,'Settings',{back:'Menu'}));
+    txt(this,W-24,44,`Playing as ${ch.name}  ·  ${ch.sw} (${ch.w})`,20,GOLD).setOrigin(1,.5);   /* Option B: buttons fill 458-704, so the hint moves top-right */
     counter(this,24,44,'ticket',`${Save.d.gt} GT`,GOLD);
     txt(this,W-20,H-20,'v1.1 browser slice',14,'#888').setOrigin(1,1);
     Sfx.music('music_menu_loop');
