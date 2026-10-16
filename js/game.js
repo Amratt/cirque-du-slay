@@ -160,7 +160,7 @@ class Game extends Phaser.Scene {
         const b=this.pool.img((w.special&&w.ptex&&this.textures.exists(w.ptex))?w.ptex:'bullet',x,y,12).setTint(w.proj||(n>1?0xffa040:0xffff80)).setRotation(a); if(n>1) b.setScale(.8);
         this.bullets.push({spr:b,x,y,vx:Math.cos(a)*720,vy:Math.sin(a)*720,life:(s.rng*U_RANGE+40)/720,s,dmgMul:n>1?1/n*1.6:1}); } } }
   hit(e,s,ang,mul=1){ if(e.dead) return; if(e.inv){ this.floatText(e.x,e.y-e.r,'IMMUNE',0xaaaaaa,14); return; }
-    const crit = Math.random()<s.cc; let d = s.dmg*mul*(crit?s.cd:1)*(e.vulnMul||1); e.hp -= d; if(!e.boss||this.time.now-(e.lastFlash||0)>250){ e.flash=.07; e.lastFlash=this.time.now; }   // BUG-006: bosses pulse a red tint, max 4x/s e.squash=.12;
+    const crit = Math.random()<s.cc; let d = s.dmg*mul*(crit?s.cd:1)*(e.vulnMul||1); e.hp -= d; if(!e.boss||this.time.now-(e.lastFlash||0)>250){ e.flash=.07; e.lastFlash=this.time.now; } e.squash=.12;   // BUG-006: bosses pulse a red tint, max 4x/s. BUG-031: squash was swallowed by this comment
     if(e.base && e.hasHit===undefined) e.hasHit=hasAnim(this,e.base,'hit');
     if(e.base && e.hasHit && !(e.spr._busy && e.spr._st!=='hit')) setAnim(this,e.spr,e.base,'hit');   // never interrupts a windup/death this.burst(e.x,e.y,crit?0xffe000:0xffffff,crit?5:2,160);
     if(crit||e.boss) this.stopFor(crit?.03:.015);
