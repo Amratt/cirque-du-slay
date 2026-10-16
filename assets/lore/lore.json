@@ -1,0 +1,297 @@
+{
+  "intro": [
+    "Once, the Cirque du Slay sold out every night. Then it sold everything else.",
+    "On closing night the tent flaps sewed themselves shut. Nobody walked out.",
+    "The troupe still performs. Their smiles don't come off anymore.",
+    "Someone has to run the ring. Tonight, the Coat chose you.",
+    "Survive 20 acts. Pop the balloons. Take back the Golden Tickets."
+  ],
+  "waves": [
+    "Ladies, gentlemen, and whatever's left of you... the show begins!",
+    "Send in the Boo-Hoos! They weep because they know what comes next.",
+    "Patty Cake has baked for you. Please don't ask what's in the custard.",
+    "All of Clown Alley, one last bow! Mind the moldy pies. They bite back.",
+    "Hear that horn? Thirty-one clowns, one truck, zero brakes. Make way!",
+    "Act Two: our human performers! Well. They were human at the matinee.",
+    "The Flyweights are small, fast, and very sorry in advance.",
+    "Fire-Eaters, take the ring! They swallow flame. You're dessert.",
+    "Firecrackers! Never trust a performer who's already smoking.",
+    "Look up. Way up. He never drops a torch by accident. He aims them.",
+    "Act Three: the menagerie! Please don't feed the animals. You are the feed.",
+    "The Monkeys are on the balls tonight, and they're all out of bananas.",
+    "The Lion hasn't eaten since closing night. Hold still. He likes that.",
+    "And the Elephants! They never forget a face. They'll remember yours fondly.",
+    "Silence for the Pet Master! Every beast in here learned to fear that hoop.",
+    "Grand Finale! Clowns, strongmen, and beasts, all at once. No intermission.",
+    "Your coat's getting heavy, isn't it? That's the applause. It adds up.",
+    "The crowd is on its feet. Whatever you do, don't look at their feet.",
+    "One more act, then you meet the family. Smile. They hate that.",
+    "Please welcome our owners, the Unknown Cousins! Hold your ticket tight."
+  ],
+  "bosses": {
+    "E5": {
+      "intro": "HONK HONK! The Clown Truck is in the ring, and it's taking passengers!",
+      "death": "The engine coughs up confetti and teeth. Thirty-one clowns, finally parked."
+    },
+    "E10": {
+      "intro": "Three torches, two ropes, one target. The Juggler never misses a catch!",
+      "death": "He drops one torch, then all of them. For once, he lets everything fall."
+    },
+    "E15": {
+      "intro": "The Pet Master raises his hoop. Every beast in the tent goes quiet.",
+      "death": "The hoop goes dark. Somewhere in the cages, an old lion purrs."
+    },
+    "E20": {
+      "intro": "No names. No faces. Just family. The Unknown Cousins have come to collect.",
+      "death": "Two hats hit the sand, empty. A shadow gets up and walks home."
+    }
+  },
+  "characters": {
+    "A1": {
+      "name": "Mr. Bee",
+      "title": "The Warm-Up Act",
+      "bio": "Before every show, a kid in a bee suit buzzed the aisles with a balloon pump and a bad joke. Nobody remembers his real name. On closing night he was out back filling red balloons when the flaps sewed themselves shut, so his name never made it onto the bill or the contract. That makes him the only performer in the tent the curse doesn't own. The Coat found him crying in the sawdust. He grabbed the Honey Blade, a beehive-topped prop club still sticky from the troupe's last jar of honey. He still tells the bad joke. Now he also pops things that used to be his friends.",
+      "quote": "Bzzz! Sorry. Nervous habit. Hold still.",
+      "circusLink": "The opening warm-up act. He never signed the contract, which is why he can start the show.",
+      "unlockLine": "A small bee in a big coat. The show needs someone. He'll have to do."
+    },
+    "A2": {
+      "name": "The LaughMaster",
+      "title": "Head of Clown Alley",
+      "bio": "Bartholomew \"Bobo\" Grin ran Clown Alley for twenty years and drove the little truck that held thirty-one clowns. On closing night the truck kept him. He spent years in the passenger seat while it rammed the ring. When you wrecked it, he crawled out of the grille without his nose. He always said a clown without a nose is nobody. So he built Nobody Nose, a pistol that fires red rubber noses hard enough to crack a skull, and he's handing them back to his old crew one at a time. He laughs at every hit. He can't stop. He's tried.",
+      "quote": "Got your nose. Got your nose. Got your nose.",
+      "circusLink": "The headlining clown and the truck's original driver, freed when you wreck the Clown Truck (E5).",
+      "unlockLine": "The wreck coughs up a clown. He's laughing. Of course he's laughing."
+    },
+    "A3": {
+      "name": "The Flame Master",
+      "title": "Teacher of Fire",
+      "bio": "Ignatius Ash taught everyone in the troupe to eat fire, including the boy who became the Juggler. He taught him too well. When the curse hit, the student climbed to the high rope, never came down, and kept his teacher's flames as props. Ignatius was left with cold hands and a hot temper. Beating the Juggler gave his fire back. He carries Pocket Lava, a glass-bladed knife full of molten stone that he keeps in his vest. It has burned through four vests so far. He doesn't mind. He hasn't felt warm since closing night, and he wants to.",
+      "quote": "Fire doesn't hurt. Being forgotten does. Fire's quicker.",
+      "circusLink": "The troupe's fire-eating teacher. His own student, the Juggler (E10), stole his flames.",
+      "unlockLine": "The torches go out. In the dark, an old fire-eater lights his hands."
+    },
+    "A4": {
+      "name": "The BeastMaster",
+      "title": "Keeper of the Cages",
+      "bio": "Rook Halloway fed the animals, cleaned the cages, and sang the old lion to sleep. The Pet Master did the rest with a whip and a burning hoop. When the curse came, the Pet Master locked Rook in an empty cage and kept the beasts for himself. Rook spent years listening to them through the bars. The old lion, called the King, died on closing night with one paw through those bars, reaching for him. Rook kept the paw, mounted it on an oak club, and named it The King's Hand. He apologizes to every animal before he swings. Then he swings.",
+      "quote": "Easy, girl. Easy. This'll hurt me more than it hurts you.",
+      "circusLink": "The real animal keeper, caged by the Pet Master (E15) until you beat him.",
+      "unlockLine": "A cage door creaks open. The BeastMaster steps out and asks about the animals first."
+    },
+    "A5": {
+      "name": "The Green Man",
+      "title": "The Elephant Walker",
+      "bio": "Old Fenwick walked the elephant every morning before the town woke up. Her name was Matilda, and she never forgot anything. On closing night Fenwick was asleep in the hay barn. The hay kept growing over him for years, then the moss, then the ivy, until he was more garden than man. Matilda remembered him even after the curse took her. She broke off her own tusk and left it at the barn door. Fenwick carved it into Elephant's Wrath, a shotgun that fires the blue light of everything she remembers. It hits hard. Elephants hold grudges.",
+      "quote": "She never forgets. I'm here to make sure they don't either.",
+      "circusLink": "Matilda's keeper from the menagerie (see Elephant, E14). The moss has been growing on him since closing night.",
+      "unlockLine": "Something mossy shuffles out of the hay barn. It smells like rain and peanuts."
+    },
+    "A6": {
+      "name": "The Ringmaster",
+      "title": "Augustin Vale, Owner of Nothing",
+      "bio": "Augustin Vale built the Cirque du Slay from one wagon and a lot of lies. When the seats went empty, two strangers in top hats called themselves his cousins and offered him a crowd that would never leave. He signed for everyone in gold ink and paid with his own shadow. The Cousins wore it out of the tent, cut in two, and took his face with it. For years he has been only a voice in the megaphone, calling the acts and cheering whoever wore his old coat. Beat the Cousins and his shadow comes home. He picks up his sword. He has a lot of apologizing to do.",
+      "quote": "I sold the show. Now I'm buying it back, one act at a time.",
+      "circusLink": "The owner who signed the contract and the voice announcing every wave. The Unknown Cousins (E20) are his stolen shadow.",
+      "unlockLine": "His shadow crawls back across the sand and fits him again. The Ringmaster bows."
+    },
+    "A7": {
+      "name": "The Rabbit King",
+      "title": "Escaped from the Hat",
+      "bio": "Every night the Great Marvello pulled a white rabbit out of his top hat. On closing night he reached in, and something inside the hat pulled Marvello in instead. The rabbit was left on stage with an empty hat and a dead man's applause. He put on the assistant's pink gown because it was the nicest thing in the dressing room, and a paper crown because nobody stopped him. Now he rules the rafters. The Rabbit Rifle was Marvello's trick gun. It used to shoot little flags. The King loads it with sharpened carrots, and he does not miss.",
+      "quote": "For my next trick, you disappear.",
+      "circusLink": "The magician's rabbit. The hat that swallowed his master is still somewhere in the tent.",
+      "unlockLine": "A rabbit in a paper crown hops into the ring. Bow, peasant. Then reload."
+    },
+    "A8": {
+      "name": "The Pop Chef",
+      "title": "Feeder of the Crowd",
+      "bio": "Chef Kernel Morrow ran the concession stand for thirty years. The candy and popcorn you find in the sawdust are his. On closing night the crowd got hungry, and it has stayed hungry ever since. Morrow still cooks for them every night, for an audience that never pays and never stops chewing. Then he noticed what they chew on when the popcorn runs out. So he turned his popper into the Popcorn Shooter and went down into the ring, where at least the customers can be shot. He grins the whole time. The stitches in his cheeks make sure of that.",
+      "quote": "Order up! Extra butter. Extra salt. Extra you.",
+      "circusLink": "The concession cook. Every candy and popcorn heal in the arena comes from his stand.",
+      "unlockLine": "The popcorn machine starts popping by itself. The Pop Chef ties on his apron."
+    },
+    "A9": {
+      "name": "Mr. Banana",
+      "title": "The Slip-and-Fall Man",
+      "bio": "Mr. Banana's act was simple: walk on stage, slip on a peel, get a laugh. He did it eight times a night for eleven years and broke every bone at least once. He started wearing a banana suit for padding. Then he started sleeping in it. By closing night he couldn't remember what was under it, and the curse decided nothing was. Now the suit is going brown and spotty, and he is in a hurry. He peeled the Banana Sword from his own left arm. It grew back. He tries very hard not to think about that.",
+      "quote": "Everybody slips eventually. I just do it on purpose.",
+      "circusLink": "The slapstick pratfall act. The suit and the man fused on closing night.",
+      "unlockLine": "A banana peel lands on the sand. Then the rest of Mr. Banana arrives, grinning."
+    },
+    "A10": {
+      "name": "The Gardener",
+      "title": "Tender of the Back Lot",
+      "bio": "Every circus loses people. The Cirque du Slay lost more than most, and somebody had to plant them. Mr. Thistle kept the little graveyard behind the winter quarters: neat rows, fresh flowers every Sunday. Since closing night, nothing he buries stays down. It all comes up blooming and angry, and most of it wanders into the ring. He wears a straw hat and a calm smile painted on a sack. He loads the Flower Shotgun with funeral bouquets and fires them at whatever crawled out of his beds. He doesn't call it fighting. He calls it weeding.",
+      "quote": "Everything I plant comes up eventually. Some of it comes up hungry.",
+      "circusLink": "Keeper of the troupe's graveyard. The performers you fight keep coming back up, so he keeps putting them down.",
+      "unlockLine": "Fresh dirt on the arena floor. The Gardener tips his straw hat. Time to weed."
+    },
+    "A11": {
+      "name": "Cregg",
+      "title": "The Boy Who Hatched",
+      "bio": "The sideshow sold tickets to see the World's Largest Egg, a pale thing in a glass case that hummed at night. On closing night it cracked. Out came Cregg, with a shell for a face and a crack that has never healed. He doesn't remember being anything else. The troupe raised him on popcorn and fear. He found the old launcher from the human cannonball act and rebuilt it as the Egg Launcher. It fires boiled eggs, always hard-boiled. He says raw ones might hatch, and he doesn't want any brothers.",
+      "quote": "Don't worry. I boil them first.",
+      "circusLink": "Hatched from the sideshow's prize exhibit on closing night, he's the only performer born inside the curse.",
+      "unlockLine": "Crack. Crack. CRACK. Cregg hatches, blinks, and asks where the eggs are."
+    },
+    "A12": {
+      "name": "Mr. Spicy",
+      "title": "Midway Champion",
+      "bio": "Rusty Cayenne won the midway's hot-pepper contest nine nights running. On closing night the Cousins slipped one more pepper into his bowl, a small black one that whispered. He ate it anyway, because champions don't refuse. He has been on fire ever since, inside and out. His skin went red, his hair curled up into a flame, and his temper went with it. He carries Hot Wing, a dagger forged in the shape of a chicken wing and kept so hot it glows. Nobody else can hold it. He holds it like a trophy.",
+      "quote": "Too hot? Aw. You should've said so. Earlier.",
+      "circusLink": "The midway's pepper-eating champion, cursed by a pepper the Cousins gave him.",
+      "unlockLine": "Mr. Spicy steps into the ring, and the sand under his feet starts to smoke."
+    }
+  },
+  "bestiary": {
+    "E1": {
+      "name": "Honker",
+      "entry": "The rank and file of Clown Alley. Their smiles sealed shut on closing night, so they honk instead of talking. Slow, simple, relentless. They still do the bit where they fall down. They just get back up."
+    },
+    "E2": {
+      "name": "Boo-Hoo",
+      "entry": "The sad clown. Faster than a Honker and always crying. The tears are real. He cries because he knows exactly what he's about to do to you."
+    },
+    "E3": {
+      "name": "Patty Cake",
+      "entry": "Clown Alley's pie thrower. She keeps her distance and lobs custard from a safe range. The custard has gone off. Everything in a Patty Cake pie has gone off."
+    },
+    "E4": {
+      "name": "Moldy Patty",
+      "entry": "Patty Cake's sister, left out in the sun too long. Her pies are green, her aim is better, and her skin is slowly turning the color of her pies."
+    },
+    "E6": {
+      "name": "Strongman",
+      "entry": "He used to lift a horse every night. Now he lifts whatever is closest. Slow on his feet until he spots you, then he charges in short, bone-cracking bursts."
+    },
+    "E7": {
+      "name": "Flyweight",
+      "entry": "The Strongman's understudy. Small, fragile, and far too fast. Each one hits like a slap, but there are always several of him."
+    },
+    "E8": {
+      "name": "Fire-Eater",
+      "entry": "He ate fire every night for years. Now the fire eats him. He twitches around the ring and spits exploding gobs of burning oil wherever he likes."
+    },
+    "E9": {
+      "name": "Firecracker",
+      "entry": "A Fire-Eater who swallowed the fuse too. Jittery, quick, and slightly on fire at all times. His bombs go off at random. So might he."
+    },
+    "E11": {
+      "name": "Seal",
+      "entry": "Still balanced on its ball, still clapping. The fastest thing in the tent. It spits jets of brine that sting like a wet glove. It wants applause. It won't stop until it gets yours."
+    },
+    "E12": {
+      "name": "Monkey",
+      "entry": "The organ grinder's monkey, minus the organ grinder. Rolls around on its ball pelting you from range. Sometimes drops two balloons, because it steals from the others."
+    },
+    "E13": {
+      "name": "Lion",
+      "entry": "One of the old King's cubs, grown mean in the dark. Fast, and it hits hard. It still flinches at the crack of a whip, then lunges at whoever is closest."
+    },
+    "E14": {
+      "name": "Elephant",
+      "entry": "Matilda's herd. Huge, slow, and they never forget a face. Every one of them remembers closing night, and they blame everyone standing in the ring."
+    },
+    "E5": {
+      "name": "The Clown Truck",
+      "entry": "A tiny car that held thirty-one clowns and a driver. On closing night it swallowed them all and grew. It chases, shoots, and at half health starts ramming. It turns slowly. Remember that."
+    },
+    "E10": {
+      "name": "The Juggler",
+      "entry": "Ignatius Ash's best student. He climbed to the high rope on closing night and never came down. Untouchable up there, dropping lit flamethrowers. He has to come down to restock. Be waiting."
+    },
+    "E15": {
+      "name": "The Pet Master",
+      "entry": "He trained the animals with a whip and a burning hoop. Now he blinks around the ring and pulls beasts straight out of the fire. While he charges the hoop he can't move. Hit him then."
+    },
+    "E20": {
+      "name": "The Unknown Cousins",
+      "entry": "Two men in top hats with no names and no faces. The Trickster blinks and shoots; the Hunter whips and drags. Kill one and the other rages. They are Augustin Vale's shadow, cut in two."
+    }
+  },
+  "endings": {
+    "win": [
+      "The Cousins fall. The Ringmaster's shadow comes home.",
+      "The crowd rises. Applause like thunder. Then one voice, then a thousand:",
+      "\"ENCORE.\" The lights come back up. The show must go on."
+    ],
+    "loss": [
+      "Your red balloon slips its string and drifts up into the dark.",
+      "Somewhere in the stands, an empty seat isn't empty anymore.",
+      "The Coat waits in the sawdust for the next one. The show goes on."
+    ]
+  },
+  "fragments": [
+    {
+      "id": "frag_01",
+      "title": "Torn Poster",
+      "text": "CIRQUE DU SLAY! ONE NIGHT ONLY! Thrills! Chills! A Crowd That Never Leaves! (The last line was added later in a different hand, in gold ink.)"
+    },
+    {
+      "id": "frag_02",
+      "title": "Ticket Stub No. 0001",
+      "text": "ADMIT ONE. On the back, in gold ink that never dried: \"A. Vale, for the troupe, the beasts, and himself.\""
+    },
+    {
+      "id": "frag_03",
+      "title": "Ringmaster's Diary, Page 12",
+      "text": "Two gentlemen came by the wagon tonight. Say they're cousins from my mother's side. I don't recall my mother having a side. They know my name. They won't tell me theirs."
+    },
+    {
+      "id": "frag_04",
+      "title": "Ringmaster's Diary, Page 13",
+      "text": "I signed. A full house forever, they said. All it costs is a little shadow. I looked down after, and I didn't have one. My mirror doesn't have a face in it either."
+    },
+    {
+      "id": "frag_05",
+      "title": "Recipe Card (Pie-Stained)",
+      "text": "Patty's Famous Custard Pie: 1 cup flour. 2 eggs. 1 cup custard. A pinch of whoever asked what's in it."
+    },
+    {
+      "id": "frag_06",
+      "title": "Clown Truck Registration",
+      "text": "Make: Tiny. Seats: 4. Occupants: 31 clowns, 1 driver. Brakes: optional. Last inspected: never. Fed: nightly."
+    },
+    {
+      "id": "frag_07",
+      "title": "Strongman's Training Log",
+      "text": "Mon: lifted horse. Tue: lifted horse. Wed: lifted the horse's owner. Thu: nobody will let me near the horses."
+    },
+    {
+      "id": "frag_08",
+      "title": "Menagerie Feeding Chart",
+      "text": "Lion: Tuesdays. Seal: daily, fish. Monkey: bananas (hide them). Elephant: whenever she remembers. Since closing night: whoever's in the ring."
+    },
+    {
+      "id": "frag_09",
+      "title": "Juggler's Note to His Teacher",
+      "text": "Master Ash, the rope is quiet up here and nobody can reach me. I'm keeping your fire. You'd only waste it on teaching."
+    },
+    {
+      "id": "frag_10",
+      "title": "Usher's Handbook, Rule Page",
+      "text": "Rule 1: The audience is always seated. Rule 2: If the show stops, see Rule 1. Rule 3: If they stand, run."
+    },
+    {
+      "id": "frag_11",
+      "title": "Missing Poster, Town of Merriwell",
+      "text": "MISSING: 412 residents, last seen walking toward the circus on closing night. All of them bought tickets. None asked for a refund."
+    },
+    {
+      "id": "frag_12",
+      "title": "Child's Drawing",
+      "text": "A crayon bee holding a bunch of red balloons. Every balloon has a face drawn on it. Caption: \"MY FRENDS. I KEEP THEM SAFE.\""
+    },
+    {
+      "id": "frag_13",
+      "title": "Concession Receipt",
+      "text": "Sold: 9,000 popcorn. 6,000 candy. Received: $0.00. Customers remaining: all of them. Customers still hungry: all of them."
+    },
+    {
+      "id": "frag_14",
+      "title": "Ringmaster's Diary, Last Page",
+      "text": "They aren't my cousins. They're me: the part that lies to a crowd and the part that cracks the whip. And the crowd? The crowd owns us all."
+    }
+  ]
+}

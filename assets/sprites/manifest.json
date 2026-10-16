@@ -1,0 +1,1677 @@
+{
+ "_comment": "key -> file (relative to this folder). size = display size in px the engine normalises images to. Optional frameWidth/frameHeight makes it a spritesheet (frame 0 is used).",
+ "sprites": {
+  "p_A1": {
+   "file": "p_A1.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "front view, body facing RIGHT (sprite is flipped when moving left); transparent bg",
+   "desc": "Character A1 Mr. Bee"
+  },
+  "p_A2": {
+   "file": "p_A2.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "front view, body facing RIGHT (sprite is flipped when moving left); transparent bg",
+   "desc": "Character A2 The LaughMaster"
+  },
+  "p_A3": {
+   "file": "p_A3.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "front view, body facing RIGHT (sprite is flipped when moving left); transparent bg",
+   "desc": "Character A3 The Flame Master"
+  },
+  "p_A4": {
+   "file": "p_A4.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "front view, body facing RIGHT (sprite is flipped when moving left); transparent bg",
+   "desc": "Character A4 The BeastMaster"
+  },
+  "p_A5": {
+   "file": "p_A5.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "front view, body facing RIGHT (sprite is flipped when moving left); transparent bg",
+   "desc": "Character A5 The Nature Master"
+  },
+  "p_A6": {
+   "file": "p_A6.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "front view, body facing RIGHT (sprite is flipped when moving left); transparent bg",
+   "desc": "Character A6 The Ringmaster"
+  },
+  "p_A7": {
+   "file": "p_A7.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "front view, body facing RIGHT (sprite is flipped when moving left); transparent bg",
+   "desc": "Character A7 The Rabbit King"
+  },
+  "p_A8": {
+   "file": "p_A8.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "front view, body facing RIGHT (sprite is flipped when moving left); transparent bg",
+   "desc": "Character A8 The Pop Chef"
+  },
+  "p_A9": {
+   "file": "p_A9.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "front view, body facing RIGHT (sprite is flipped when moving left); transparent bg",
+   "desc": "Character A9 Mr.Banana"
+  },
+  "p_A10": {
+   "file": "p_A10.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "front view, body facing RIGHT (sprite is flipped when moving left); transparent bg",
+   "desc": "Character A10 The Gardner"
+  },
+  "p_A11": {
+   "file": "p_A11.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "front view, body facing RIGHT (sprite is flipped when moving left); transparent bg",
+   "desc": "Character A11 Cregg"
+  },
+  "p_A12": {
+   "file": "p_A12.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "front view, body facing RIGHT (sprite is flipped when moving left); transparent bg",
+   "desc": "Character A12 Mr.Spicy"
+  },
+  "e_E1": {
+   "file": "e_E1.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "front/top-down, centred; engine adds side-to-side wobble or bounce",
+   "desc": "Enemy E1 Male Clown V.1"
+  },
+  "e_E2": {
+   "file": "e_E2.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "front/top-down, centred; engine adds side-to-side wobble or bounce",
+   "desc": "Enemy E2 Male Clown V.2"
+  },
+  "e_E3": {
+   "file": "e_E3.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "front/top-down, centred; engine adds side-to-side wobble or bounce",
+   "desc": "Enemy E3 Female Clown V.1"
+  },
+  "e_E4": {
+   "file": "e_E4.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "front/top-down, centred; engine adds side-to-side wobble or bounce",
+   "desc": "Enemy E4 Female Clown V.2"
+  },
+  "e_E6": {
+   "file": "e_E6.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "front/top-down, centred; engine adds side-to-side wobble or bounce",
+   "desc": "Enemy E6 Muscle Man V.1"
+  },
+  "e_E7": {
+   "file": "e_E7.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "front/top-down, centred; engine adds side-to-side wobble or bounce",
+   "desc": "Enemy E7 Muscle Man V.2"
+  },
+  "e_E8": {
+   "file": "e_E8.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "front/top-down, centred; engine adds side-to-side wobble or bounce",
+   "desc": "Enemy E8 FlameThrower V.1"
+  },
+  "e_E9": {
+   "file": "e_E9.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "front/top-down, centred; engine adds side-to-side wobble or bounce",
+   "desc": "Enemy E9 FlameThrower V.2"
+  },
+  "e_E11": {
+   "file": "e_E11.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "front/top-down, centred; engine adds side-to-side wobble or bounce",
+   "desc": "Enemy E11 Seal"
+  },
+  "e_E12": {
+   "file": "e_E12.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "front/top-down, centred; engine adds side-to-side wobble or bounce",
+   "desc": "Enemy E12 Monkey"
+  },
+  "e_E13": {
+   "file": "e_E13.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "front/top-down, centred; engine adds side-to-side wobble or bounce",
+   "desc": "Enemy E13 Lion"
+  },
+  "e_E14": {
+   "file": "e_E14.png",
+   "size": [
+    52,
+    52
+   ],
+   "orient": "front/top-down, centred; engine adds side-to-side wobble or bounce",
+   "desc": "Enemy E14 Elephant"
+  },
+  "truck": {
+   "file": "truck.png",
+   "size": [
+    110,
+    64
+   ],
+   "orient": "top-down, front of truck pointing RIGHT (engine rotates it)",
+   "desc": "Boss E5 Clown Truck"
+  },
+  "juggler": {
+   "file": "juggler.png",
+   "size": [
+    56,
+    64
+   ],
+   "orient": "front view, upright",
+   "desc": "Boss E10 The Juggler"
+  },
+  "petmaster": {
+   "file": "petmaster.png",
+   "size": [
+    60,
+    70
+   ],
+   "orient": "front view, upright",
+   "desc": "Boss E15 The Pet Master"
+  },
+  "cousin1": {
+   "file": "cousin1.png",
+   "size": [
+    50,
+    60
+   ],
+   "orient": "front view, upright",
+   "desc": "Boss E20 Cousin 1 The Trickster"
+  },
+  "cousin2": {
+   "file": "cousin2.png",
+   "size": [
+    50,
+    60
+   ],
+   "orient": "front view, upright",
+   "desc": "Boss E20 Cousin 2 The Hunter"
+  },
+  "w_Handgun": {
+   "file": "w_Handgun.png",
+   "size": [
+    40,
+    40
+   ],
+   "orient": "barrel pointing RIGHT, centred (engine rotates toward target, flips vertically when aiming left)",
+   "desc": "Weapon Handgun"
+  },
+  "w_Rifle": {
+   "file": "w_Rifle.png",
+   "size": [
+    40,
+    40
+   ],
+   "orient": "barrel pointing RIGHT, centred (engine rotates toward target, flips vertically when aiming left)",
+   "desc": "Weapon Rifle"
+  },
+  "w_Shotgun": {
+   "file": "w_Shotgun.png",
+   "size": [
+    40,
+    40
+   ],
+   "orient": "barrel pointing RIGHT, centred (engine rotates toward target, flips vertically when aiming left)",
+   "desc": "Weapon Shotgun"
+  },
+  "w_Dagger": {
+   "file": "w_Dagger.png",
+   "size": [
+    40,
+    40
+   ],
+   "orient": "blade/tip pointing UP, handle at bottom (engine rotates toward target)",
+   "desc": "Weapon Dagger"
+  },
+  "w_Bat": {
+   "file": "w_Bat.png",
+   "size": [
+    40,
+    40
+   ],
+   "orient": "blade/tip pointing UP, handle at bottom (engine rotates toward target)",
+   "desc": "Weapon Bat"
+  },
+  "w_Sword": {
+   "file": "w_Sword.png",
+   "size": [
+    40,
+    40
+   ],
+   "orient": "blade/tip pointing UP, handle at bottom (engine rotates toward target)",
+   "desc": "Weapon Sword"
+  },
+  "bullet": {
+   "file": "bullet.png",
+   "size": [
+    12,
+    12
+   ],
+   "orient": "round/symmetric; WHITE/light so engine tint colours it per weapon",
+   "desc": "Player projectile"
+  },
+  "eshot": {
+   "file": "eshot.png",
+   "size": [
+    14,
+    14
+   ],
+   "orient": "round/symmetric; WHITE/light so engine tint colours it per enemy",
+   "desc": "Enemy projectile (pies, water, balls)"
+  },
+  "firedrop": {
+   "file": "firedrop.png",
+   "size": [
+    20,
+    20
+   ],
+   "orient": "round",
+   "desc": "Lobbed explosive / juggler flamethrower drop"
+  },
+  "ring": {
+   "file": "ring.png",
+   "size": [
+    40,
+    40
+   ],
+   "orient": "round, viewed top-down (engine spins it)",
+   "desc": "Cousins' rolling flaming ring"
+  },
+  "box": {
+   "file": "box.png",
+   "size": [
+    36,
+    30
+   ],
+   "orient": "top-down",
+   "desc": "Juggler flamethrower box"
+  },
+  "balloon": {
+   "file": "balloon.png",
+   "size": [
+    22,
+    34
+   ],
+   "orient": "upright, string at bottom",
+   "desc": "Red balloon (currency pickup)"
+  },
+  "candy": {
+   "file": "candy.png",
+   "size": [
+    26,
+    16
+   ],
+   "orient": "any",
+   "desc": "Candy pickup (heals 30%)"
+  },
+  "popcorn": {
+   "file": "popcorn.png",
+   "size": [
+    22,
+    26
+   ],
+   "orient": "upright",
+   "desc": "Popcorn pickup (heals 100%)"
+  },
+  "warn": {
+   "file": "warn.png",
+   "size": [
+    32,
+    32
+   ],
+   "orient": "symmetric, red",
+   "desc": "Enemy spawn warning X"
+  },
+  "puff": {
+   "file": "puff.png",
+   "size": [
+    16,
+    16
+   ],
+   "orient": "round soft WHITE (tinted by engine)",
+   "desc": "Particle: gas puff / smoke"
+  },
+  "spark": {
+   "file": "spark.png",
+   "size": [
+    8,
+    8
+   ],
+   "orient": "WHITE square/dot (tinted by engine)",
+   "desc": "Particle: spark"
+  },
+  "ticket": {
+   "file": "ticket.png",
+   "size": [
+    128,
+    128
+   ],
+   "orient": "square icon, shown at ~64px",
+   "desc": "Golden Ticket UI icon"
+  },
+  "arena_tile": {
+   "file": "arena_tile.png",
+   "size": [
+    256,
+    256
+   ],
+   "orient": "seamless tileable, top-down",
+   "desc": "Arena floor tile (tileSprite clipped to the ring)",
+   "fit": false
+  },
+  "arena_ring": {
+   "file": "arena_ring.png",
+   "size": [
+    2000,
+    2000
+   ],
+   "orient": "top-down 2000x2000; TRANSPARENT inside radius 880 around centre (1000,1000), OPAQUE outside (covers floor tile corners); wall 880-907px",
+   "desc": "Arena wall + audience overlay"
+  },
+  "e_E9_sheet": {
+   "file": "e_E9_sheet.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "horizontal strip of frames, each frame front view",
+   "desc": "FlameThrower V.2 animated (replaces e_E9 when present)",
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 4,
+   "frameRate": 6
+  },
+  "ui_title": {
+   "file": "ui_title.png",
+   "size": [
+    560,
+    300
+   ],
+   "orient": "logo, transparent bg",
+   "desc": "Main menu title logo (optional; text title if absent)",
+   "fit": false
+  },
+  "egg_shot": {
+   "file": "egg_shot.png",
+   "size": [
+    12,
+    12
+   ],
+   "orient": "round",
+   "desc": "Cregg (A11) special-weapon projectile (optional; tinted bullet if absent)"
+  },
+  "candy_cane": {
+   "file": "candy_cane.png",
+   "size": [
+    13,
+    26
+   ],
+   "orient": "see art/manifest.md",
+   "desc": "Candy cane (extra, unused)"
+  },
+  "popcorn_kernel": {
+   "file": "popcorn_kernel.png",
+   "size": [
+    16,
+    16
+   ],
+   "orient": "see art/manifest.md",
+   "desc": "Popcorn kernel (extra, unused)"
+  },
+  "truck_alt": {
+   "file": "truck_alt.png",
+   "size": [
+    110,
+    110
+   ],
+   "orient": "see art/manifest.md",
+   "desc": "Clown Truck alt (extra, unused)"
+  },
+  "p_ringmaster_alt": {
+   "file": "p_ringmaster_alt.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art/manifest.md",
+   "desc": "Alt ringmaster skin (extra, unused)"
+  },
+  "puff_sheet": {
+   "file": "puff_sheet.png",
+   "size": [
+    16,
+    16
+   ],
+   "orient": "4-frame horizontal strip, white (tinted)",
+   "desc": "Smoke puff dissipate anim",
+   "frameWidth": 16,
+   "frameHeight": 16,
+   "frameCount": 4,
+   "frameRate": 12
+  },
+  "spark_sheet": {
+   "file": "spark_sheet.png",
+   "size": [
+    8,
+    8
+   ],
+   "orient": "4-frame horizontal strip, white (tinted)",
+   "desc": "Hit spark fade anim",
+   "frameWidth": 8,
+   "frameHeight": 8,
+   "frameCount": 4,
+   "frameRate": 16
+  },
+  "menu_bg_blank": {
+   "file": "menu_bg_blank.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "orient": "no baked text; cover-scaled behind live UI",
+   "desc": "Background for menu",
+   "fit": false
+  },
+  "ui_shop_bg_blank": {
+   "file": "ui_shop_bg_blank.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "orient": "no baked text; cover-scaled behind live UI",
+   "desc": "Background for shop",
+   "fit": false
+  },
+  "ui_settings_bg_blank": {
+   "file": "ui_settings_bg_blank.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "orient": "no baked text; cover-scaled behind live UI",
+   "desc": "Background for settings",
+   "fit": false
+  },
+  "ui_upgrade_bg_blank": {
+   "file": "ui_upgrade_bg_blank.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "orient": "no baked text; cover-scaled behind live UI",
+   "desc": "Background for upgrade",
+   "fit": false
+  },
+  "ui_run_complete_bg_blank": {
+   "file": "ui_run_complete_bg_blank.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "orient": "no baked text; cover-scaled behind live UI",
+   "desc": "Background for run_complete",
+   "fit": false
+  },
+  "ui_char_select_bg_blank": {
+   "file": "ui_char_select_bg_blank.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "orient": "no baked text; cover-scaled behind live UI",
+   "desc": "Background for char_select",
+   "fit": false
+  },
+  "ui_panel": {
+   "file": "ui_panel.png",
+   "size": [
+    96,
+    96
+   ],
+   "orient": "9-slice panel; margins 24px each side",
+   "desc": "9-slice panel",
+   "fit": false,
+   "slice": 24
+  },
+  "ui_button": {
+   "file": "ui_button.png",
+   "size": [
+    192,
+    60
+   ],
+   "orient": "9-slice button normal (no text); margins 16px each side",
+   "desc": "9-slice button normal (no text)",
+   "fit": false,
+   "slice": 16
+  },
+  "ui_button_hover": {
+   "file": "ui_button_hover.png",
+   "size": [
+    192,
+    60
+   ],
+   "orient": "9-slice button hover; margins 16px each side",
+   "desc": "9-slice button hover",
+   "fit": false,
+   "slice": 16
+  },
+  "ui_button_pressed": {
+   "file": "ui_button_pressed.png",
+   "size": [
+    192,
+    60
+   ],
+   "orient": "9-slice button pressed; margins 16px each side",
+   "desc": "9-slice button pressed",
+   "fit": false,
+   "slice": 16
+  },
+  "ui_icon_button": {
+   "file": "ui_icon_button.png",
+   "size": [
+    64,
+    64
+   ],
+   "orient": "round, blank centre",
+   "desc": "Pause / icon button",
+   "fit": false
+  },
+  "ui_counter": {
+   "file": "ui_counter.png",
+   "size": [
+    160,
+    48
+   ],
+   "orient": "icon slot circle at (24,24) r18, text x 50-150",
+   "desc": "Balloon / GT counter frame",
+   "fit": false
+  },
+  "ui_healthbar_frame": {
+   "file": "ui_healthbar_frame.png",
+   "size": [
+    200,
+    28
+   ],
+   "orient": "inner area x4..196, y4..24",
+   "desc": "Health bar frame",
+   "fit": false
+  },
+  "ui_healthbar_fill": {
+   "file": "ui_healthbar_fill.png",
+   "size": [
+    192,
+    20
+   ],
+   "orient": "stretched horizontally; cropped to HP %",
+   "desc": "Health bar fill",
+   "fit": false
+  },
+  "menu_bg": {
+   "file": "menu_bg.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: Title/main menu background (full 1024x1024 mockup, includes mockup text/buttons)"
+  },
+  "ui_shop_bg": {
+   "file": "ui_shop_bg.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: Shop screen mockup background (full 1024x1024 mockup, includes mockup text/buttons)"
+  },
+  "ui_settings_bg": {
+   "file": "ui_settings_bg.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: Settings screen background (full 1024x1024 mockup, includes mockup text/buttons)"
+  },
+  "ui_upgrade_bg": {
+   "file": "ui_upgrade_bg.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: Weapon upgrade screen background (full 1024x1024 mockup, includes mockup text/buttons)"
+  },
+  "ui_run_complete_bg": {
+   "file": "ui_run_complete_bg.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: Run completed screen background (full 1024x1024 mockup, includes mockup text/buttons)"
+  },
+  "ui_char_select_bg": {
+   "file": "ui_char_select_bg.png",
+   "size": [
+    1024,
+    1024
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: Character select background (full 1024x1024 mockup, includes mockup text/buttons)"
+  },
+  "p_A1_idle": {
+   "file": "p_A1_idle.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 6,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "p_A1_walk": {
+   "file": "p_A1_walk.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 8
+  },
+  "p_A1_hit": {
+   "file": "p_A1_hit.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 2
+  },
+  "p_A1_death": {
+   "file": "p_A1_death.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 6
+  },
+  "p_A6_idle": {
+   "file": "p_A6_idle.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 6,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "p_A6_walk": {
+   "file": "p_A6_walk.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 8
+  },
+  "p_A6_hit": {
+   "file": "p_A6_hit.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 2
+  },
+  "p_A6_death": {
+   "file": "p_A6_death.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 6
+  },
+  "e_E1_walk": {
+   "file": "e_E1_walk.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 6
+  },
+  "e_E1_death": {
+   "file": "e_E1_death.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 4
+  },
+  "e_E2_walk": {
+   "file": "e_E2_walk.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 6
+  },
+  "e_E2_death": {
+   "file": "e_E2_death.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 4
+  },
+  "e_E3_walk": {
+   "file": "e_E3_walk.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 6
+  },
+  "e_E3_death": {
+   "file": "e_E3_death.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 4
+  },
+  "e_E4_walk": {
+   "file": "e_E4_walk.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 6
+  },
+  "e_E4_death": {
+   "file": "e_E4_death.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 4
+  },
+  "e_E6_walk": {
+   "file": "e_E6_walk.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 6
+  },
+  "e_E6_death": {
+   "file": "e_E6_death.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 4
+  },
+  "e_E7_walk": {
+   "file": "e_E7_walk.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 6
+  },
+  "e_E7_death": {
+   "file": "e_E7_death.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 4
+  },
+  "e_E8_walk": {
+   "file": "e_E8_walk.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 6
+  },
+  "e_E8_death": {
+   "file": "e_E8_death.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 4
+  },
+  "e_E9_walk": {
+   "file": "e_E9_walk.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 6
+  },
+  "e_E9_death": {
+   "file": "e_E9_death.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 96,
+   "frameCount": 4
+  },
+  "e_E11_walk": {
+   "file": "e_E11_walk.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 96,
+   "frameHeight": 128,
+   "frameCount": 6
+  },
+  "e_E11_death": {
+   "file": "e_E11_death.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 128,
+   "frameCount": 4
+  },
+  "e_E12_walk": {
+   "file": "e_E12_walk.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 96,
+   "frameHeight": 128,
+   "frameCount": 6
+  },
+  "e_E12_death": {
+   "file": "e_E12_death.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 128,
+   "frameCount": 4
+  },
+  "e_E13_walk": {
+   "file": "e_E13_walk.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 96,
+   "frameHeight": 128,
+   "frameCount": 6
+  },
+  "e_E13_death": {
+   "file": "e_E13_death.png",
+   "size": [
+    38,
+    38
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 96,
+   "frameHeight": 128,
+   "frameCount": 4
+  },
+  "e_E14_walk": {
+   "file": "e_E14_walk.png",
+   "size": [
+    52,
+    52
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 128,
+   "frameCount": 6
+  },
+  "e_E14_death": {
+   "file": "e_E14_death.png",
+   "size": [
+    52,
+    52
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 128,
+   "frameCount": 4
+  },
+  "truck_move": {
+   "file": "truck_move.png",
+   "size": [
+    256,
+    256
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 256,
+   "frameHeight": 256,
+   "frameCount": 6
+  },
+  "truck_windup": {
+   "file": "truck_windup.png",
+   "size": [
+    256,
+    256
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 256,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "truck_death": {
+   "file": "truck_death.png",
+   "size": [
+    110,
+    64
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 256,
+   "frameHeight": 256,
+   "frameCount": 6
+  },
+  "juggler_idle": {
+   "file": "juggler_idle.png",
+   "size": [
+    56,
+    64
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 256,
+   "frameHeight": 256,
+   "frameCount": 6
+  },
+  "juggler_windup": {
+   "file": "juggler_windup.png",
+   "size": [
+    256,
+    256
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 256,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "juggler_death": {
+   "file": "juggler_death.png",
+   "size": [
+    56,
+    64
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 256,
+   "frameHeight": 256,
+   "frameCount": 6
+  },
+  "petmaster_idle": {
+   "file": "petmaster_idle.png",
+   "size": [
+    60,
+    70
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 256,
+   "frameHeight": 256,
+   "frameCount": 6
+  },
+  "petmaster_windup": {
+   "file": "petmaster_windup.png",
+   "size": [
+    256,
+    256
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 256,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "petmaster_death": {
+   "file": "petmaster_death.png",
+   "size": [
+    60,
+    70
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 256,
+   "frameHeight": 256,
+   "frameCount": 6
+  },
+  "cousin1_idle": {
+   "file": "cousin1_idle.png",
+   "size": [
+    50,
+    60
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 6
+  },
+  "cousin1_windup": {
+   "file": "cousin1_windup.png",
+   "size": [
+    128,
+    256
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "cousin1_death": {
+   "file": "cousin1_death.png",
+   "size": [
+    50,
+    60
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 6
+  },
+  "cousin2_idle": {
+   "file": "cousin2_idle.png",
+   "size": [
+    50,
+    60
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 6
+  },
+  "cousin2_windup": {
+   "file": "cousin2_windup.png",
+   "size": [
+    128,
+    256
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "cousin2_death": {
+   "file": "cousin2_death.png",
+   "size": [
+    50,
+    60
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 10,
+   "loop": false,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 6
+  },
+  "p_A2_idle": {
+   "file": "p_A2_idle.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 6,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "p_A2_walk": {
+   "file": "p_A2_walk.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 8
+  },
+  "p_A3_idle": {
+   "file": "p_A3_idle.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 6,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "p_A3_walk": {
+   "file": "p_A3_walk.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 8
+  },
+  "p_A4_idle": {
+   "file": "p_A4_idle.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 6,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "p_A4_walk": {
+   "file": "p_A4_walk.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 8
+  },
+  "p_A5_idle": {
+   "file": "p_A5_idle.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 6,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "p_A5_walk": {
+   "file": "p_A5_walk.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 8
+  },
+  "p_A7_idle": {
+   "file": "p_A7_idle.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 6,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "p_A7_walk": {
+   "file": "p_A7_walk.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 8
+  },
+  "p_A8_idle": {
+   "file": "p_A8_idle.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 6,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "p_A8_walk": {
+   "file": "p_A8_walk.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 8
+  },
+  "p_A9_idle": {
+   "file": "p_A9_idle.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 6,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "p_A9_walk": {
+   "file": "p_A9_walk.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 8
+  },
+  "p_A10_idle": {
+   "file": "p_A10_idle.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 6,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "p_A10_walk": {
+   "file": "p_A10_walk.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 8
+  },
+  "p_A11_idle": {
+   "file": "p_A11_idle.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 6,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "p_A11_walk": {
+   "file": "p_A11_walk.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 8
+  },
+  "p_A12_idle": {
+   "file": "p_A12_idle.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 6,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 4
+  },
+  "p_A12_walk": {
+   "file": "p_A12_walk.png",
+   "size": [
+    48,
+    56
+   ],
+   "orient": "see art manifest",
+   "desc": "from art: ",
+   "frameRate": 12,
+   "loop": true,
+   "frameWidth": 128,
+   "frameHeight": 256,
+   "frameCount": 8
+  }
+ }
+}

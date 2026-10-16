@@ -1,0 +1,733 @@
+[
+ {
+  "key": "music_menu_loop",
+  "type": "music",
+  "file": {
+   "ogg": "music/music_menu_loop.ogg",
+   "mp3": "music/music_menu_loop.mp3"
+  },
+  "loop": true,
+  "volume": 0.5,
+  "duration": 43.636,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "music_shop_loop",
+  "type": "music",
+  "file": {
+   "ogg": "music/music_shop_loop.ogg",
+   "mp3": "music/music_shop_loop.mp3"
+  },
+  "loop": true,
+  "volume": 0.45,
+  "duration": 28.8,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "music_combat_loop",
+  "type": "music",
+  "file": {
+   "ogg": "music/music_combat_loop.ogg",
+   "mp3": "music/music_combat_loop.mp3"
+  },
+  "loop": true,
+  "volume": 0.42,
+  "duration": 38.4,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "music_boss_loop",
+  "type": "music",
+  "file": {
+   "ogg": "music/music_boss_loop.ogg",
+   "mp3": "music/music_boss_loop.mp3"
+  },
+  "loop": true,
+  "volume": 0.45,
+  "duration": 43.636,
+  "source": "Procedurally generated (tools/gen_audio_v2.py, numpy synthesis)",
+  "license": "CC0-1.0",
+  "note": "v2: heavier boss (176bpm double-kick, tritone/cluster dissonance)"
+ },
+ {
+  "key": "music_win_stinger",
+  "type": "music",
+  "file": {
+   "ogg": "music/music_win_stinger.ogg",
+   "mp3": "music/music_win_stinger.mp3"
+  },
+  "loop": false,
+  "volume": 0.6,
+  "duration": 4.42,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "music_lose_stinger",
+  "type": "music",
+  "file": {
+   "ogg": "music/music_lose_stinger.ogg",
+   "mp3": "music/music_lose_stinger.mp3"
+  },
+  "loop": false,
+  "volume": 0.6,
+  "duration": 5.6,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_handgun_fire_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_handgun_fire_01.ogg",
+   "mp3": "sfx/sfx_weapon_handgun_fire_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.55,
+  "duration": 0.25,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_rifle_fire_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_rifle_fire_01.ogg",
+   "mp3": "sfx/sfx_weapon_rifle_fire_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.55,
+  "duration": 0.35,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_shotgun_fire_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_shotgun_fire_01.ogg",
+   "mp3": "sfx/sfx_weapon_shotgun_fire_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.6,
+  "duration": 0.599,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_dagger_throw_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_dagger_throw_01.ogg",
+   "mp3": "sfx/sfx_weapon_dagger_throw_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.45,
+  "duration": 0.176,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_bat_swing_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_bat_swing_01.ogg",
+   "mp3": "sfx/sfx_weapon_bat_swing_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.288,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_sword_swing_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_sword_swing_01.ogg",
+   "mp3": "sfx/sfx_weapon_sword_swing_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.242,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_hit_flesh_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_hit_flesh_01.ogg",
+   "mp3": "sfx/sfx_hit_flesh_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.15,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_hit_blunt_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_hit_blunt_01.ogg",
+   "mp3": "sfx/sfx_hit_blunt_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.2,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_handgun_fire_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_handgun_fire_02.ogg",
+   "mp3": "sfx/sfx_weapon_handgun_fire_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.55,
+  "duration": 0.25,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_rifle_fire_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_rifle_fire_02.ogg",
+   "mp3": "sfx/sfx_weapon_rifle_fire_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.55,
+  "duration": 0.35,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_shotgun_fire_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_shotgun_fire_02.ogg",
+   "mp3": "sfx/sfx_weapon_shotgun_fire_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.6,
+  "duration": 0.599,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_dagger_throw_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_dagger_throw_02.ogg",
+   "mp3": "sfx/sfx_weapon_dagger_throw_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.45,
+  "duration": 0.175,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_bat_swing_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_bat_swing_02.ogg",
+   "mp3": "sfx/sfx_weapon_bat_swing_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.291,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_sword_swing_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_sword_swing_02.ogg",
+   "mp3": "sfx/sfx_weapon_sword_swing_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.244,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_hit_flesh_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_hit_flesh_02.ogg",
+   "mp3": "sfx/sfx_hit_flesh_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.15,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_hit_blunt_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_hit_blunt_02.ogg",
+   "mp3": "sfx/sfx_hit_blunt_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.2,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_handgun_fire_03",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_handgun_fire_03.ogg",
+   "mp3": "sfx/sfx_weapon_handgun_fire_03.mp3"
+  },
+  "loop": false,
+  "volume": 0.55,
+  "duration": 0.25,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_rifle_fire_03",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_rifle_fire_03.ogg",
+   "mp3": "sfx/sfx_weapon_rifle_fire_03.mp3"
+  },
+  "loop": false,
+  "volume": 0.55,
+  "duration": 0.35,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_shotgun_fire_03",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_shotgun_fire_03.ogg",
+   "mp3": "sfx/sfx_weapon_shotgun_fire_03.mp3"
+  },
+  "loop": false,
+  "volume": 0.6,
+  "duration": 0.599,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_dagger_throw_03",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_dagger_throw_03.ogg",
+   "mp3": "sfx/sfx_weapon_dagger_throw_03.mp3"
+  },
+  "loop": false,
+  "volume": 0.45,
+  "duration": 0.175,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_bat_swing_03",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_bat_swing_03.ogg",
+   "mp3": "sfx/sfx_weapon_bat_swing_03.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.292,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_weapon_sword_swing_03",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_weapon_sword_swing_03.ogg",
+   "mp3": "sfx/sfx_weapon_sword_swing_03.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.242,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_hit_flesh_03",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_hit_flesh_03.ogg",
+   "mp3": "sfx/sfx_hit_flesh_03.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.15,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_hit_blunt_03",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_hit_blunt_03.ogg",
+   "mp3": "sfx/sfx_hit_blunt_03.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.2,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_enemy_death_clown_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_enemy_death_clown_01.ogg",
+   "mp3": "sfx/sfx_enemy_death_clown_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.55,
+  "duration": 0.517,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_enemy_death_clown_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_enemy_death_clown_02.ogg",
+   "mp3": "sfx/sfx_enemy_death_clown_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.55,
+  "duration": 0.624,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_enemy_death_clown_03",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_enemy_death_clown_03.ogg",
+   "mp3": "sfx/sfx_enemy_death_clown_03.mp3"
+  },
+  "loop": false,
+  "volume": 0.55,
+  "duration": 0.763,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_enemy_death_clown_04",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_enemy_death_clown_04.ogg",
+   "mp3": "sfx/sfx_enemy_death_clown_04.mp3"
+  },
+  "loop": false,
+  "volume": 0.55,
+  "duration": 0.472,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_enemy_death_clown_05",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_enemy_death_clown_05.ogg",
+   "mp3": "sfx/sfx_enemy_death_clown_05.mp3"
+  },
+  "loop": false,
+  "volume": 0.55,
+  "duration": 0.534,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_player_hit_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_player_hit_01.ogg",
+   "mp3": "sfx/sfx_player_hit_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.65,
+  "duration": 0.4,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_player_hit_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_player_hit_02.ogg",
+   "mp3": "sfx/sfx_player_hit_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.65,
+  "duration": 0.3,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_player_death",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_player_death.ogg",
+   "mp3": "sfx/sfx_player_death.mp3"
+  },
+  "loop": false,
+  "volume": 0.7,
+  "duration": 2.587,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_balloon_pop_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_balloon_pop_01.ogg",
+   "mp3": "sfx/sfx_balloon_pop_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.104,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_balloon_pop_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_balloon_pop_02.ogg",
+   "mp3": "sfx/sfx_balloon_pop_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.104,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_balloon_pop_03",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_balloon_pop_03.ogg",
+   "mp3": "sfx/sfx_balloon_pop_03.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.103,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_pickup_candy_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_pickup_candy_01.ogg",
+   "mp3": "sfx/sfx_pickup_candy_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.45,
+  "duration": 0.4,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_pickup_candy_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_pickup_candy_02.ogg",
+   "mp3": "sfx/sfx_pickup_candy_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.45,
+  "duration": 0.4,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_pickup_popcorn_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_pickup_popcorn_01.ogg",
+   "mp3": "sfx/sfx_pickup_popcorn_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.45,
+  "duration": 0.15,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_pickup_popcorn_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_pickup_popcorn_02.ogg",
+   "mp3": "sfx/sfx_pickup_popcorn_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.45,
+  "duration": 0.15,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_pickup_coin_01",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_pickup_coin_01.ogg",
+   "mp3": "sfx/sfx_pickup_coin_01.mp3"
+  },
+  "loop": false,
+  "volume": 0.45,
+  "duration": 0.411,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_pickup_coin_02",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_pickup_coin_02.ogg",
+   "mp3": "sfx/sfx_pickup_coin_02.mp3"
+  },
+  "loop": false,
+  "volume": 0.45,
+  "duration": 0.403,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_shop_buy",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_shop_buy.ogg",
+   "mp3": "sfx/sfx_shop_buy.mp3"
+  },
+  "loop": false,
+  "volume": 0.55,
+  "duration": 0.499,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_shop_deny",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_shop_deny.ogg",
+   "mp3": "sfx/sfx_shop_deny.mp3"
+  },
+  "loop": false,
+  "volume": 0.5,
+  "duration": 0.298,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_wave_start_horn",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_wave_start_horn.ogg",
+   "mp3": "sfx/sfx_wave_start_horn.mp3"
+  },
+  "loop": false,
+  "volume": 0.6,
+  "duration": 2.174,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_boss_windup_warning",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_boss_windup_warning.ogg",
+   "mp3": "sfx/sfx_boss_windup_warning.mp3"
+  },
+  "loop": false,
+  "volume": 0.65,
+  "duration": 2.0,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_boss_death",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_boss_death.ogg",
+   "mp3": "sfx/sfx_boss_death.mp3"
+  },
+  "loop": false,
+  "volume": 0.75,
+  "duration": 3.036,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_golden_ticket",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_golden_ticket.ogg",
+   "mp3": "sfx/sfx_golden_ticket.mp3"
+  },
+  "loop": false,
+  "volume": 0.65,
+  "duration": 1.979,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_ui_hover",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_ui_hover.ogg",
+   "mp3": "sfx/sfx_ui_hover.mp3"
+  },
+  "loop": false,
+  "volume": 0.3,
+  "duration": 0.019,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "sfx_ui_click",
+  "type": "sfx",
+  "file": {
+   "ogg": "sfx/sfx_ui_click.ogg",
+   "mp3": "sfx/sfx_ui_click.mp3"
+  },
+  "loop": false,
+  "volume": 0.4,
+  "duration": 0.023,
+  "source": "Procedurally generated (tools/gen_audio.py, numpy synthesis)",
+  "license": "CC0-1.0"
+ },
+ {
+  "key": "combat_v2b",
+  "type": "music",
+  "file": {
+   "ogg": "music/combat_v2b.ogg",
+   "mp3": "music/combat_v2b.mp3"
+  },
+  "loop": true,
+  "volume": 0.42,
+  "duration": 64.0,
+  "source": "Procedurally generated (tools/gen_audio_v2.py, numpy synthesis)",
+  "license": "CC0-1.0",
+  "note": "combat candidate: 150bpm, galloping kick shuffle (circus \"horse\" rhythm), organ+calliope, half-time lead phrasing; form A-B-D-A2-B",
+  "preview": "music/previews/combat_v2b_preview.mp3"
+ }
+]
