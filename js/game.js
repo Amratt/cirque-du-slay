@@ -222,7 +222,7 @@ class Game extends Phaser.Scene {
     if(e.big||e.boss) this.cameras.main.shake(120,.006); this.stopFor(e.boss?.12:.02);
     this.dieOnScreen(e); }
   // death without rewards (wave clear / boss summons): death sheet, hold, fade - never an instant pop. Also used by killEnemy.
-  dieOnScreen(e){ e.dead=true; const sp=e.spr; if(e.boss){ (this.bossDying=this.bossDying||[]).push({x:sp?sp.x:e.x,y:sp?sp.y:e.y,until:this.time.now+FEEL.deathHoldBoss+FEEL.deathFadeBoss+400}); }   /* keep the boss camera framing through the whole death + fade */
+  dieOnScreen(e){ e.dead=true; const sp=e.spr; if(e.boss){ (this.bossDying=this.bossDying||[]).push({x:sp?sp.x:e.x,y:sp?sp.y:e.y,w:sp?sp.displayWidth:260,h:sp?sp.displayHeight:260,until:this.time.now+FEEL.deathHoldBoss+FEEL.deathFadeBoss+400}); }   /* keep the boss camera framing through the whole death + fade */
     if(!sp||!sp.active) return;
     this.corpses=(this.corpses||[]).filter(c=>c.active); if(!e.boss) this.corpses.push(sp); /* bosses are exempt from the corpse cap: the wave-clear deaths were evicting the dying boss */ while(this.corpses.length>PERF.maxCorpses){ const o=this.corpses.shift(); this.tweens.killTweensOf(o); o.destroy(); }   /* corpse cap */ sp.clearTint(); e.flashUntil=0;
     if(e.boss){ this.cameras.main.shake(400,.012); this.cameras.main.flash(180,255,240,220); this.burst(sp.x,sp.y,0xffd040,30,260,3,1200); this.burst(sp.x,sp.y,0xff4060,30,220,3,1200); this.burst(sp.x,sp.y,0x40c0ff,20,200,3,1200); }   /* no scale pop: boss stays put */   /* pop + confetti */ this.tweens.killTweensOf(sp); sp.setDepth(8.5);
@@ -393,17 +393,21 @@ class Game extends Phaser.Scene {
     this.time.delayedCall(FEEL.bossOutro,()=>{ this.setBossBars([]); this.endWave(); }); }   // wait for the boss death to play out before the shop
   // ---------------------------------------------------------------- main loop
   // boss fights: pull the camera toward the boss and zoom out (down to ZOOM_MIN_BOSS) so player and boss stay on screen together
-  bossCam(dt){ const cam=this.cameras.main, base=this.baseZoom||CAM_ZOOM, bs=this.enemies.filter(e=>e.boss&&!e.dead); this.bossDying=(this.bossDying||[]).filter(d=>d.until>this.time.now); let z=base, ox=0, oy=0;
-    if(bs.length){ let mx=0,my=0; for(const b of bs){ const dx=b.x-this.pl.x, dy=b.y-this.pl.y; if(Math.abs(dx)>Math.abs(mx)) mx=dx; if(Math.abs(dy)>Math.abs(my)) my=dy; }
-      const top=HUD_SAFE.top, bot=HUD_SAFE.bottom; z=Math.min(base, Math.max(base*.45, Math.min(W/(Math.abs(mx)+420), (H-top-bot)/(Math.abs(my)+300))));
-      /* when both can't fit, lean the framing toward the boss so it stays inside the HUD-safe band (Star Lord: truck at the top edge after a ram) */
-      const hx=W/2/z-200, hy=(H-top-bot)/2/z-150, wx=Math.abs(mx)>1?Math.max(.5,1-hx/Math.abs(mx)):.5, wy=Math.abs(my)>1?Math.max(.5,1-hy/Math.abs(my)):.5;
-      ox=-mx*Math.min(wx,1); oy=-my*Math.min(wy,1) + (bot-top)/2/z; }   // BUG-032: frame both inside the HUD-safe band
-    cam.useBounds = !(bs.length||this.bossDying.length);   /* world bounds clamped the boss framing (truck pushed to the top edge); free the camera during boss fights */
-    const dd=this.bossDying[0]; if(dd&&!bs.length){ /* boss death: stop following, centre on the death spot until the fade ends */
-      if(cam._follow){ this._camLock=1; cam.stopFollow(); } const kk=1-Math.exp(-dt*9); cam.setZoom(cam.zoom+(base*.9-cam.zoom)*kk); cam.centerOn(cam.midPoint.x+(dd.x-cam.midPoint.x)*kk, cam.midPoint.y+(dd.y-cam.midPoint.y)*kk); return; }
-    if(this._camLock){ this._camLock=0; cam.followOffset.set(0,0); cam.startFollow(this.player,false,.09,.09); }
-    const k=1-Math.exp(-dt*7); cam.setZoom(cam.zoom+(z-cam.zoom)*k); cam.followOffset.x+=(ox-cam.followOffset.x)*k; cam.followOffset.y+=(oy-cam.followOffset.y)*k; }
+  bossCam(dt){ const cam=this.cameras.main, base=this.baseZoom||CAM_ZOOM, bs=this.enemies.filter(e=>e.boss&&!e.dead&&e.spr);
+    this.bossDying=(this.bossDying||[]).filter(d=>d.until>this.time.now);
+    /* boss framing (Star Lord: player must never leave the screen): bounding box of player + every live boss / dying wreck,
+       zoom out as far as needed (floor CAM_MIN_ZOOM) so the whole box sits inside the HUD-safe band, centre on it; ease back in afterwards */
+    const tg=bs.map(e=>({x:e.spr.x,y:e.spr.y,w:e.spr.displayWidth,h:e.spr.displayHeight})).concat(this.bossDying.map(d=>({x:d.x,y:d.y,w:d.w||260,h:d.h||260})));
+    if(tg.length){ const pp=this.player, top=HUD_SAFE.top, bot=HUD_SAFE.bottom, M=40;
+      tg.push({x:pp.x,y:pp.y,w:pp.displayWidth+20,h:pp.displayHeight+20});
+      let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9; for(const t of tg){ x0=Math.min(x0,t.x-t.w/2); x1=Math.max(x1,t.x+t.w/2); y0=Math.min(y0,t.y-t.h/2); y1=Math.max(y1,t.y+t.h/2); }
+      const z=Math.max(CAM_MIN_ZOOM, Math.min(base, (W-2*M)/(x1-x0), (H-top-bot-2*M)/(y1-y0)));
+      if(cam._follow){ this._camLock=1; cam.stopFollow(); } cam.useBounds=false;
+      const kz=1-Math.exp(-dt*(z<cam.zoom?14:4)); cam.setZoom(cam.zoom+(z-cam.zoom)*kz);   // zoom out fast (never lose anyone), ease in slowly
+      const cz=cam.zoom, cx=(x0+x1)/2, cy=(y0+y1)/2-(top-bot)/2/cz, kc=1-Math.exp(-dt*14);   // shift so the box centres in the HUD-safe band
+      cam.centerOn(cam.midPoint.x+(cx-cam.midPoint.x)*kc, cam.midPoint.y+(cy-cam.midPoint.y)*kc); this.camMinSeen=Math.min(this.camMinSeen||9,cz); return; }
+    if(this._camLock){ this._camLock=0; cam.followOffset.set(0,0); cam.startFollow(this.player,false,.09,.09); cam.useBounds=true; }
+    const k=1-Math.exp(-dt*3); cam.setZoom(cam.zoom+(base-cam.zoom)*k); }
   drawBossArrows(){ const g=this.bossArrow; g.clear(); const v=this.cameras.main.worldView, m=34;
     for(const e of this.enemies){ if(!e.boss||e.dead||e.hidden) continue; if(Phaser.Geom.Rectangle.Contains(v,e.x,e.y)) continue;   // BUG-007: off-screen boss indicator
       const cx=W/2, cy=H/2, a=Math.atan2(e.y-(v.y+v.height/2), e.x-(v.x+v.width/2)), c=Math.cos(a), s=Math.sin(a), k=Math.min((W/2-m)/Math.abs(c||1e-6),(H/2-m)/Math.abs(s||1e-6));
