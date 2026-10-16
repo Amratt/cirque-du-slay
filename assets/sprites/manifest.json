@@ -438,13 +438,13 @@
    "fit": false
   },
   "arena_ring": {
-   "file": "arena_ring.png",
+   "file": "arena_ring.webp",
    "size": [
     2000,
     2000
    ],
-   "orient": "top-down 2000x2000; TRANSPARENT inside radius 880 around centre (1000,1000), OPAQUE outside (covers floor tile corners); wall 880-907px",
-   "desc": "Arena wall + audience overlay"
+   "orient": "Drax 2048x2048 single arena image (sawdust centre, red/cream ring border); playable radius = 44% of width. WebP q82 (400 KB) from art/arena_ring.png",
+   "desc": "Arena floor + ring (ARENA_V2)"
   },
   "e_E9_sheet": {
    "file": "e_E9_sheet.png",
