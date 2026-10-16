@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------ BOOT: generate placeholder sprites
 class Boot extends Phaser.Scene {
   constructor(){ super('Boot'); }
-  preload(){ this.load.json('manifest','assets/sprites/manifest.json'); this.load.json('audioManifest','assets/audio/manifest.json'); this.load.json('lore','assets/lore/lore.json'); }
+  preload(){ this.load.json('manifest',V('assets/sprites/manifest.json')); this.load.json('audioManifest',V('assets/audio/manifest.json')); this.load.json('lore',V('assets/lore/lore.json')); }
   create(){
     // Phase 2: load every sprite listed in the manifest; missing files fall back to generated placeholders
     const raw = this.cache.json.get('manifest')||{}, man = {};
@@ -13,8 +13,8 @@ class Boot extends Phaser.Scene {
     // audio: tolerant list / {sounds:[...]} / {key:entry}; each sound loads [ogg, mp3]; missing => synth fallback
     let al = this.cache.json.get('audioManifest')||[]; if(!Array.isArray(al)) al = al.sounds||al.audio||Object.entries(al).map(([k,v])=>Object.assign({key:k},v));
     al = al.filter(e=>e&&e.key&&e.file); Sfx.setup(this.game, al);
-    for(const e of al){ const f=typeof e.file==='string'?[e.file]:[e.file.ogg,e.file.mp3].filter(Boolean); this.load.audio(e.key, f.map(x=>'assets/audio/'+x)); } this.missing=[];
-    for(const [k,v] of Object.entries(man)){ const url='assets/sprites/'+v.file+(QS.has('nocache')?'?'+Date.now():'');
+    for(const e of al){ const f=typeof e.file==='string'?[e.file]:[e.file.ogg,e.file.mp3].filter(Boolean); this.load.audio(e.key, f.map(x=>V('assets/audio/'+x))); } this.missing=[];
+    for(const [k,v] of Object.entries(man)){ const url=V('assets/sprites/'+v.file);
       if(v.frameWidth) this.load.spritesheet(k,url,{frameWidth:v.frameWidth,frameHeight:v.frameHeight||v.frameWidth}); else this.load.image(k,url); }
     this.load.on('loaderror',f=>this.missing.push(f.key));
     this.load.once('complete',()=>{ if(this.missing.length) console.info('[assets] fallback (placeholder/synth) for:',this.missing.join(', '));
@@ -22,7 +22,9 @@ class Boot extends Phaser.Scene {
       this.makePlaceholders();
       // every spritesheet in the manifest becomes an animation with the same key (frames/fps from manifest); _hit/_death/_attack play once
       for(const [k,v] of Object.entries(man)) if(v.frameWidth&&this.textures.exists(k)&&!this.anims.exists(k)){
-        const n = v.frameCount || (this.textures.get(k).frameTotal-1);
+        let n = v.frameCount || (this.textures.get(k).frameTotal-1);
+        // windup sheets whose last frame is a baked solid-red flash: drop that frame; the engine pulses a red multiply-tint instead (keeps detail, no red block)
+        if(/_windup$/.test(k) && n>2 && bakedRed(this,k,n-1)){ n--; WINDUP_FLASH[k]=1; }
         this.anims.create({key:k,frames:this.anims.generateFrameNumbers(k,{start:0,end:n-1}),frameRate:v.frameRate||8,repeat:(v.loop===true)?-1:(v.loop===false)?0:(ONE_SHOT.test(k)?0:-1)}); }
       Lore.apply(this.cache.json.get('lore')); this.scene.start(QS.has('showcase')?'Showcase':'Menu'); });
     this.load.start();
@@ -297,13 +299,13 @@ class Showcase extends Phaser.Scene {
     const it=this.list[this.i]; SHOWCASE.idx=this.i; this.title.setText(it.group); this.name.setText(it.label); this.prog.setText(`${this.i+1} / ${this.list.length}`);
     const m=SPRITE_MANIFEST[it.base], box=(m&&m.size)?m.size:[64,64]; this.spr=this.add.sprite(W/2,H/2+20,it.base).setOrigin(.5,.5);
     const fh=k=>{ const a=k&&this.anims.get(k); return a?a.frames[0].frame.realHeight:256; };   // never upscale art beyond its native frame size (no resample blur)
-    const target=Math.min(380, 1.0*Math.max(...it.seq.map(([st])=>fh(animFor(this,it.base,st)||(st==='move'?animFor(this,it.base,'walk'):null)))));
+    const target=Math.min(380, Math.max(it.group==='Enemies'?260:0, 1.0*Math.max(...it.seq.map(([st])=>fh(animFor(this,it.base,st)||(st==='move'?animFor(this,it.base,'walk'):null))))));
     this.spr.setScale(target/Math.max(box[0],box[1]));
     let t=0; it.seq.forEach(([st,d])=>{ this.time.delayedCall(t*1000,()=>{ if(!this.spr) return; this.spr._busy=false; this.spr._st=null; const k=animFor(this,it.base,st)||(st==='move'?animFor(this,it.base,'walk'):null);
         this.state.setText(k?`${st}  (${k}, ${this.anims.get(k).frames.length}f @ ${this.anims.get(k).frameRate}fps)`:`${st}  (no sheet — still sprite)`);
         this.spr.clearTint(); this.spr.off('animationcomplete');
         if(k){ this.spr.play(k,true); refit(this.spr);
-          if(st==='windup'){ const back=animFor(this,it.base,it.base==='truck'?'move':'idle'); this.spr.play({key:k,repeat:1}); this.spr.once('animationcomplete',()=>{ if(this.spr&&back){ this.spr.play(back); refit(this.spr); } }); }   // telegraph twice (ends on the sheet's baked red flash), then back to the loop
+          if(st==='windup'){ const back=animFor(this,it.base,it.base==='truck'?'move':'idle'); this.spr.play({key:k,repeat:1}); this.spr.once('animationcomplete',()=>{ if(!this.spr) return; windupFlash(this,this.spr,k); if(back){ this.spr.play(back); refit(this.spr); } }); }   // telegraph twice (ends on the sheet's baked red flash), then back to the loop
  }   // death plays once and holds its last frame
         else { this.spr.anims.stop(); this.spr.setTexture(it.base); } }); t+=d; });
     this.time.delayedCall(t*1000+300,()=>this.next()); }

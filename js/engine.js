@@ -1,5 +1,7 @@
 // Shared engine helpers: manifest-driven sprite fitting, animation states, pooling, UI widgets, scene transitions.
 const W = 1280, H = 720;
+// cache-busting: every asset URL carries the build version (index.html sets window.BUILD); ?nocache forces a fresh fetch every load
+function V(url){ const nc=/[?&]nocache\b/.test(location.search); return url+(url.includes('?')?'&':'?')+'v='+(nc?Date.now():(window.BUILD||'dev')); }
 const GOLD = '#f3c75a', BLOOD = '#b3001b';
 window.SPRITE_MANIFEST = {}; window.SPRITE_REAL = {};
 
@@ -29,6 +31,12 @@ function setAnim(sc, spr, base, state){ if(!spr.play) return; if(spr._busy && !O
   const k = animFor(sc,base,state); if(!k && /^(hit|death|attack|windup)/.test(state)) return; spr._st = state;
   if(k){ spr.play(k,true); refit(spr); if(ONE_SHOT.test(k)){ spr._busy=true; spr.once('animationcomplete',()=>{ spr._busy=false; spr._st=null; }); } }
   else if(!spr._busy && spr.texture.key!==base){ spr.anims.stop(); spr.setTexture(base); } }
+// true if a spritesheet frame is a near-monochrome red silhouette (baked flash)
+const WINDUP_FLASH = {};
+function bakedRed(sc,key,idx){ try{ const fr=sc.textures.getFrame(key,idx), src=fr.source.image, c=document.createElement('canvas'), w=c.width=Math.min(64,fr.cutWidth), h=c.height=Math.min(64,fr.cutHeight), x=c.getContext('2d');
+  x.drawImage(src,fr.cutX,fr.cutY,fr.cutWidth,fr.cutHeight,0,0,w,h); const d=x.getImageData(0,0,w,h).data; let n=0,red=0;
+  for(let i=0;i<d.length;i+=4){ if(d[i+3]<40) continue; n++; if(d[i]>1.6*d[i+1]+20 && d[i]>1.6*d[i+2]+20) red++; } return n>50 && red/n>.8; }catch(e){ return false; } }
+function windupFlash(sc,spr,key){ if(!WINDUP_FLASH[key]) return; spr.setTint(0xff6a6a); sc.time.delayedCall(110,()=>{ if(spr.active) spr.clearTint(); }); }
 function hasAnim(sc, base, state){ return sc.anims.exists(base+'_'+state); }
 
 // ---- Object pool (particles, bullets, floating text) to keep GC/alloc out of the frame loop

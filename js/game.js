@@ -238,7 +238,7 @@ class Game extends Phaser.Scene {
   bossSprite(tex,x,y){ const s=this.add.sprite(x,y,tex).setDepth(9); setAnim(this,s,tex,'walk'); return s; }
   // telegraph: <key>_windup (once) then a short red flash, played just before each boss attack
   windup(e){ if(!e.base||e.dead) return; Sfx.windup(); if(!hasAnim(this,e.base,'windup')||e.spr._busy) return; setAnim(this,e.spr,e.base,'windup');
-    e.spr.once('animationcomplete',()=>{ if(e.dead) return; e.spr.clearTint(); e.spr._busy=false; e.spr._st=null; setAnim(this,e.spr,e.base,'walk'); }); }   // windup sheet ends on its own baked red flash; then back to the loop (no held red frame)
+    e.spr.once('animationcomplete',()=>{ if(e.dead) return; e.spr.clearTint(); windupFlash(this,e.spr,e.base+'_windup'); e.spr._busy=false; e.spr._st=null; setAnim(this,e.spr,e.base,'walk'); }); }   // windup sheet ends on its own baked red flash; then back to the loop (no held red frame)
   bossAttack(e,name='attack'){ if(hasAnim(this,e.base,name)) setAnim(this,e.spr,e.base,name); else if(name!=='attack'&&hasAnim(this,e.base,'attack')) setAnim(this,e.spr,e.base,'attack'); }
   updateBoss(e,dt){ if(e.spr&&!e.spr._busy) setAnim(this,e.spr,e.base,'walk'); const p=this.pl; e.t+=dt; const a=Math.atan2(p.y-e.y,p.x-e.x), d=dist(e.x,e.y,p.x,p.y);
     if(e.id==='E5'){ // Clown Truck
