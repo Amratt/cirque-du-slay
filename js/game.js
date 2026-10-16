@@ -338,7 +338,8 @@ class Game extends Phaser.Scene {
       else if(e.st==='aim'){ e.rot = Phaser.Math.Angle.RotateTo(e.rot,a,3*dt); e.spr.x+=Phaser.Math.Between(-3,3); if(Math.random()<.4) this.burst(e.x-Math.cos(e.rot)*50,e.y-Math.sin(e.rot)*50,0x777777,1,60,2,600);
         if(e.t>1.1){ e.st='ram'; e.t=0; e.passed=false; } }
       else if(e.st==='ram'){ const v=e.spd*4.2; e.x+=Math.cos(e.rot)*v*dt; e.y+=Math.sin(e.rot)*v*dt;
-        if(this.clampArena(e,e.r)||e.t>1.6){ e.st='turn'; e.t=0; e.vulnMul=1.5; } }
+        const away=Math.cos(e.rot)*(e.x-p.x)+Math.sin(e.rot)*(e.y-p.y)>0, leash=away&&d>TRUCK_RAM_LEASH;   /* only once it has passed the player */ if(leash){ for(let i=0;i<3;i++) this.burst(e.x-Math.cos(e.rot)*40,e.y-Math.sin(e.rot)*40,0x8a7a60,2,90,2,500); Sfx.noise(.12,.25,500); }   /* skid: brake about one screen-width past the player instead of running to the ring edge */
+        if(leash||this.clampArena(e,e.r)||e.t>1.6){ e.st='turn'; e.t=0; e.vulnMul=1.5; } }
       else if(e.st==='turn'){ e.rot = Phaser.Math.Angle.RotateTo(e.rot,a,.9*dt); e.x+=Math.cos(e.rot)*e.spd*.3*dt; e.y+=Math.sin(e.rot)*e.spd*.3*dt;
         if(e.t>1.8){ e.st='aim'; e.t=0; e.vulnMul=1; this.windup(e); } }
       this.clampArena(e,e.r); e.spr.setPosition(e.x,e.y).setRotation(e.rot); if(d<e.r+PLAYER_R+2) this.hurtPlayer(e.st==='ram'?e.dmg*2:e.dmg); }
@@ -401,10 +402,14 @@ class Game extends Phaser.Scene {
     if(tg.length){ const pp=this.player, top=HUD_SAFE.top, bot=HUD_SAFE.bottom, M=40;
       tg.push({x:pp.x,y:pp.y,w:pp.displayWidth+20,h:pp.displayHeight+20});
       let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9; for(const t of tg){ x0=Math.min(x0,t.x-t.w/2); x1=Math.max(x1,t.x+t.w/2); y0=Math.min(y0,t.y-t.h/2); y1=Math.max(y1,t.y+t.h/2); }
-      const z=Math.max(CAM_MIN_ZOOM, Math.min(base, (W-2*M)/(x1-x0), (H-top-bot-2*M)/(y1-y0)));
+      const zmin=base*CAM_MIN_ZOOM_FRAC, z=Math.max(zmin, Math.min(base, (W-2*M)/(x1-x0), (H-top-bot-2*M)/(y1-y0)));
       const snap=!this._camLock; if(cam._follow||snap){ this._camLock=1; cam.stopFollow(); } cam.useBounds=false;   /* first boss frame snaps, so a boss entering from off-screen is framed at once */
       const kz=snap?1:1-Math.exp(-dt*(z<cam.zoom?14:4)); cam.setZoom(cam.zoom+(z-cam.zoom)*kz);   // zoom out fast (never lose anyone), ease in slowly
-      const cz=cam.zoom, cx=(x0+x1)/2, cy=(y0+y1)/2-(top-bot)/2/cz, kc=snap?1:1-Math.exp(-dt*14);   // shift so the box centres in the HUD-safe band
+      const cz=cam.zoom; let cx=(x0+x1)/2, cy=(y0+y1)/2-(top-bot)/2/cz;
+      /* at the zoom floor the box may not fit: the player wins (centre clamped so the player stays inside the safe band), the boss may clip */
+      const hw=(W/2-M)/cz-(pp.displayWidth+20)/2, hTop=(H/2-top-M)/cz-(pp.displayHeight+20)/2, hBot=(H/2-bot-M)/cz-(pp.displayHeight+20)/2;
+      cx=Phaser.Math.Clamp(cx,pp.x-Math.max(0,hw),pp.x+Math.max(0,hw)); cy=Phaser.Math.Clamp(cy,pp.y-Math.max(0,hBot),pp.y+Math.max(0,hTop));
+      const kc=snap?1:1-Math.exp(-dt*14);   // shift so the box centres in the HUD-safe band
       cam.centerOn(cam.midPoint.x+(cx-cam.midPoint.x)*kc, cam.midPoint.y+(cy-cam.midPoint.y)*kc); this.camMinSeen=Math.min(this.camMinSeen||9,cz); return; }
     if(this._camLock){ this._camLock=0; cam.followOffset.set(0,0); cam.startFollow(this.player,false,.09,.09); cam.useBounds=true; }
     const k=1-Math.exp(-dt*3); cam.setZoom(cam.zoom+(base-cam.zoom)*k); }

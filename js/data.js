@@ -21,7 +21,8 @@ const PETMASTER_TP = [260,460];
 // Hero v2: A7/A10 are drawn shorter inside their 128x256 frames (~215/235 px vs ~254); scale them up to match the others
 const HERO_NORM = { A7:254/215, A10:254/235 };
 // BUG-032: screen px kept clear at the top (HP/wave HUD) and bottom (boss name + HP bar) when the boss camera frames a fight
-const CAM_MIN_ZOOM = .2;   // boss framing may zoom this far out so player + boss always fit (outside the arena is dark backdrop)
+const CAM_MIN_ZOOM_FRAC = .75;   // boss framing never zooms out past 0.75x of base (1.35 desktop, 1.5 mobile); if player + boss do not fit, the player is kept and the boss may clip
+const TRUCK_RAM_LEASH = Math.round(1280/CAM_ZOOM);   // ~711 world px = one screen-width at base zoom: the truck ram skids to a stop this far from the player instead of reaching the ring edge
 const HUD_SAFE = { top:100, bottom:110 };
 const BOSS_BAR_COL = 0xd8283a;   // BUG-026: boss HP fill (was plain white)
 // performance caps
