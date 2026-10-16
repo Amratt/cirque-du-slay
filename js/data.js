@@ -20,6 +20,11 @@ const FEEL = { bobPx:7, bobPxNoSheet:7, tilt:.14 /* ~8 deg */, stepHz:3.4, turnS
 const PETMASTER_TP = [260,460];
 // Hero v2: A7/A10 are drawn shorter inside their 128x256 frames (~215/235 px vs ~254); scale them up to match the others
 const HERO_NORM = { A7:254/215, A10:254/235 };
+// BUG-032: screen px kept clear at the top (HP/wave HUD) and bottom (boss name + HP bar) when the boss camera frames a fight
+const HUD_SAFE = { top:100, bottom:110 };
+const BOSS_BAR_COL = 0xd8283a;   // BUG-026: boss HP fill (was plain white)
+// performance caps
+const PERF = { maxParticles:260, maxCorpses:24, cullMargin:120 };
 // arena floor resolution tiers. 'hi' assets (manifest tier:'hi') load only on desktops whose GPU takes >=4096 textures:
 //   grid: arena_t<row><col> (ARENA_GRID x ARENA_GRID tiles, e.g. 4x4 of 1024)  >  arena_ring_4k (single 4096)  >  arena_ring (2048, everyone incl. phones)
 const ARENA_GRID = 4;
@@ -27,7 +32,7 @@ function arenaHiOK(game){ const r=game&&game.renderer, mt=(r&&r.getMaxTextureSiz
   return !touch && mt>=4096 && !new URLSearchParams(location.search).has('lowres'); }
 // ring dressing (Drax decals; blend from manifest, these override strength)
 const DRESS = { scatterCount:170, scatterAlpha:.72, scatterSize:[44,70], ringAlpha:.8, ringSize:1.15,
-  spotCount:3, spotAlpha:.55, spotTint:0xffd8a0, spotSize:640, floorTint:0xb4aaa0, vignetteAlpha:.7 };    // BUG-024: player drawn this much larger than its manifest box; hit radius scales with it
+  spotCount:3, spotAlpha:.3, spotTint:0xffd8a0, spotSize:640, floorTint:0xb4aaa0, vignetteAlpha:.7 };    // BUG-024: player drawn this much larger than its manifest box; hit radius scales with it
 const PLAYER_R = Math.round(16*Math.sqrt(PLAYER_SCALE)*1.1);   // body radius (sprite box has lots of headroom, so it grows slower than the art)
 const FAST_WAVE_T = 10;   // ?fast=1 wave length (BUG-008); ?gold=N sets starting balloons
 // Animation frame skips for known art defects. Each skip only applies while the frame still matches 'when'

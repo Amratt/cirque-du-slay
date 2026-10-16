@@ -16,26 +16,31 @@ class Game extends Phaser.Scene {
     this.pl = {x:CX,y:CY,vx:0,vy:0,hp:100,max:100,ifr:0,stun:0,face:1};
     this.cameras.main.setBounds(0,0,WORLD,WORLD).startFollow(this.player,false,.09,.09); this.baseZoom = (this.sys.game.device.input.touch && Math.min(innerWidth,innerHeight)<600) ? CAM_ZOOM_MOBILE : CAM_ZOOM; this.cameras.main.setZoom(this.baseZoom);   // smoothed follow
     // HUD camera: everything with scrollFactor 0 renders unzoomed on uiCam, the world on the main camera
-    if(CAM_ZOOM!==1){ this.uiCam = this.cameras.add(0,0,W,H); this.routeCams(); this.events.on('preupdate',()=>this.routeCams()); this.scale.on('resize',()=>this.uiCam.setSize(W,H)); }
+    if(CAM_ZOOM!==1){ this.uiCam = this.cameras.add(0,0,W,H); this.routeCams(); this.events.on('preupdate',()=>this.routeCams()); this.events.on('prerender',()=>this.routeCams()); /* BUG-033: also route objects created mid-frame, before drawing */ this.scale.on('resize',()=>this.uiCam.setSize(W,H)); }
     if(QS.has('fps')) this.fpsT = txt(this,W-90,80,'',16,'#7f7').setScrollFactor(0).setDepth(3000);
     this.fx = this.add.graphics().setDepth(20);
     this.buildHUD(); this.setupInput();
     this.startWave();
   }
+  inView(x,y){ if(this._vwT!==this.time.now){ this._vwT=this.time.now; const v=this.cameras.main.worldView, m=PERF.cullMargin; this._vw=[v.x-m,v.y-m,v.right+m,v.bottom+m]; } const q=this._vw; return x>q[0]&&x<q[2]&&y>q[1]&&y<q[3]; }
   routeCams(){ const mb=this.cameras.main.id, ub=this.uiCam.id; for(const o of this.children.list){ const ui=o.scrollFactorX===0; if(o._camUI===ui) continue; o._camUI=ui; o.cameraFilter = ui ? mb : ub; } }
   // ---------------------------------------------------------------- arena
   // Drax's decals (manifest 'decals' gives blend + alpha): painted ring circle, drifting spotlight pools, scattered popcorn/confetti/tickets, screen vignette
-  dressRing(){ const D=window.DECALS||{}, ok=k=>this.textures.exists(k)&&!(window.ASSET_MISSING||[]).includes(k);
-    const BM={normal:Phaser.BlendModes.NORMAL, add:Phaser.BlendModes.ADD, multiply:Phaser.BlendModes.MULTIPLY, screen:Phaser.BlendModes.SCREEN};
-    const deco=(k,o)=>o.setBlendMode(BM[(D[k]||{}).blend]||0).setAlpha((D[k]||{}).alpha??.6);
-    const rnd=mulberry(1234);
-    if(ok('ring_circle')) deco('ring_circle',this.add.image(CX,CY,'ring_circle').setDisplaySize(R*DRESS.ringSize,R*DRESS.ringSize).setDepth(.3)).setAlpha(DRESS.ringAlpha);
-    const scat=Object.keys(D).filter(k=>/^(popcorn|confetti|ticket)_/.test(k)&&ok(k));
-    const [s0,s1]=DRESS.scatterSize; for(let i=0;i<DRESS.scatterCount&&scat.length;i++){ const a=rnd()*Math.PI*2, r=Math.sqrt(rnd())*(R-50), k=scat[Math.floor(rnd()*scat.length)], s=s0+rnd()*(s1-s0);
-      deco(k,this.add.image(CX+Math.cos(a)*r,CY+Math.sin(a)*r,k).setDisplaySize(s,s).setRotation(rnd()*Math.PI*2).setDepth(.2)).setAlpha(DRESS.scatterAlpha); }
-    if(ok('spotlight_pool')) for(let i=0;i<DRESS.spotCount;i++){ const a=i*2.1, r=R*.3, sp=deco('spotlight_pool',this.add.image(CX+Math.cos(a)*r,CY+Math.sin(a)*r,'spotlight_pool').setDisplaySize(DRESS.spotSize,DRESS.spotSize).setDepth(.4)).setAlpha(DRESS.spotAlpha).setTint(DRESS.spotTint);
-      const drift=()=>{ const b=rnd()*Math.PI*2, rr=rnd()*R*.5; this.tweens.add({targets:sp,x:CX+Math.cos(b)*rr,y:CY+Math.sin(b)*rr,duration:6000+rnd()*5000,ease:'Sine.inOut',onComplete:drift}); }; drift(); }
-    if(ok('vignette')) deco('vignette',this.add.image(0,0,'vignette').setOrigin(0).setDisplaySize(W,H).setScrollFactor(0).setDepth(990)).setAlpha(DRESS.vignetteAlpha);   // fixed to the screen, under the HUD (1000+)
+  // Drax's decals, baked ONCE into a 2048 render texture (was 170 separate sprites + a multiply vignette + additive spots: wave-19 fps 15 -> 8)
+  dressRing(){ const D=window.DECALS||{}, ok=k=>this.textures.exists(k)&&!(window.ASSET_MISSING||[]).includes(k), rnd=mulberry(1234);
+    if(!this.textures.exists('arena_decals_baked')){ const S=2048, k0=S/(R/.44), rt=this.make.renderTexture({width:S,height:S},false), tmp=this.make.image({key:'__WHITE'},false);
+      const put=(key,wx,wy,size,rot,alpha)=>{ tmp.setTexture(key).setOrigin(.5); tmp.setScale(size*k0/Math.max(tmp.width,tmp.height)).setRotation(rot).setAlpha(alpha); rt.draw(tmp,S/2+(wx-CX)*k0,S/2+(wy-CY)*k0); };
+      if(ok('ring_circle')) put('ring_circle',CX,CY,R*DRESS.ringSize,0,DRESS.ringAlpha);
+      const scat=Object.keys(D).filter(k=>/^(popcorn|confetti|ticket)_/.test(k)&&ok(k)), [s0,s1]=DRESS.scatterSize;
+      for(let i=0;i<DRESS.scatterCount&&scat.length;i++){ const a=rnd()*Math.PI*2, r=Math.sqrt(rnd())*(R-50); put(scat[Math.floor(rnd()*scat.length)],CX+Math.cos(a)*r,CY+Math.sin(a)*r,s0+rnd()*(s1-s0),rnd()*Math.PI*2,DRESS.scatterAlpha); }
+      if(ok('spotlight_pool')) for(let i=0;i<DRESS.spotCount;i++){ const a=i*2.1, r=R*.3; tmp.setTexture('spotlight_pool').setOrigin(.5).setRotation(0).setScale(DRESS.spotSize*k0/Math.max(tmp.width,tmp.height)).setAlpha(DRESS.spotAlpha).setTint(DRESS.spotTint); rt.draw(tmp,S/2+Math.cos(a)*r*k0,S/2+Math.sin(a)*r*k0); }
+      rt.saveTexture('arena_decals_baked'); tmp.destroy(); }
+    this.add.image(CX,CY,'arena_decals_baked').setDisplaySize(R/.44,R/.44).setDepth(.2);
+    /* spotlight pools + vignette moved out of the per-frame fill: spots are baked into the decal RT, vignette is 4 thin edge strips (perf: wave-19 full-screen layers cost ~35% fps) */
+    if(!this.textures.exists('vig_edge')){ const c=document.createElement('canvas'); c.width=4; c.height=64; const x=c.getContext('2d'), g=x.createLinearGradient(0,0,0,64);
+      g.addColorStop(0,'rgba(0,0,0,.85)'); g.addColorStop(1,'rgba(0,0,0,0)'); x.fillStyle=g; x.fillRect(0,0,4,64); this.textures.addCanvas('vig_edge',c); }
+    const vd=DRESS.vignetteAlpha, ev=Math.round(H*.22), eh=Math.round(W*.16);
+    [[W/2,0,W,ev,0],[W/2,H,W,ev,Math.PI],[0,H/2,H,eh,-Math.PI/2],[W,H/2,H,eh,Math.PI/2]].forEach(([x,y,len,dep,rot])=>this.add.image(x,y,'vig_edge').setOrigin(.5,0).setDisplaySize(len,dep).setRotation(rot).setScrollFactor(0).setDepth(990).setAlpha(vd));
   }
   // BUG-024 v2: one procedural circus-ring floor, no tiling: dark sawdust, faint raked rings, red/cream striped curb, vignette, noise
   bakeRing(){ const D=R*2+4, c=document.createElement('canvas'); c.width=c.height=D; const x=c.getContext('2d'), m=D/2, rnd=mulberry(11);
@@ -86,7 +91,7 @@ class Game extends Phaser.Scene {
     const ringArt = ARENA_V2 && !(window.ASSET_MISSING||[]).includes('arena_ring');   // Drax's art/arena_ring.png, once imported, is the whole arena as one image
     if(ringArt){ const D=R/.44, ok=k=>this.textures.exists(k)&&!(window.ASSET_MISSING||[]).includes(k), n=ARENA_GRID, grid=ok('arena_t00')&&ok(`arena_t${n-1}${n-1}`);
       if(grid){ const s=D/n; for(let r=0;r<n;r++) for(let c=0;c<n;c++) this.add.image(CX-D/2+c*s,CY-D/2+r*s,`arena_t${r}${c}`).setOrigin(0).setDisplaySize(s+1,s+1).setDepth(0).setTint(DRESS.floorTint); this.arenaTier='grid'+n; }   // +1 px overlap hides tile seams
-      else { const k=ok('arena_ring_4k')?'arena_ring_4k':'arena_ring'; this.add.image(CX,CY,k).setDisplaySize(D,D).setDepth(0).setTint(DRESS.floorTint); this.arenaTier=k; } }   // floor darkened a touch so characters pop   // playable radius R = 44% of image width (ring border outside it)
+      else { const k=ok('arena_ring_4k')?'arena_ring_4k':'arena_ring'; this.textures.get(k).setFilter(Phaser.Textures.FilterMode.LINEAR); this.add.image(CX,CY,k).setDisplaySize(D,D).setDepth(0).setTint(DRESS.floorTint); this.arenaTier=k; } }   // floor darkened a touch so characters pop   // playable radius R = 44% of image width (ring border outside it)
     else if(ARENA_V2){ if(!this.textures.exists('arena_floor_ring')) this.bakeRing(); this.add.image(CX,CY,'arena_floor_ring').setDepth(0); }
     else { if(!this.textures.exists('arena_floor_baked')){ const t=this.textures.get('arena_tile').getSourceImage(), D=R*2+4, c=document.createElement('canvas'); c.width=c.height=D;
       const x=c.getContext('2d'); x.beginPath(); x.arc(D/2,D/2,D/2,0,Math.PI*2); x.clip(); x.fillStyle=x.createPattern(t,'repeat'); x.fillRect(0,0,D,D); this.textures.addCanvas('arena_floor_baked',c); }
@@ -115,7 +120,7 @@ class Game extends Phaser.Scene {
   setBossBars(list){ this.bossBars.forEach(b=>b.forEach(o=>o.destroy())); this.bossBars=[];
     list.forEach((e,i)=>{ const w = list.length>1?440:800, x = list.length>1? W/2+(i?240:-240) : W/2, y = H-40;
       const bg=this.add.rectangle(x,y,w,20,0x000000,.7).setStrokeStyle(2,0xffffff).setScrollFactor(0).setDepth(1000);
-      const bar=this.add.rectangle(x-w/2+2,y,w-4,16,0xffffff).setOrigin(0,.5).setScrollFactor(0).setDepth(1000);
+      const bar=this.add.rectangle(x-w/2+2,y,w-4,16,BOSS_BAR_COL).setOrigin(0,.5).setScrollFactor(0).setDepth(1000);
       const t=txt(this,x,y-30,e.name,18,'#fff',{stroke:'#000',strokeThickness:4}).setScrollFactor(0).setDepth(1001); this.bossBars.push([bg,bar,t]); e.bar=bar; e.barW=w-4; }); }   // label sits above the bar, outlined
   updateHUD(){ const p=this.pl, w = Math.min(600, p.max*2);   // bar length grows with Max HP (GDD); fill is cropped to HP%
     this.hpBg.setDisplaySize(w+8,28); this.hpBar.setDisplaySize(w,20); const fw=this.hpBar.frame.realWidth; this.hpBar.setCrop(0,0,fw*Phaser.Math.Clamp(p.hp/p.max,0,1),this.hpBar.frame.realHeight);
@@ -195,7 +200,7 @@ class Game extends Phaser.Scene {
     this.tweens.add({targets:t,scale:1,duration:90,ease:'Back.out'}); this.tweens.add({targets:t,y:y-30,alpha:0,duration:600,onComplete:()=>this.pool.release(t)}); }
   // pooled particles; uses puff_sheet / spark_sheet animations when the art provides them
   burst(x,y,col,n,spd=120,size=1,life=500){ const big=size>1, sheet=big?'puff_sheet':'spark_sheet', useSheet=this.anims.exists(sheet);
-    for(let i=0;i<n;i++){ if(this.pool.count>900 && !big) break;
+    for(let i=0;i<n;i++){ if(this.pool.active>PERF.maxParticles) break;   // particle cap
       const p=this.pool.img(useSheet?sheet:(big?'puff':'spark'),x,y,15); if(useSheet) p.play(sheet);
       p.setTint(col).setScale(big?Phaser.Math.FloatBetween(.6,1.4):1);
       const a=Math.random()*Math.PI*2, v=Phaser.Math.Between(spd*.3,spd);
@@ -217,7 +222,8 @@ class Game extends Phaser.Scene {
     if(e.big||e.boss) this.cameras.main.shake(120,.006); this.stopFor(e.boss?.12:.02);
     this.dieOnScreen(e); }
   // death without rewards (wave clear / boss summons): death sheet, hold, fade - never an instant pop. Also used by killEnemy.
-  dieOnScreen(e){ e.dead=true; const sp=e.spr; if(!sp||!sp.active) return; sp.clearTint(); e.flashUntil=0;
+  dieOnScreen(e){ e.dead=true; const sp=e.spr; if(!sp||!sp.active) return;
+    this.corpses=(this.corpses||[]).filter(c=>c.active); this.corpses.push(sp); while(this.corpses.length>PERF.maxCorpses){ const o=this.corpses.shift(); this.tweens.killTweensOf(o); o.destroy(); }   // corpse cap sp.clearTint(); e.flashUntil=0;
     if(e.boss){ this.cameras.main.shake(400,.012); this.cameras.main.flash(180,255,240,220); this.burst(sp.x,sp.y,0xffd040,30,260,3,1200); this.burst(sp.x,sp.y,0xff4060,30,220,3,1200); this.burst(sp.x,sp.y,0x40c0ff,20,200,3,1200); this.tweens.add({targets:sp,scaleX:sp.scaleX*1.15,scaleY:sp.scaleY*1.15,yoyo:true,duration:140}); }   /* pop + confetti */ this.tweens.killTweensOf(sp); sp.setDepth(8.5);
     const fade=()=>this.tweens.add({targets:sp,alpha:0,y:sp.y+4,delay:e.boss?FEEL.deathHoldBoss:FEEL.deathHold,duration:e.boss?FEEL.deathFadeBoss:FEEL.deathFade,onComplete:()=>sp.destroy()});
     const dir=(sp.flipX?1:-1); this.tweens.add({targets:sp,rotation:e.boss?0:dir*FEEL.deathTopple*.35,x:sp.x-dir*10,duration:260,ease:'Quad.out'});   // knocked back + topples
@@ -259,7 +265,7 @@ class Game extends Phaser.Scene {
         const ph=this.time.now/130+e.x*.01, sq=(e.squash>0?(e.squash-=dt,.18):0), st=Math.sin(ph*2)*.06;   // walk squash & stretch + hit squash
         if(e.spawnT>0){ e.spawnT-=dt; e.spr.setScale(1-e.spawnT*3.6); } else e.spr.setScale(1+st+sq,1-st-sq);
         const step=this.time.now/1000*Math.PI*(e.def.walkHz||FEEL.stepHz)+e.x*.01;   // procedural walk bob (2-4 px) + tilt, synced to the ~10 fps walk sheet
-        e.spr.setPosition(e.x, e.y - Math.abs(Math.sin(step))*(e.hasWalk?FEEL.bobPx:FEEL.bobPxNoSheet)).setRotation(rot*.3 + Math.sin(step)*FEEL.tilt); }   // subtle: the walk sheets already bounce
+        e.spr.setPosition(e.x, e.y - Math.abs(Math.sin(step))*(e.hasWalk?FEEL.bobPx:FEEL.bobPxNoSheet)).setRotation(rot*.3 + Math.sin(step)*FEEL.tilt); e.spr.visible=this.inView(e.x,e.y); }   // cull off-screen enemies   // subtle: the walk sheets already bounce
       if(this.time.now<(e.flashUntil||0)){ if(e.boss) e.spr.setTint(0xffc0c0); else e.spr.setTintFill(0xffffff); } /* bosses: shape-keeping tint, never a fill */ else if(!e.inv) e.spr.clearTint(); }   // ~60 ms white flash, then cleared
     // cheap separation
     const L=this.enemies; for(let i=0;i<L.length;i++){ const a=L[i]; if(a.dead||a.boss) continue; for(let j=i+1;j<L.length;j++){ const b=L[j]; if(b.dead||b.boss) continue;
@@ -362,7 +368,7 @@ class Game extends Phaser.Scene {
       const rage = e.rage>0; if(rage){ e.rage-=dt; e.spr.setTint(0xff5050); } else if(!(this.time.now<(e.flashUntil||0))) e.spr.clearTint();
       e.ringT=(e.ringT||0)+dt;
       if(e.st==='c1'){ e.blink=(e.blink||0)+dt; e.shot=(e.shot||0)+dt;
-        if(e.blink>2.2){ e.blink=0; this.burst(e.x,e.y,0xffffff,12,150); const aa=Math.random()*Math.PI*2, rr=Phaser.Math.Between(200,420); e.x=p.x+Math.cos(aa)*rr; e.y=p.y+Math.sin(aa)*rr; this.clampArena(e,e.r); this.burst(e.x,e.y,0x80ffff,12,150); }
+        if(e.blink>1.85&&!e.bw){ e.bw=1; this.windup(e); } /* new cousin1 art = cousin2 rig: same windup telegraph before each blink */ if(e.blink>2.2){ e.blink=0; e.bw=0; this.burst(e.x,e.y,0xffffff,12,150); const aa=Math.random()*Math.PI*2, rr=Phaser.Math.Between(200,420); e.x=p.x+Math.cos(aa)*rr; e.y=p.y+Math.sin(aa)*rr; this.clampArena(e,e.r); this.burst(e.x,e.y,0x80ffff,12,150); }
         if(e.shot>(rage?.25:.8)){ e.shot=0; this.bossAttack(e); this.enemyShot(e.x,e.y,a,320,e.dmg*.6,0x80ffff,{from:e.id}); }
         if(e.ringT>5.6&&!e.wu){ e.wu=1; this.windup(e); } if(e.ringT>6){ e.ringT=0; e.wu=0; this.enemyShot(e.x,e.y,a,200,0,0xffffff,{tex:'ring',r:16,life:6,ring:'stun',spin:1}); } }
       else { const sp = e.spd*(rage?2:1); e.whip=(e.whip||0)-dt*(rage?2:1);
@@ -388,7 +394,7 @@ class Game extends Phaser.Scene {
   // boss fights: pull the camera toward the boss and zoom out (down to ZOOM_MIN_BOSS) so player and boss stay on screen together
   bossCam(dt){ const cam=this.cameras.main, base=this.baseZoom||CAM_ZOOM, bs=this.enemies.filter(e=>e.boss&&!e.dead); let z=base, ox=0, oy=0;
     if(bs.length){ let mx=0,my=0; for(const b of bs){ const dx=b.x-this.pl.x, dy=b.y-this.pl.y; if(Math.abs(dx)>Math.abs(mx)) mx=dx; if(Math.abs(dy)>Math.abs(my)) my=dy; }
-      ox=-mx*.5; oy=-my*.5; z=Math.min(base, Math.max(base*.45, Math.min(W/(Math.abs(mx)+420), H/(Math.abs(my)+340)))); }
+      const top=HUD_SAFE.top, bot=HUD_SAFE.bottom; ox=-mx*.5; z=Math.min(base, Math.max(base*.45, Math.min(W/(Math.abs(mx)+420), (H-top-bot)/(Math.abs(my)+300)))); oy=-my*.5 + (bot-top)/2/z; }   // BUG-032: frame both inside the HUD-safe band
     const k=1-Math.exp(-dt*7); cam.setZoom(cam.zoom+(z-cam.zoom)*k); cam.followOffset.x+=(ox-cam.followOffset.x)*k; cam.followOffset.y+=(oy-cam.followOffset.y)*k; }
   drawBossArrows(){ const g=this.bossArrow; g.clear(); const v=this.cameras.main.worldView, m=34;
     for(const e of this.enemies){ if(!e.boss||e.dead||e.hidden) continue; if(Phaser.Geom.Rectangle.Contains(v,e.x,e.y)) continue;   // BUG-007: off-screen boss indicator

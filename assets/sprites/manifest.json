@@ -1319,7 +1319,7 @@
     60
    ],
    "orient": "see art manifest",
-   "desc": "from art: ",
+   "desc": "Cousin 1 (cousin2 art, navy coat)",
    "frameRate": 10,
    "loop": true,
    "frameWidth": 128,
@@ -1333,7 +1333,7 @@
     256
    ],
    "orient": "see art manifest",
-   "desc": "from art: ",
+   "desc": "Cousin 1 (cousin2 art, navy coat)",
    "frameRate": 12,
    "loop": false,
    "frameWidth": 128,
@@ -1347,7 +1347,7 @@
     60
    ],
    "orient": "see art manifest",
-   "desc": "from art: ",
+   "desc": "Cousin 1 (cousin2 art, navy coat)",
    "frameRate": 12,
    "loop": false,
    "frameWidth": 128,
@@ -2145,7 +2145,7 @@
     60
    ],
    "orient": "see art manifest",
-   "desc": "from art: ",
+   "desc": "Cousin 1 (cousin2 art, navy coat)",
    "frameRate": 15,
    "loop": false,
    "frameWidth": 128,
@@ -2720,6 +2720,13 @@
    "fit": false,
    "orient": "portrait",
    "desc": "full body, dark vignette bg (opaque)"
+  },
+  "arena_ring_4k": {
+   "file": "arena_ring_4k.webp",
+   "fit": false,
+   "tier": "hi",
+   "orient": "arena hi-res",
+   "desc": "desktop-only arena floor"
   }
  },
  "projectiles": {

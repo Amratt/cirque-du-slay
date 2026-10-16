@@ -46,13 +46,13 @@ function hasAnim(sc, base, state){ return sc.anims.exists(base+'_'+state); }
 
 // ---- Object pool (particles, bullets, floating text) to keep GC/alloc out of the frame loop
 class Pool { constructor(sc){ this.sc=sc; this.free={}; this.count=0; }
-  img(key,x,y,depth=15){ const a=this.free[key]||(this.free[key]=[]); let o=a.pop();
+  img(key,x,y,depth=15){ this.active=(this.active||0)+1; const a=this.free[key]||(this.free[key]=[]); let o=a.pop();
     if(o){ o.setActive(true).setVisible(true).setPosition(x,y).setAlpha(1).setRotation(0).setScale(1).clearTint(); this.sc.tweens.killTweensOf(o); }
     else { o=this.sc.add.sprite(x,y,key); o._poolKey=key; this.count++; } if(o.anims&&o.anims.isPlaying) o.anims.stop(); return o.setDepth(depth); }
   text(x,y,s,style){ const a=this.free.__t||(this.free.__t=[]); let t=a.pop();
     if(t){ t.setActive(true).setVisible(true).setPosition(x,y).setAlpha(1).setText(s).setStyle(style); this.sc.tweens.killTweensOf(t); }
     else { t=this.sc.add.text(x,y,s,style).setOrigin(.5); t._poolKey='__t'; } return t; }
-  release(o){ if(!o||!o.active) return; o.setActive(false).setVisible(false); (this.free[o._poolKey]||(this.free[o._poolKey]=[])).push(o); } }
+  release(o){ if(!o||!o.active) return; this.active--; o.setActive(false).setVisible(false); (this.free[o._poolKey]||(this.free[o._poolKey]=[])).push(o); } }
 
 // ---- Text + UI widgets (9-slice art from manifest, placeholder textures generated in Boot)
 function txt(sc,x,y,s,size=24,col='#fff',o={}){ return sc.add.text(x,y,s,Object.assign({fontFamily:'Georgia,serif',fontSize:size+'px',color:col,stroke:'#000',strokeThickness:Math.max(2,size/8),align:'center'},o)).setOrigin(.5); }
