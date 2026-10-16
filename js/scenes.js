@@ -296,8 +296,8 @@ class Showcase extends Phaser.Scene {
   next(){ this.i++; if(this.spr) this.spr.destroy(); if(this.i>=this.list.length){ this.title.setText('Cirque du Slay — cast complete'); this.name.setText(''); this.state.setText(''); SHOWCASE.done=true; return; }
     const it=this.list[this.i]; SHOWCASE.idx=this.i; this.title.setText(it.group); this.name.setText(it.label); this.prog.setText(`${this.i+1} / ${this.list.length}`);
     const m=SPRITE_MANIFEST[it.base], box=(m&&m.size)?m.size:[64,64]; this.spr=this.add.sprite(W/2,H/2+20,it.base).setOrigin(.5,.5);
-    const fh=k=>{ const a=k&&this.anims.get(k); return a?a.frames[0].frame.realHeight:256; };   // never upscale art beyond ~1.3x its native frame (no blur)
-    const target=Math.min(380, 1.3*Math.max(...it.seq.map(([st])=>fh(animFor(this,it.base,st)||(st==='move'?animFor(this,it.base,'walk'):null)))));
+    const fh=k=>{ const a=k&&this.anims.get(k); return a?a.frames[0].frame.realHeight:256; };   // never upscale art beyond its native frame size (no resample blur)
+    const target=Math.min(380, 1.0*Math.max(...it.seq.map(([st])=>fh(animFor(this,it.base,st)||(st==='move'?animFor(this,it.base,'walk'):null)))));
     this.spr.setScale(target/Math.max(box[0],box[1]));
     let t=0; it.seq.forEach(([st,d])=>{ this.time.delayedCall(t*1000,()=>{ if(!this.spr) return; this.spr._busy=false; this.spr._st=null; const k=animFor(this,it.base,st)||(st==='move'?animFor(this,it.base,'walk'):null);
         this.state.setText(k?`${st}  (${k}, ${this.anims.get(k).frames.length}f @ ${this.anims.get(k).frameRate}fps)`:`${st}  (no sheet — still sprite)`);

@@ -9,7 +9,10 @@ function fitBox(key){ const base = key && key.replace(ANIM_SUFFIX,''), b = base!
   if(b && b.size && b.fit!==false) return b; return SPRITE_MANIFEST[key]; }
 function fitFactor(obj){ const m = fitBox(obj.texture && obj.texture.key); if(!m||m.fit===false||!m.size||!obj.frame) return 1;
   return Math.min(m.size[0]/obj.frame.realWidth, m.size[1]/obj.frame.realHeight); }
-function refit(obj){ const old = obj._fit||1, nf = fitFactor(obj); if(Math.abs(nf-old)<1e-6) return obj;
+// optional manifest 'outline' (colour) on a base sprite: soft rim glow for low-contrast art (WebGL preFX; no-op on Canvas)
+function applyOutline(obj){ if(!obj.preFX) return; const m=fitBox(obj.texture&&obj.texture.key); const col=m&&m.outline; if(obj._outlined===col) return; if(obj._glow){ obj.preFX&&obj.preFX.remove(obj._glow); obj._glow=null; }
+  obj._outlined=col; if(col && obj.preFX) obj._glow=obj.preFX.addGlow(Phaser.Display.Color.HexStringToColor(col).color,2,0,false,.1,10); }
+function refit(obj){ applyOutline(obj); const old = obj._fit||1, nf = fitFactor(obj); if(Math.abs(nf-old)<1e-6) return obj;
   obj._fit = nf; obj.scaleX = obj.scaleX/old*nf; obj.scaleY = obj.scaleY/old*nf; return obj; }
 for(const C of [Phaser.GameObjects.Image, Phaser.GameObjects.Sprite]){ const P = C.prototype, oScale = P.setScale, oFrame = P.setFrame;
   P.setScale = function(x,y){ if(y===undefined) y=x; const b=this._fit||1; return oScale.call(this,x*b,y*b); };   // scales are relative to the fitted size

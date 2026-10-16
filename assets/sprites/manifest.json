@@ -107,7 +107,9 @@
     56
    ],
    "orient": "front view, body facing RIGHT (sprite is flipped when moving left); transparent bg",
-   "desc": "Character A12 Mr.Spicy"
+   "desc": "Character A12 Mr.Spicy",
+   "outline": "#ffd9a0",
+   "note_outline": "low-contrast palette (all dark red/orange): engine adds a soft warm rim so he never reads as a silhouette"
   },
   "e_E1": {
    "file": "e_E1.png",
@@ -238,11 +240,12 @@
   "petmaster": {
    "file": "petmaster.png",
    "size": [
-    60,
-    70
+    110,
+    110
    ],
    "orient": "front view, upright",
-   "desc": "Boss E15 The Pet Master"
+   "desc": "Boss E15 The Pet Master",
+   "note_size": "256px frames include the fire hoop; 60x70 shrank the character to ~35px"
   },
   "cousin1": {
    "file": "cousin1.png",
