@@ -395,7 +395,10 @@ class Game extends Phaser.Scene {
   // boss fights: pull the camera toward the boss and zoom out (down to ZOOM_MIN_BOSS) so player and boss stay on screen together
   bossCam(dt){ const cam=this.cameras.main, base=this.baseZoom||CAM_ZOOM, bs=this.enemies.filter(e=>e.boss&&!e.dead); this.bossDying=(this.bossDying||[]).filter(d=>d.until>this.time.now); let z=base, ox=0, oy=0;
     if(bs.length){ let mx=0,my=0; for(const b of bs){ const dx=b.x-this.pl.x, dy=b.y-this.pl.y; if(Math.abs(dx)>Math.abs(mx)) mx=dx; if(Math.abs(dy)>Math.abs(my)) my=dy; }
-      const top=HUD_SAFE.top, bot=HUD_SAFE.bottom; ox=-mx*.5; z=Math.min(base, Math.max(base*.45, Math.min(W/(Math.abs(mx)+420), (H-top-bot)/(Math.abs(my)+300)))); oy=-my*.5 + (bot-top)/2/z; }   // BUG-032: frame both inside the HUD-safe band
+      const top=HUD_SAFE.top, bot=HUD_SAFE.bottom; z=Math.min(base, Math.max(base*.45, Math.min(W/(Math.abs(mx)+420), (H-top-bot)/(Math.abs(my)+300))));
+      /* when both can't fit, lean the framing toward the boss so it stays inside the HUD-safe band (Star Lord: truck at the top edge after a ram) */
+      const hx=W/2/z-200, hy=(H-top-bot)/2/z-150, wx=Math.abs(mx)>1?Math.max(.5,1-hx/Math.abs(mx)):.5, wy=Math.abs(my)>1?Math.max(.5,1-hy/Math.abs(my)):.5;
+      ox=-mx*Math.min(wx,1); oy=-my*Math.min(wy,1) + (bot-top)/2/z; }   // BUG-032: frame both inside the HUD-safe band
     cam.useBounds = !(bs.length||this.bossDying.length);   /* world bounds clamped the boss framing (truck pushed to the top edge); free the camera during boss fights */
     const dd=this.bossDying[0]; if(dd&&!bs.length){ /* boss death: stop following, centre on the death spot until the fade ends */
       if(cam._follow){ this._camLock=1; cam.stopFollow(); } const kk=1-Math.exp(-dt*9); cam.setZoom(cam.zoom+(base*.9-cam.zoom)*kk); cam.centerOn(cam.midPoint.x+(dd.x-cam.midPoint.x)*kk, cam.midPoint.y+(dd.y-cam.midPoint.y)*kk); return; }
