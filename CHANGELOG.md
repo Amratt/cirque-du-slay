@@ -21,3 +21,6 @@
 
 ### Art (Drax)
 - Hit and death sheets for all 29 characters, cleaned windups, a rebuilt Elephant and Pet Master, and painted-fire deaths.
+
+## Oct 16 (feel)
+- Camera zoom is 1.8x on desktop (was 1.6x in the first ARENA_V2 push; raised so the player reads ~60 px tall), 2.0x on touch screens. HUD is drawn unzoomed on a second camera.

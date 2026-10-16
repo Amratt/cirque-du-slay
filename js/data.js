@@ -8,7 +8,7 @@ const ARENA_V2 = true;        // BUG-024 (approved by Star Lord): single ring fl
 const PROJ_BY = { E1:'proj_pie',E2:'proj_pie',E3:'proj_pie',E4:'proj_pie', E8:'proj_ember',E9:'proj_ember', E11:'proj_ball',E12:'proj_ball', E14:'proj_peanut',
   E10:'proj_pin', E20:'proj_ring', cousin1:'proj_ring', cousin2:'proj_ring', _ranged:'proj_pin', _any:'proj_confetti' };
 const PROJ_MODE = { proj_pie:['face'], proj_pin:['spin'], proj_peanut:['spin'], proj_ember:['anim','proj_ember_anim'], proj_confetti:['anim','proj_confetti_anim'], proj_ring:['anim','proj_ring_spin'], proj_ball:['anim','proj_ball_spin'] };
-const CAM_ZOOM = ARENA_V2 ? 1.8 : 1;     // desktop gameplay zoom; HUD stays 1:1 on its own camera
+const CAM_ZOOM = ARENA_V2 ? 1.8 : 1;     // desktop gameplay zoom (intended: raised from 1.6 on Oct 16 so the player reads ~60 px tall on a 720p view); HUD stays 1:1 on its own camera
 const CAM_ZOOM_MOBILE = 2.0;              // touch / short screens (canvas is scaled down ~0.55 there)
 const PLAYER_SCALE = ARENA_V2 ? 1.3 : 1;  // player ~60 px tall on a 720p desktop view; hit radius follows
 const ENEMY_SCALE = ARENA_V2 ? 1.05 : 1;   // regular enemies + their hit radius
