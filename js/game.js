@@ -174,13 +174,13 @@ class Game extends Phaser.Scene {
         const b=this.pool.img((w.special&&w.ptex&&this.textures.exists(w.ptex))?w.ptex:'bullet',x,y,12).setTint(w.proj||(n>1?0xffa040:0xffff80)).setRotation(a); if(n>1) b.setScale(.8);
         this.bullets.push({spr:b,x,y,vx:Math.cos(a)*720,vy:Math.sin(a)*720,life:(s.rng*U_RANGE+40)/720,s,dmgMul:n>1?1/n*1.6:1}); } } }
   hit(e,s,ang,mul=1){ if(e.dead) return; if(e.inv){ this.floatText(e.x,e.y-e.r,'IMMUNE',0xaaaaaa,14); return; }
-    const crit = Math.random()<s.cc; let d = s.dmg*mul*(crit?s.cd:1)*(e.vulnMul||1); e.hp -= d; if(!e.boss||this.time.now-(e.lastFlash||0)>250){ e.flash=.06; e.lastFlash=this.time.now; } e.squash=.12;   // BUG-006: bosses pulse a red tint, max 4x/s. BUG-031: squash was swallowed by this comment
+    const crit = Math.random()<s.cc; let d = s.dmg*mul*(crit?s.cd:1)*(e.vulnMul||1); e.hp -= d; if(!e.boss||this.time.now-(e.lastFlash||0)>250){ e.flash=FEEL.hitFlash; e.lastFlash=this.time.now; } e.squash=.12;   // BUG-006: bosses pulse a red tint, max 4x/s. BUG-031: squash was swallowed by this comment
     if(e.base && e.hasHit===undefined) e.hasHit=hasAnim(this,e.base,'hit');
     if(e.base && e.hasHit && !(e.spr._busy && e.spr._st!=='hit')) setAnim(this,e.spr,e.base,'hit');   // never interrupts a windup/death
     this.burst(e.x,e.y,crit?0xffe000:0xffffff,crit?5:2,160);   // (was swallowed by the comment above, like BUG-031)
-    if(!e.boss) e.stag=.09;   // stagger: brief slow-down on top of knockback
-    if(this.time.now-(this.lastHitShake||0)>90){ this.lastHitShake=this.time.now; this.cameras.main.shake(45,e.boss?.0025:.0012); }
-    if(crit||e.boss) this.stopFor(e.boss?.04:.03);
+    if(!e.boss) e.stag=FEEL.stagger;   // stagger: brief slow-down on top of knockback
+    if(this.time.now-(this.lastHitShake||0)>90){ this.lastHitShake=this.time.now; this.cameras.main.shake(45,e.boss?FEEL.hitShake*2:FEEL.hitShake); }
+    if(crit||e.boss) this.stopFor(e.boss?FEEL.bossHitStop:.03);
     if(Math.random()<s.ls){ this.pl.hp=Math.min(this.pl.max,this.pl.hp+2); }
     if(!e.boss){ e.kx += Math.cos(ang)*s.kb*60; e.ky += Math.sin(ang)*s.kb*60; }
     this.floatText(e.x+Phaser.Math.Between(-8,8),e.y-e.r,Math.round(d)+'',crit?0xffe000:0xffffff,crit?20:15);
@@ -210,8 +210,12 @@ class Game extends Phaser.Scene {
     else { const n = Phaser.Math.Between(e.def.rb[0],e.def.rb[1]); for(let i=0;i<n;i++) this.dropPickup('balloon',e.x+Phaser.Math.Between(-14,14),e.y+Phaser.Math.Between(-14,14));
       const r=Math.random(); if(r<.10) this.dropPickup('popcorn',e.x,e.y); else if(r<.25) this.dropPickup('candy',e.x,e.y); }
     if(e.big||e.boss) this.cameras.main.shake(120,.006); this.stopFor(e.boss?.12:.02);
-    if(e.base && hasAnim(this,e.base,'death')){ e.spr._busy=false; setAnim(this,e.spr,e.base,'death'); e.spr.clearTint(); const sp=e.spr; sp.once('animationcomplete',()=>{ this.burst(sp.x,sp.y,0xffffff,e.boss?30:8,e.boss?200:70,2,e.boss?900:500); this.tweens.add({targets:sp,alpha:0,y:sp.y+4,delay:e.boss?1200:700,duration:450,onComplete:()=>sp.destroy()}); }); sp.setDepth(8.5); }   // hold the last death frame, then fade (below live enemies)
-    else this.tweens.add({targets:e.spr,alpha:0,scaleX:e.spr.scaleX*1.5,scaleY:e.spr.scaleY*.3,duration:250,onComplete:()=>e.spr.destroy()}); }
+    this.dieOnScreen(e); }
+  // death without rewards (wave clear / boss summons): death sheet, hold, fade - never an instant pop. Also used by killEnemy.
+  dieOnScreen(e){ e.dead=true; const sp=e.spr; if(!sp||!sp.active) return; sp.clearTint(); this.tweens.killTweensOf(sp); sp.setDepth(8.5);
+    const fade=()=>this.tweens.add({targets:sp,alpha:0,y:sp.y+4,delay:e.boss?FEEL.deathHoldBoss:FEEL.deathHold,duration:FEEL.deathFade,onComplete:()=>sp.destroy()});
+    if(e.base&&hasAnim(this,e.base,'death')){ sp._busy=false; sp._st=null; setAnim(this,sp,e.base,'death'); sp.once('animationcomplete',()=>{ this.burst(sp.x,sp.y,0xffffff,e.boss?30:8,e.boss?200:70,2,e.boss?900:500); fade(); }); }
+    else this.tweens.add({targets:sp,alpha:0,scaleX:sp.scaleX*1.5,scaleY:sp.scaleY*.3,duration:FEEL.deathFade,onComplete:()=>sp.destroy()}); }
   dropPickup(kind,x,y){ const s=this.add.image(x,y,kind).setDepth(8); if(kind==='balloon') this.tweens.add({targets:s,y:y-6,yoyo:true,repeat:-1,duration:600+Math.random()*300,ease:'Sine.inOut'});
     this.pickups.push({kind,spr:s,x,y}); }
   collect(p){ p.spr.destroy(); p.dead=true;
@@ -239,15 +243,15 @@ class Game extends Phaser.Scene {
         else if(e.ai==='burst'){ const cyc=e.t%2; const m = cyc>1.5?4.2:.5; vx=Math.cos(a)*e.spd*m; vy=Math.sin(a)*e.spd*m; if(cyc>1.3&&cyc<1.5) e.spr.x+=Phaser.Math.Between(-2,2); }
         else if(e.ai==='erratic'){ if(!e.dir||e.t%0.7<dt) e.dir = a + Phaser.Math.FloatBetween(-1.6,1.6); vx=Math.cos(e.dir)*e.spd; vy=Math.sin(e.dir)*e.spd;
           e.phase+=dt; if(e.phase>2.8 && d<550){ e.phase=0; this.lob(e.x,e.y,p.x+Phaser.Math.Between(-90,90),p.y+Phaser.Math.Between(-90,90),e.dmg); } }
-        const sg=e.stag>0?(e.stag-=dt,.25):1; e.x += (vx*sg+e.kx)*dt; e.y += (vy*sg+e.ky)*dt; e.kx*=.82; e.ky*=.82;
+        const sg=e.stag>0?(e.stag-=dt,FEEL.staggerSlow):1; e.x += (vx*sg+e.kx)*dt; e.y += (vy*sg+e.ky)*dt; e.kx*=.82; e.ky*=.82;
         this.clampArena(e, e.r);
         if(d<e.r+PLAYER_R) this.hurtPlayer(e.dmg);
         const rot = e.ai==='chase'&&e.id>'E10'||e.id==='E11'||e.id==='E12' ? 0 : Math.sin(this.time.now/150+e.x)*.15; // side-to-side
         if(Math.abs(vx)>4){ const f=vx<0; if(f!==e.spr.flipX) e.squash=Math.max(e.squash||0,.1); e.spr.setFlipX(f); }   // face movement direction; squash on turn
         const ph=this.time.now/130+e.x*.01, sq=(e.squash>0?(e.squash-=dt,.18):0), st=Math.sin(ph*2)*.06;   // walk squash & stretch + hit squash
         if(e.spawnT>0){ e.spawnT-=dt; e.spr.setScale(1-e.spawnT*3.6); } else e.spr.setScale(1+st+sq,1-st-sq);
-        const step=this.time.now/1000*Math.PI*(e.def.walkHz||3.2)+e.x*.01;   // procedural walk bob (2-4 px) + tilt, synced to the ~10 fps walk sheet
-        e.spr.setPosition(e.x, e.y - Math.abs(Math.sin(step))*(e.hasWalk?1.2:3)).setRotation(rot*(e.hasWalk?.2:.5) + Math.sin(step)*(e.hasWalk?.025:.07)); }   // subtle: the walk sheets already bounce
+        const step=this.time.now/1000*Math.PI*(e.def.walkHz||FEEL.stepHz)+e.x*.01;   // procedural walk bob (2-4 px) + tilt, synced to the ~10 fps walk sheet
+        e.spr.setPosition(e.x, e.y - Math.abs(Math.sin(step))*(e.hasWalk?FEEL.bobPx:FEEL.bobPxNoSheet)).setRotation(rot*.3 + Math.sin(step)*FEEL.tilt); }   // subtle: the walk sheets already bounce
       if(e.flash>0){ e.flash-=dt; if(e.boss) e.spr.setTint(0xff9a9a); else e.spr.setTintFill(0xffffff); } else if(!e.inv) e.spr.clearTint(); }   // ~60 ms white flash, then cleared
     // cheap separation
     const L=this.enemies; for(let i=0;i<L.length;i++){ const a=L[i]; if(a.dead||a.boss) continue; for(let j=i+1;j<L.length;j++){ const b=L[j]; if(b.dead||b.boss) continue;
@@ -279,7 +283,7 @@ class Game extends Phaser.Scene {
   }
   updateWarnings(dt){ for(const w of this.warnings){ w.t-=dt; if(w.t<=0){ w.spr.destroy(); w.done=true; if(this.state==='wave') this.spawnEnemy(w.id,w.x,w.y); } } this.warnings=this.warnings.filter(w=>!w.done); }
   endWave(){ if(this.state==='shop'||this.over) return; this.state='cleared';
-    for(const e of this.enemies){ if(!e.dead){ e.dead=true; const sp=e.spr; sp.clearTint(); if(e.base&&hasAnim(this,e.base,'death')){ sp._busy=false; setAnim(this,sp,e.base,'death'); sp.once('animationcomplete',()=>this.tweens.add({targets:sp,alpha:0,delay:500,duration:400,onComplete:()=>sp.destroy()})); } else this.tweens.add({targets:sp,alpha:0,duration:350,onComplete:()=>sp.destroy()}); } } this.enemies=[];   // wave clear: remaining enemies die on screen, never pop out
+    for(const e of this.enemies) if(!e.dead) this.dieOnScreen(e); this.enemies=[];   // wave clear: remaining enemies die on screen, never pop out
     this.warnings.forEach(w=>w.spr.destroy()); this.warnings=[]; this.eshots.forEach(s=>s.pooled?this.pool.release(s.spr):s.spr.destroy()); this.eshots=[]; this.hazards.forEach(h=>h.spr&&h.spr.destroy()); this.hazards=[];
     for(const p of this.pickups) if(!p.dead&&p.kind==='balloon') this.collect(p); this.pickups.forEach(p=>!p.dead&&p.spr.destroy()); this.pickups=[];
     if(this.run.wave>=20){ this.finish(true); return; }
@@ -344,7 +348,7 @@ class Game extends Phaser.Scene {
         if(e.t>6.6&&!e.wu){ e.wu=1; this.windup(e); }
         if(e.t>7){ e.wu=0; this.bossAttack(e,'attack_summon'); const n=3+Math.floor(Math.random()*3); for(let i=0;i<n;i++){ const id=Phaser.Utils.Array.GetRandom(['E11','E12','E13','E14']); const s=this.spawnEnemy(id,e.x+Phaser.Math.Between(-60,60),e.y+Phaser.Math.Between(-60,60)); this.burst(s.x,s.y,0xff6000,8,100); }
           e.st='tp'; e.t=0; } }
-      else if(e.st==='tp'){ e.inv=true; if(e.t>.8){ this.burst(e.x,e.y,0xff4000,20,180); const aa=Math.random()*Math.PI*2, rr=Math.random()*R*.7; e.x=CX+Math.cos(aa)*rr; e.y=CY+Math.sin(aa)*rr; this.burst(e.x,e.y,0xff4000,20,180); e.st='charge'; e.t=0; } }
+      else if(e.st==='tp'){ e.inv=true; if(e.t>.8){ this.burst(e.x,e.y,0xff4000,20,180); const aa=Math.random()*Math.PI*2, rr=Phaser.Math.Between(PETMASTER_TP[0],PETMASTER_TP[1]); e.x=this.pl.x+Math.cos(aa)*rr; e.y=this.pl.y+Math.sin(aa)*rr; this.clampArena(e,60); this.burst(e.x,e.y,0xff4000,20,180); e.st='charge'; e.t=0; } }
       e.spr.setPosition(e.x,e.y).setAlpha(e.inv?.6:1); }
     if(e.id==='E20'){ // The Unknown Cousins
       const rage = e.rage>0; if(rage){ e.rage-=dt; e.spr.setTint(0xff5050); } else if(!e.flash) e.spr.clearTint();
@@ -370,7 +374,7 @@ class Game extends Phaser.Scene {
     this.say(Lore.boss(e.id,'death'),'#ffd0a0',3400); this.fragFound(Lore.give(Lore.gatedFor(e.id)));
     Save.save(); this.showBanner(`+${B.gt} GOLDEN TICKET${B.gt>1?'S':''}`,GOLD); Sfx.bossDeath(); this.time.delayedCall(500,()=>Sfx.ticket());
     // pet master summons die with him
-    for(const x of this.enemies) if(!x.dead&&!x.boss){ x.dead=true; this.burst(x.x,x.y,0xffffff,5,60,2); x.spr.destroy(); }
+    for(const x of this.enemies) if(!x.dead&&!x.boss) this.dieOnScreen(x);
     this.time.delayedCall(900,()=>{ this.setBossBars([]); this.endWave(); }); }
   // ---------------------------------------------------------------- main loop
   // boss fights: pull the camera toward the boss and zoom out (down to ZOOM_MIN_BOSS) so player and boss stay on screen together
@@ -389,12 +393,12 @@ class Game extends Phaser.Scene {
     const dt=Math.min(delta/1000,.05); this.fx.clear(); const p=this.pl;
     if(!this.over){ let tx=0,ty=0; if(p.stun>0) p.stun-=dt; else { const v=this.moveVec(); tx=v.x*p.ms; ty=v.y*p.ms; }
       const k=1-Math.exp(-dt*((tx||ty)?14:10)); p.vx+=(tx-p.vx)*k; p.vy+=(ty-p.vy)*k;      // acceleration / easing
-      p.x+=p.vx*dt; p.y+=p.vy*dt; if(Math.abs(p.vx)>8){ const nf=Math.sign(p.vx); if(nf!==p.face) p.sq=.12; p.face=nf; }
+      p.x+=p.vx*dt; p.y+=p.vy*dt; if(Math.abs(p.vx)>8){ const nf=Math.sign(p.vx); if(nf!==p.face) p.sq=FEEL.turnSquash; p.face=nf; }
       this.clampArena(p,18); p.ifr-=dt; const sp=Math.hypot(p.vx,p.vy), moving=sp>20;
       setAnim(this,this.player,this.pkey,moving?'walk':'idle');
-      const walkAnim=hasAnim(this,this.pkey,moving?'walk':'idle'); const ph=time/1000*Math.PI*3.4, bob = moving ? Math.abs(Math.sin(ph))*(walkAnim?1.2:3.5) : 0;   // step-synced bounce, subtle over the walk sheet
+      const walkAnim=hasAnim(this,this.pkey,moving?'walk':'idle'); const ph=time/1000*Math.PI*FEEL.stepHz, bob = moving ? Math.abs(Math.sin(ph))*(walkAnim?FEEL.bobPx:FEEL.bobPxNoSheet) : 0;   // step-synced bounce, subtle over the walk sheet
       if(p.sq>0) p.sq-=dt; const br = (p.sq>0?-.14*p.sq/.12:0) + (moving? Math.sin(ph*2)*.04 : Math.sin(time/400)*.02);
-      this.player.setPosition(p.x,p.y-bob).setFlipX(p.face<0).setScale(1-br,1+br).setRotation(moving? p.vx/p.ms*.04 + Math.sin(ph)*(walkAnim?.02:.06) : 0);
+      this.player.setPosition(p.x,p.y-bob).setFlipX(p.face<0).setScale(1-br,1+br).setRotation(moving? p.vx/p.ms*.05 + Math.sin(ph)*FEEL.tilt : 0);
       if(p.stun>0) this.player.setTint(0x8888ff); }
     this.bossCam(dt);
     if(this.state==='wave'){ this.timeLeft-=dt; this.updateSpawning(dt); if(this.timeLeft<=0) this.endWave(); }

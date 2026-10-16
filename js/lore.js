@@ -35,7 +35,8 @@ function loreCard(sc,title,body,opt={}){
 // unlock reveal: one card per newly freed character, using its unlockLine
 function showReveals(sc,run){ const q=(run&&run.reveals)||[]; if(!q.length) return; const id=q.shift(), c=CHARS.find(c=>c.id===id), L=Lore.char(id);
   sc.revealOpen=true; Sfx.ticket(); const card=loreCard(sc,`New character unlocked: ${L.name||c.name}`,`${L.unlockLine||''}\n\n${L.title||''}`,{w:860,h:380,btn:'Welcome!',depth:3000,onClose:()=>{ sc.revealOpen=false; showReveals(sc,run); }});
-  const im=sc.add.image(W/2,H/2+40,'p_'+id); im.setScale(Math.min(110/im.width,110/im.height)); card.add(im); im.y=H/2+50; sc.tweens.add({targets:im,scale:im.scale*1.15,yoyo:true,repeat:-1,duration:500}); }
+  const im=sc.add.sprite(W/2,H/2+50,'p_'+id); refit(im); setAnim(sc,im,'p_'+id,'idle'); im.setScale(1); const k=Math.min(130/im.displayHeight,130/im.displayWidth); im.setScale(k);   // fitted box -> ~130 px portrait (raw image width made it a speck)
+  card.add(im); sc.tweens.add({targets:im,scaleX:im.scaleX*1.08,scaleY:im.scaleY*1.08,yoyo:true,repeat:-1,duration:500}); }
 
 // ---------------------------------------------------------------- Story cards: intro / win / loss (skippable)
 class Story extends Phaser.Scene {

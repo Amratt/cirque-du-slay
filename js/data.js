@@ -13,6 +13,11 @@ const CAM_ZOOM_MOBILE = 2.0;              // touch / short screens (canvas is sc
 const PLAYER_SCALE = ARENA_V2 ? 1.3 : 1;  // player ~60 px tall on a 720p desktop view; hit radius follows
 const ENEMY_SCALE = ARENA_V2 ? 1.05 : 1;   // regular enemies + their hit radius
 const BOSS_SCALE = ARENA_V2 ? 1.0 : 1;   // bosses + their hit radius
+// game feel (world px / radians / seconds / ms). Bob is on top of the walk sheets' own bounce; at zoom 1.8 1 world px = 1.8 screen px
+const FEEL = { bobPx:3, bobPxNoSheet:4, tilt:.09, stepHz:3.4, turnSquash:.14, hitFlash:.1, stagger:.12, staggerSlow:.2, hitShake:.0018, bossHitStop:.04,
+  deathHold:700, deathHoldBoss:1400, deathFade:450 };
+// Pet Master teleport lands this far from the player (was anywhere in 70% of the arena, which strands short-range builds; Nebula: 205 s shotgun fight)
+const PETMASTER_TP = [260,460];
 // ring dressing (Drax decals; blend from manifest, these override strength)
 const DRESS = { scatterCount:170, scatterAlpha:.72, scatterSize:[44,70], ringAlpha:.8, ringSize:1.15,
   spotCount:3, spotAlpha:.55, spotTint:0xffd8a0, spotSize:640, floorTint:0xb4aaa0, vignetteAlpha:.7 };    // BUG-024: player drawn this much larger than its manifest box; hit radius scales with it
