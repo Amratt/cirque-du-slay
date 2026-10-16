@@ -23,8 +23,6 @@ class Boot extends Phaser.Scene {
       // every spritesheet in the manifest becomes an animation with the same key (frames/fps from manifest); _hit/_death/_attack play once
       for(const [k,v] of Object.entries(man)) if(v.frameWidth&&this.textures.exists(k)&&!this.anims.exists(k)){
         let n = v.frameCount || (this.textures.get(k).frameTotal-1);
-        // windup sheets whose last frame is a baked solid-red flash: drop that frame; the engine pulses a red multiply-tint instead (keeps detail, no red block)
-        if(/_windup$/.test(k) && n>2 && bakedRed(this,k,n-1)){ n--; WINDUP_FLASH[k]=1; }
         this.anims.create({key:k,frames:framesFor(this,k,n),frameRate:v.frameRate||8,repeat:(v.loop===true)?-1:(v.loop===false)?0:(ONE_SHOT.test(k)?0:-1)}); }
       Lore.apply(this.cache.json.get('lore')); this.scene.start(QS.has('showcase')?'Showcase':'Menu'); });
     this.load.start();
@@ -299,14 +297,14 @@ class Showcase extends Phaser.Scene {
     const it=this.list[this.i]; SHOWCASE.idx=this.i; this.title.setText(it.group); this.name.setText(it.label); this.prog.setText(`${this.i+1} / ${this.list.length}`);
     const m=SPRITE_MANIFEST[it.base], box=(m&&m.size)?m.size:[64,64]; this.spr=this.add.sprite(W/2,H/2+20,it.base).setOrigin(.5,.5);
     const fh=k=>{ const a=k&&this.anims.get(k); return a?a.frames[0].frame.realHeight:256; };   // never upscale art beyond its native frame size (no resample blur)
-    const target=Math.min(380, Math.max(it.group==='Enemies'?260:0, 1.0*Math.max(...it.seq.map(([st])=>fh(animFor(this,it.base,st)||(st==='move'?animFor(this,it.base,'walk'):null))))));
+    const target=Math.min(380, Math.max(it.group==='Enemies'?Math.min(260,2*fh(animFor(this,it.base,'walk'))):0, 1.0*Math.max(...it.seq.map(([st])=>fh(animFor(this,it.base,st)||(st==='move'?animFor(this,it.base,'walk'):null))))));
     this.spr.setScale(target/Math.max(box[0],box[1]));
     let t=0; it.seq.forEach(([st,d])=>{ this.time.delayedCall(t*1000,()=>{ if(!this.spr) return; this.spr._busy=false; this.spr._st=null; const k=animFor(this,it.base,st)||(st==='move'?animFor(this,it.base,'walk'):null);
         this.state.setText(k?`${st}  (${k}, ${this.anims.get(k).frames.length}f @ ${this.anims.get(k).frameRate}fps)`:`${st}  (no sheet — still sprite)`);
         this.spr.clearTint(); this.spr.off('animationcomplete');
         if(k){ this.spr.play(k,true); refit(this.spr);
-          if(st==='hit'){ this.spr.play({key:k,repeat:2,repeatDelay:110}); }
-          if(st==='windup'){ windupLean(this,this.spr,300); const back=animFor(this,it.base,it.base==='truck'?'move':'idle'); this.spr.play({key:k,repeat:1}); this.spr.once('animationcomplete',()=>{ if(!this.spr) return; windupFlash(this,this.spr,k); if(back){ this.spr.play(back); refit(this.spr); } }); }   // telegraph twice (ends on the sheet's baked red flash), then back to the loop
+          if(st==='hit'){ this.spr.play({key:k,repeat:2,repeatDelay:110});  }
+          if(st==='windup'){ const back=animFor(this,it.base,it.base==='truck'?'move':'idle'); this.spr.play({key:k,repeat:1}); this.spr.once('animationcomplete',()=>{ if(!this.spr) return; if(back){ this.spr.play(back); refit(this.spr); } }); }   // telegraph twice (ends on the sheet's baked red flash), then back to the loop
  }   // death plays once and holds its last frame
         else { this.spr.anims.stop(); this.spr.setTexture(it.base); } }); t+=d; });
     this.time.delayedCall(t*1000+300,()=>this.next()); }
