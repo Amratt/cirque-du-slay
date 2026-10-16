@@ -86,6 +86,10 @@ function curtains(sc,bgKey,alpha=.55){ const g = sc.add.graphics(); g.fillStyle(
 // ---- Scene transitions: fade out -> start; every scene fades/slides in via enterFx()
 // BUG-030: DisplayList.removeAll(true) means skipCallback in Phaser 3.8x, NOT destroy, so old interactive buttons survived as invisible ghosts.
 // clearUI destroys every child (and its tweens/input) before a rebuild.
+// scale any Image/Sprite to fit a w x h box on screen (works with fitted sprites: setScale is relative to the fitted size)
+function fitTo(im,w,h){ im.setScale(1); const k=Math.min(w/im.displayWidth,h/im.displayHeight); im.setScale(k); return im; }
+// Drax's hero portraits (manifest 'portraits'), falling back to the in-game sprite
+function heroArt(sc,id,kind='portrait'){ const k=kind+'_'+id; return sc.textures.exists(k)&&!(window.ASSET_MISSING||[]).includes(k) ? k : 'p_'+id; }
 function clearUI(sc){ const list=sc.children.list.slice(); for(const o of list){ sc.tweens.killTweensOf(o); if(o.list) o.list.forEach(c=>sc.tweens.killTweensOf(c)); o.destroy(); }
   // Phaser 3.80 quirk: objects created and destroyed within one frame linger in the input plugin's queues; purge dead entries
   const ip=sc.input; for(const q of ['_list','_pendingInsertion','_pendingRemoval','_over','_draggable']){ const v=ip[q]; if(Array.isArray(v)){ const keep=v.filter(o=>o&&o.scene); v.length=0; v.push(...keep); } } }

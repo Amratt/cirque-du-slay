@@ -143,7 +143,7 @@ class CharSelect extends Phaser.Scene {
       const r = panel(this,x,y,124,170).setInteractive({useHandCursor:true}); if(c.id!==this.sel) r.setTint(0x777777);
       r.on('pointerover',()=>{ if(c.id!==this.sel) r.clearTint(); }); r.on('pointerout',()=>{ if(c.id!==this.sel) r.setTint(0x777777); });
       r.on('pointerup',()=>{ Sfx.click(); this.sel=c.id; if(un){ Save.d.selected=c.id; Save.save(); } this.build(); });
-      const im = this.add.image(x,y-18,'p_'+c.id).setScale(1.45); if(c.id===this.sel) this.tweens.add({targets:im,y:y-24,yoyo:true,repeat:-1,duration:500,ease:'Sine.inOut'}); if(!un) im.setTint(0x222222);
+      const pk=heroArt(this,c.id), im = fitTo(this.add.image(x,y-22,pk), 110, pk==='p_'+c.id?81:110); if(c.id===this.sel) this.tweens.add({targets:im,y:y-24,yoyo:true,repeat:-1,duration:500,ease:'Sine.inOut'}); if(!un) im.setTint(0x222222);
       txt(this,x,y+45,c.name,14,'#fff',{wordWrap:{width:115}});
       if(!un){ txt(this,x,y-25,'🔒',30); txt(this,x,y+68,c.unlock==='gt'?`${c.gt} GT${c.usd?' / $'+c.usd:''}`:`Beat ${c.unlock}`,13,GOLD); } });
     button(this,W/2-170,H-60,300,56,'Upgrade Weapon',()=>goScene(this,'Upgrade',{charId:ch.id}),{enabled:unlocked,size:22});

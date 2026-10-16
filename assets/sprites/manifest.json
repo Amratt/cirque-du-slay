@@ -2480,6 +2480,246 @@
    "fit": false,
    "orient": "decal",
    "desc": "stretch to screen, top layer, scrollFactor 0"
+  },
+  "portrait_A1": {
+   "file": "portraits/portrait_A1.png",
+   "size": [
+    256,
+    256
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A1": {
+   "file": "portraits/card_A1.png",
+   "size": [
+    512,
+    768
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A2": {
+   "file": "portraits/portrait_A2.png",
+   "size": [
+    256,
+    256
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A2": {
+   "file": "portraits/card_A2.png",
+   "size": [
+    512,
+    768
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A3": {
+   "file": "portraits/portrait_A3.png",
+   "size": [
+    256,
+    256
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A3": {
+   "file": "portraits/card_A3.png",
+   "size": [
+    512,
+    768
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A4": {
+   "file": "portraits/portrait_A4.png",
+   "size": [
+    256,
+    256
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A4": {
+   "file": "portraits/card_A4.png",
+   "size": [
+    512,
+    768
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A5": {
+   "file": "portraits/portrait_A5.png",
+   "size": [
+    256,
+    256
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A5": {
+   "file": "portraits/card_A5.png",
+   "size": [
+    512,
+    768
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A6": {
+   "file": "portraits/portrait_A6.png",
+   "size": [
+    256,
+    256
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A6": {
+   "file": "portraits/card_A6.png",
+   "size": [
+    512,
+    768
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A7": {
+   "file": "portraits/portrait_A7.png",
+   "size": [
+    256,
+    256
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A7": {
+   "file": "portraits/card_A7.png",
+   "size": [
+    512,
+    768
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A8": {
+   "file": "portraits/portrait_A8.png",
+   "size": [
+    256,
+    256
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A8": {
+   "file": "portraits/card_A8.png",
+   "size": [
+    512,
+    768
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A9": {
+   "file": "portraits/portrait_A9.png",
+   "size": [
+    256,
+    256
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A9": {
+   "file": "portraits/card_A9.png",
+   "size": [
+    512,
+    768
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A10": {
+   "file": "portraits/portrait_A10.png",
+   "size": [
+    256,
+    256
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A10": {
+   "file": "portraits/card_A10.png",
+   "size": [
+    512,
+    768
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A11": {
+   "file": "portraits/portrait_A11.png",
+   "size": [
+    256,
+    256
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A11": {
+   "file": "portraits/card_A11.png",
+   "size": [
+    512,
+    768
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A12": {
+   "file": "portraits/portrait_A12.png",
+   "size": [
+    256,
+    256
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A12": {
+   "file": "portraits/card_A12.png",
+   "size": [
+    512,
+    768
+   ],
+   "fit": false,
+   "orient": "portrait",
+   "desc": "full body, dark vignette bg (opaque)"
   }
  },
  "projectiles": {
@@ -2659,6 +2899,200 @@
    "blend": "multiply",
    "alpha": 0.7,
    "note": "stretch to screen, top layer, scrollFactor 0"
+  }
+ },
+ "portraits": {
+  "portrait_A1": {
+   "file": "portraits/portrait_A1.png",
+   "size": [
+    256,
+    256
+   ],
+   "what": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A1": {
+   "file": "portraits/card_A1.png",
+   "size": [
+    512,
+    768
+   ],
+   "what": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A2": {
+   "file": "portraits/portrait_A2.png",
+   "size": [
+    256,
+    256
+   ],
+   "what": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A2": {
+   "file": "portraits/card_A2.png",
+   "size": [
+    512,
+    768
+   ],
+   "what": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A3": {
+   "file": "portraits/portrait_A3.png",
+   "size": [
+    256,
+    256
+   ],
+   "what": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A3": {
+   "file": "portraits/card_A3.png",
+   "size": [
+    512,
+    768
+   ],
+   "what": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A4": {
+   "file": "portraits/portrait_A4.png",
+   "size": [
+    256,
+    256
+   ],
+   "what": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A4": {
+   "file": "portraits/card_A4.png",
+   "size": [
+    512,
+    768
+   ],
+   "what": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A5": {
+   "file": "portraits/portrait_A5.png",
+   "size": [
+    256,
+    256
+   ],
+   "what": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A5": {
+   "file": "portraits/card_A5.png",
+   "size": [
+    512,
+    768
+   ],
+   "what": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A6": {
+   "file": "portraits/portrait_A6.png",
+   "size": [
+    256,
+    256
+   ],
+   "what": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A6": {
+   "file": "portraits/card_A6.png",
+   "size": [
+    512,
+    768
+   ],
+   "what": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A7": {
+   "file": "portraits/portrait_A7.png",
+   "size": [
+    256,
+    256
+   ],
+   "what": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A7": {
+   "file": "portraits/card_A7.png",
+   "size": [
+    512,
+    768
+   ],
+   "what": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A8": {
+   "file": "portraits/portrait_A8.png",
+   "size": [
+    256,
+    256
+   ],
+   "what": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A8": {
+   "file": "portraits/card_A8.png",
+   "size": [
+    512,
+    768
+   ],
+   "what": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A9": {
+   "file": "portraits/portrait_A9.png",
+   "size": [
+    256,
+    256
+   ],
+   "what": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A9": {
+   "file": "portraits/card_A9.png",
+   "size": [
+    512,
+    768
+   ],
+   "what": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A10": {
+   "file": "portraits/portrait_A10.png",
+   "size": [
+    256,
+    256
+   ],
+   "what": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A10": {
+   "file": "portraits/card_A10.png",
+   "size": [
+    512,
+    768
+   ],
+   "what": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A11": {
+   "file": "portraits/portrait_A11.png",
+   "size": [
+    256,
+    256
+   ],
+   "what": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A11": {
+   "file": "portraits/card_A11.png",
+   "size": [
+    512,
+    768
+   ],
+   "what": "full body, dark vignette bg (opaque)"
+  },
+  "portrait_A12": {
+   "file": "portraits/portrait_A12.png",
+   "size": [
+    256,
+    256
+   ],
+   "what": "head & shoulders, dark vignette bg (opaque)"
+  },
+  "card_A12": {
+   "file": "portraits/card_A12.png",
+   "size": [
+    512,
+    768
+   ],
+   "what": "full body, dark vignette bg (opaque)"
   }
  }
 }

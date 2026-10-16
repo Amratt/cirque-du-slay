@@ -34,8 +34,8 @@ function loreCard(sc,title,body,opt={}){
 
 // unlock reveal: one card per newly freed character, using its unlockLine
 function showReveals(sc,run){ const q=(run&&run.reveals)||[]; if(!q.length) return; const id=q.shift(), c=CHARS.find(c=>c.id===id), L=Lore.char(id);
-  sc.revealOpen=true; Sfx.ticket(); const card=loreCard(sc,`New character unlocked: ${L.name||c.name}`,`${L.unlockLine||''}\n\n${L.title||''}`,{w:860,h:380,btn:'Welcome!',depth:3000,onClose:()=>{ sc.revealOpen=false; showReveals(sc,run); }});
-  const im=sc.add.sprite(W/2,H/2+50,'p_'+id); refit(im); setAnim(sc,im,'p_'+id,'idle'); im.setScale(1); const k=Math.min(130/im.displayHeight,130/im.displayWidth); im.setScale(k);   // fitted box -> ~130 px portrait (raw image width made it a speck)
+  sc.revealOpen=true; Sfx.ticket(); const card=loreCard(sc,`New character unlocked: ${L.name||c.name}`,`${L.unlockLine||''}\n\n${L.title||''}`,{w:860,h:580,btn:'Welcome!',depth:3000,onClose:()=>{ sc.revealOpen=false; showReveals(sc,run); }});
+  const pk=heroArt(sc,id), im=sc.add.sprite(W/2,H/2+75,pk); refit(im); if(pk==='p_'+id) setAnim(sc,im,pk,'idle'); fitTo(im,200,200);   // portrait_<id>, fitted (raw image width made it a speck)
   card.add(im); sc.tweens.add({targets:im,scaleX:im.scaleX*1.08,scaleY:im.scaleY*1.08,yoyo:true,repeat:-1,duration:500}); }
 
 // ---------------------------------------------------------------- Story cards: intro / win / loss (skippable)
@@ -69,13 +69,13 @@ class Codex extends Phaser.Scene {
     const tabs=[['chars',`Characters ${Save.d.unlocked.length}/${CHARS.length}`],['beasts',`Bestiary ${best.filter(id=>this.known(id)).length}/${best.length}`],['frags',`Fragments ${x.frags.length}/${frs.length}`]];
     tabs.forEach((t,i)=>{ const b=button(this,W/2+(i-1)*340,115,320,54,t[1],()=>{ this.tab=t[0]; this.pg=0; this.build(); },{size:22}); if(this.tab!==t[0]) b.setAlpha(.6); });
     let items=[];
-    if(this.tab==='chars') items=CHARS.map(c=>{ const L=Lore.char(c.id), un=Save.d.unlocked.includes(c.id); return {key:'p_'+c.id,un,label:un?L.name:'???',sub:un?L.title:'Locked',open:()=>loreCard(this,`${L.name} — ${L.title}`,`${L.bio}\n\n${L.circusLink}`,{quote:L.quote,h:660,w:1160,size:26})}; });
+    if(this.tab==='chars') items=CHARS.map(c=>{ const L=Lore.char(c.id), un=Save.d.unlocked.includes(c.id); return {key:heroArt(this,c.id),un,label:un?L.name:'???',sub:un?L.title:'Locked',open:()=>loreCard(this,`${L.name} — ${L.title}`,`${L.bio}\n\n${L.circusLink}`,{quote:L.quote,h:660,w:1160,size:26})}; });
     if(this.tab==='beasts') items=best.map(id=>{ const B=LORE.bestiary[id], un=this.known(id), boss=!!BOSSES[id]; return {key:this.etex(id),un,label:un?B.name:'???',sub:boss?'Boss':'',open:()=>loreCard(this,B.name,B.entry+(boss&&un?`\n\n“${Lore.boss(id,'intro')}”`:''),{})}; });
     if(this.tab==='frags') items=frs.map((f,i)=>{ const un=x.frags.includes(f.id), g=LORE_GATES[f.id]; return {key:'ticket',un,label:un?f.title:`Fragment ${i+1}`,sub:un?'':(g&&!Save.d.beaten.includes(g)?`Defeat ${BOSSES[g].name}`:'Drops in the ring'),open:()=>loreCard(this,f.title,f.text,{})}; });
     const per=8, pages=Math.ceil(items.length/per); this.pg=Math.min(this.pg,pages-1);
     items.slice(this.pg*per,this.pg*per+per).forEach((it,k)=>{ const cx=250+(k%4)*260, cy=270+Math.floor(k/4)*215;
       const p=panel(this,cx,cy,240,200); if(it.un){ p.setInteractive({useHandCursor:true}).on('pointerup',()=>{ Sfx.click(); it.open(); }); p.on('pointerover',()=>p.setTint(0xffe0a0)); p.on('pointerout',()=>p.clearTint()); }
-      const im=this.add.image(cx,cy-35,this.textures.exists(it.key)?it.key:'ticket'); im.setScale(Math.min(90/im.width,90/im.height)*1.0); if(!it.un) im.setTint(0x111111);
+      const im=this.add.image(cx,cy-35,this.textures.exists(it.key)?it.key:'ticket'); fitTo(im,110,110); if(!it.un) im.setTint(0x111111);
       txt(this,cx,cy+40,it.label,LORE_MIN_FONT,it.un?'#fff':'#888',{wordWrap:{width:225}}); if(it.sub) txt(this,cx,cy+76,it.sub,18,GOLD,{wordWrap:{width:225}}); });
     if(pages>1){ button(this,W/2-150,H-50,140,50,'◂ Prev',()=>{ this.pg=(this.pg+pages-1)%pages; this.build(); },{size:22}); txt(this,W/2,H-50,`${this.pg+1}/${pages}`,LORE_MIN_FONT); button(this,W/2+150,H-50,140,50,'Next ▸',()=>{ this.pg=(this.pg+1)%pages; this.build(); },{size:22}); }
     button(this,100,H-50,150,50,'Back',()=>goScene(this,'Menu'),{size:22});

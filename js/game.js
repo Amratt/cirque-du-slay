@@ -12,7 +12,7 @@ class Game extends Phaser.Scene {
     this.enemies=[]; this.bullets=[]; this.eshots=[]; this.pickups=[]; this.warnings=[]; this.hazards=[]; this.weapons=[];
     this.over=false; this.paused=false; this.pauseLayer=null; this.time.paused=false; this.state='wave';
     this.drawArena();
-    this.pkey='p_'+this.charId; this.player = this.add.sprite(CX,CY,this.pkey).setDepth(10); this.player._xs=PLAYER_SCALE; setAnim(this,this.player,this.pkey,'idle');
+    this.pkey='p_'+this.charId; this.player = this.add.sprite(CX,CY,this.pkey).setDepth(10); this.player._xs=PLAYER_SCALE*(HERO_NORM[this.charId]||1); setAnim(this,this.player,this.pkey,'idle');
     this.pl = {x:CX,y:CY,vx:0,vy:0,hp:100,max:100,ifr:0,stun:0,face:1};
     this.cameras.main.setBounds(0,0,WORLD,WORLD).startFollow(this.player,false,.09,.09); this.baseZoom = (this.sys.game.device.input.touch && Math.min(innerWidth,innerHeight)<600) ? CAM_ZOOM_MOBILE : CAM_ZOOM; this.cameras.main.setZoom(this.baseZoom);   // smoothed follow
     // HUD camera: everything with scrollFactor 0 renders unzoomed on uiCam, the world on the main camera
@@ -97,13 +97,16 @@ class Game extends Phaser.Scene {
   }
   // ---------------------------------------------------------------- HUD (GDD 1.3.1.1 layout)
   buildHUD(){ const D=1000, sf=o=>o.setScrollFactor(0).setDepth(D);
-    this.hpBg = sf(this.add.image(20,26,'ui_healthbar_frame').setOrigin(0,.5));
-    this.hpBar = sf(this.add.image(24,26,'ui_healthbar_fill').setOrigin(0,.5));
-    this.hpT = sf(txt(this,120,26,'',15).setOrigin(.5));
-    this.rbC = sf(counter(this,16,70,'balloon','0','#ff8090')); this.rbT = this.rbC.label;
-    this.waveT = sf(txt(this,W/2,24,'',26,GOLD)); this.timerT = sf(txt(this,W/2,58,'',30,'#fff'));
+    // hero portrait badge (Drax portrait_<id>, circle-masked), HP bar and balloons to its right
+    const pk=heroArt(this,this.charId); sf(this.add.circle(46,48,36,0x1a0a0c).setStrokeStyle(4,0xd4a648)); const pim=sf(fitTo(this.add.image(46,48,pk),66,66));
+    const pm=this.make.graphics({add:false}); pm.fillCircle(46,48,33); pim.setMask(pm.createGeometryMask());
+    this.hpBg = sf(this.add.image(92,26,'ui_healthbar_frame').setOrigin(0,.5));
+    this.hpBar = sf(this.add.image(96,26,'ui_healthbar_fill').setOrigin(0,.5));
+    this.hpT = sf(txt(this,192,26,'',15).setOrigin(.5));
+    this.rbC = sf(counter(this,88,70,'balloon','0','#ff8090')); this.rbT = this.rbC.label;
+    this.waveT = sf(txt(this,W/2,24,'',26,GOLD)); this.timerT = sf(txt(this,W/2,66,'',28,'#fff',{stroke:'#000',strokeThickness:4}));
     this.pauseBtn = sf(iconButton(this,W-40,38,'II',()=>this.togglePause(),56));
-    this.bossArrow = sf(this.add.graphics()).setDepth(1001); this.bossBars = []; this.banner = sf(txt(this,W/2,H/2-120,'',54,BLOOD,{strokeThickness:8})).setAlpha(0); this.sayT = sf(txt(this,W/2,H/2-55,'',28,'#fff',{wordWrap:{width:1000},backgroundColor:'#000000aa',padding:{x:14,y:8}})).setAlpha(0).setDepth(1000); this.fragThisWave=false; this.revealQ=[];
+    this.bossArrow = sf(this.add.graphics()).setDepth(1001); this.bossBars = []; this.banner = sf(txt(this,W/2,150,'',50,BLOOD,{strokeThickness:8})).setAlpha(0); this.sayT = sf(txt(this,W/2,H-140,'',26,'#fff',{wordWrap:{width:1000},backgroundColor:'#000000aa',padding:{x:14,y:8}})).setAlpha(0).setDepth(1000); this.fragThisWave=false; this.revealQ=[];
     this.joyBase = sf(this.add.circle(0,0,60,0xffffff,.15).setStrokeStyle(3,0xffffff,.5)).setVisible(false);
     this.joyKnob = sf(this.add.circle(0,0,26,0xf3c75a,.6)).setVisible(false);
   }
@@ -114,8 +117,8 @@ class Game extends Phaser.Scene {
       const t=txt(this,x,y-30,e.name,18,'#fff',{stroke:'#000',strokeThickness:4}).setScrollFactor(0).setDepth(1001); this.bossBars.push([bg,bar,t]); e.bar=bar; e.barW=w-4; }); }   // label sits above the bar, outlined
   updateHUD(){ const p=this.pl, w = Math.min(600, p.max*2);   // bar length grows with Max HP (GDD); fill is cropped to HP%
     this.hpBg.setDisplaySize(w+8,28); this.hpBar.setDisplaySize(w,20); const fw=this.hpBar.frame.realWidth; this.hpBar.setCrop(0,0,fw*Phaser.Math.Clamp(p.hp/p.max,0,1),this.hpBar.frame.realHeight);
-    this.hpT.setPosition(24+w/2,26).setText(`${Math.ceil(p.hp)} / ${Math.round(p.max)}`); this.rbT.setText(this.run.balloons);
-    this.waveT.setText(`WAVE ${this.run.wave}/20`); this.timerT.setText(this.state==='boss'?'BOSS':this.state==='wave'?Math.ceil(Math.max(0,this.timeLeft)):'');
+    this.hpT.setPosition(96+w/2,26).setText(`${Math.ceil(p.hp)} / ${Math.round(p.max)}`); this.rbT.setText(this.run.balloons);
+    this.waveT.setText(`WAVE ${this.run.wave}/20`); this.timerT.setColor(this.state==='boss'?'#ff5a5a':'#fff').setText(this.state==='boss'?'BOSS FIGHT':this.state==='wave'?Math.ceil(Math.max(0,this.timeLeft)):'');
     for(const e of this.enemies) if(e.bar) e.bar.width = Math.max(0,e.barW*e.hp/e.max); }
   togglePause(){ if(this.over||this.state==='shop') return; this.paused=!this.paused;
     this.time.paused=this.paused; if(this.paused) this.tweens.pauseAll(); else this.tweens.resumeAll();   // BUG-002: freeze timers + tweens (lobs, boss intro, shop timer)
@@ -178,7 +181,7 @@ class Game extends Phaser.Scene {
     if(e.base && e.hasHit===undefined) e.hasHit=hasAnim(this,e.base,'hit');
     if(e.base && e.hasHit && !(e.spr._busy && e.spr._st!=='hit')) setAnim(this,e.spr,e.base,'hit');   // never interrupts a windup/death
     this.burst(e.x,e.y,crit?0xffe000:0xffffff,crit?5:2,160);   // (was swallowed by the comment above, like BUG-031)
-    if(!e.boss) e.stag=FEEL.stagger;   // stagger: brief slow-down on top of knockback
+    if(!e.boss){ e.stag=FEEL.stagger; e.kx+=Math.cos(ang)*FEEL.staggerPush; e.ky+=Math.sin(ang)*FEEL.staggerPush; }   // stagger: brief slow-down on top of knockback
     if(this.time.now-(this.lastHitShake||0)>90){ this.lastHitShake=this.time.now; this.cameras.main.shake(45,e.boss?FEEL.hitShake*2:FEEL.hitShake); }
     if(crit||e.boss) this.stopFor(e.boss?FEEL.bossHitStop:.03);
     if(Math.random()<s.ls){ this.pl.hp=Math.min(this.pl.max,this.pl.hp+2); }
@@ -214,7 +217,8 @@ class Game extends Phaser.Scene {
   // death without rewards (wave clear / boss summons): death sheet, hold, fade - never an instant pop. Also used by killEnemy.
   dieOnScreen(e){ e.dead=true; const sp=e.spr; if(!sp||!sp.active) return; sp.clearTint(); this.tweens.killTweensOf(sp); sp.setDepth(8.5);
     const fade=()=>this.tweens.add({targets:sp,alpha:0,y:sp.y+4,delay:e.boss?FEEL.deathHoldBoss:FEEL.deathHold,duration:FEEL.deathFade,onComplete:()=>sp.destroy()});
-    if(e.base&&hasAnim(this,e.base,'death')){ sp._busy=false; sp._st=null; setAnim(this,sp,e.base,'death'); sp.once('animationcomplete',()=>{ this.burst(sp.x,sp.y,0xffffff,e.boss?30:8,e.boss?200:70,2,e.boss?900:500); fade(); }); }
+    const dir=(sp.flipX?1:-1); this.tweens.add({targets:sp,rotation:e.boss?0:dir*FEEL.deathTopple*.35,x:sp.x-dir*10,duration:260,ease:'Quad.out'});   // knocked back + topples
+    if(e.base&&hasAnim(this,e.base,'death')){ sp._busy=false; sp._st=null; setAnim(this,sp,e.base,'death'); if(sp.anims.currentAnim) sp.anims.msPerFrame=1000/FEEL.deathFps; sp.once('animationcomplete',()=>{ this.burst(sp.x,sp.y,0xffffff,e.boss?30:8,e.boss?200:70,2,e.boss?900:500); fade(); }); }
     else this.tweens.add({targets:sp,alpha:0,scaleX:sp.scaleX*1.5,scaleY:sp.scaleY*.3,duration:FEEL.deathFade,onComplete:()=>sp.destroy()}); }
   dropPickup(kind,x,y){ const s=this.add.image(x,y,kind).setDepth(8); if(kind==='balloon') this.tweens.add({targets:s,y:y-6,yoyo:true,repeat:-1,duration:600+Math.random()*300,ease:'Sine.inOut'});
     this.pickups.push({kind,spr:s,x,y}); }
@@ -252,7 +256,7 @@ class Game extends Phaser.Scene {
         if(e.spawnT>0){ e.spawnT-=dt; e.spr.setScale(1-e.spawnT*3.6); } else e.spr.setScale(1+st+sq,1-st-sq);
         const step=this.time.now/1000*Math.PI*(e.def.walkHz||FEEL.stepHz)+e.x*.01;   // procedural walk bob (2-4 px) + tilt, synced to the ~10 fps walk sheet
         e.spr.setPosition(e.x, e.y - Math.abs(Math.sin(step))*(e.hasWalk?FEEL.bobPx:FEEL.bobPxNoSheet)).setRotation(rot*.3 + Math.sin(step)*FEEL.tilt); }   // subtle: the walk sheets already bounce
-      if(e.flash>0){ e.flash-=dt; if(e.boss) e.spr.setTint(0xff9a9a); else e.spr.setTintFill(0xffffff); } else if(!e.inv) e.spr.clearTint(); }   // ~60 ms white flash, then cleared
+      if(e.flash>0){ e.flash-=dt; e.spr.setTintFill(0xffffff); } else if(!e.inv) e.spr.clearTint(); }   // ~60 ms white flash, then cleared
     // cheap separation
     const L=this.enemies; for(let i=0;i<L.length;i++){ const a=L[i]; if(a.dead||a.boss) continue; for(let j=i+1;j<L.length;j++){ const b=L[j]; if(b.dead||b.boss) continue;
       const dx=b.x-a.x, dy=b.y-a.y, m=dx*dx+dy*dy, rr=(a.r+b.r)*.9; if(m<rr*rr&&m>0.01){ const k=(rr-Math.sqrt(m))/2/Math.sqrt(m); a.x-=dx*k; a.y-=dy*k; b.x+=dx*k; b.y+=dy*k; } } }
@@ -380,8 +384,8 @@ class Game extends Phaser.Scene {
   // boss fights: pull the camera toward the boss and zoom out (down to ZOOM_MIN_BOSS) so player and boss stay on screen together
   bossCam(dt){ const cam=this.cameras.main, base=this.baseZoom||CAM_ZOOM, bs=this.enemies.filter(e=>e.boss&&!e.dead); let z=base, ox=0, oy=0;
     if(bs.length){ let mx=0,my=0; for(const b of bs){ const dx=b.x-this.pl.x, dy=b.y-this.pl.y; if(Math.abs(dx)>Math.abs(mx)) mx=dx; if(Math.abs(dy)>Math.abs(my)) my=dy; }
-      ox=-mx*.45; oy=-my*.45; z=Math.min(base, Math.max(base*.6, Math.min(W/(Math.abs(mx)*1.1+380), H/(Math.abs(my)*1.1+300)))); }
-    const k=1-Math.exp(-dt*3); cam.setZoom(cam.zoom+(z-cam.zoom)*k); cam.followOffset.x+=(ox-cam.followOffset.x)*k; cam.followOffset.y+=(oy-cam.followOffset.y)*k; }
+      ox=-mx*.5; oy=-my*.5; z=Math.min(base, Math.max(base*.45, Math.min(W/(Math.abs(mx)+420), H/(Math.abs(my)+340)))); }
+    const k=1-Math.exp(-dt*7); cam.setZoom(cam.zoom+(z-cam.zoom)*k); cam.followOffset.x+=(ox-cam.followOffset.x)*k; cam.followOffset.y+=(oy-cam.followOffset.y)*k; }
   drawBossArrows(){ const g=this.bossArrow; g.clear(); const v=this.cameras.main.worldView, m=34;
     for(const e of this.enemies){ if(!e.boss||e.dead||e.hidden) continue; if(Phaser.Geom.Rectangle.Contains(v,e.x,e.y)) continue;   // BUG-007: off-screen boss indicator
       const cx=W/2, cy=H/2, a=Math.atan2(e.y-(v.y+v.height/2), e.x-(v.x+v.width/2)), c=Math.cos(a), s=Math.sin(a), k=Math.min((W/2-m)/Math.abs(c||1e-6),(H/2-m)/Math.abs(s||1e-6));
