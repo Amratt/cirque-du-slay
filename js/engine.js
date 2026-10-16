@@ -36,7 +36,20 @@ const WINDUP_FLASH = {};
 function bakedRed(sc,key,idx){ try{ const fr=sc.textures.getFrame(key,idx), src=fr.source.image, c=document.createElement('canvas'), w=c.width=Math.min(64,fr.cutWidth), h=c.height=Math.min(64,fr.cutHeight), x=c.getContext('2d');
   x.drawImage(src,fr.cutX,fr.cutY,fr.cutWidth,fr.cutHeight,0,0,w,h); const d=x.getImageData(0,0,w,h).data; let n=0,red=0;
   for(let i=0;i<d.length;i+=4){ if(d[i+3]<40) continue; n++; if(d[i]>1.6*d[i+1]+20 && d[i]>1.6*d[i+2]+20) red++; } return n>50 && red/n>.8; }catch(e){ return false; } }
+function bakedWhite(sc,key,idx){ try{ const fr=sc.textures.getFrame(key,idx), c=document.createElement('canvas'), w=c.width=Math.min(64,fr.cutWidth), h=c.height=Math.min(64,fr.cutHeight), x=c.getContext('2d');
+  x.drawImage(fr.source.image,fr.cutX,fr.cutY,fr.cutWidth,fr.cutHeight,0,0,w,h); const d=x.getImageData(0,0,w,h).data; let n=0,wh=0;
+  for(let i=0;i<d.length;i+=4){ if(d[i+3]<40) continue; n++; const mx=Math.max(d[i],d[i+1],d[i+2]), mn=Math.min(d[i],d[i+1],d[i+2]); if(mn>110 && mx-mn<40) wh++; } return n>50 && wh/n>.85; /* light, desaturated silhouette */ }catch(e){ return false; } }
+const ANIM_SKIPPED = {};
+function skipRules(key){ const T=(typeof ANIM_FRAME_SKIPS!=='undefined')?ANIM_FRAME_SKIPS:{}; let r=[];
+  for(const [p,v] of Object.entries(T)){ const re=new RegExp('^'+p.replace(/[.+^${}()|[\]\\]/g,'\\$&').replace(/\*/g,'.*')+'$'); if(re.test(key)) r=r.concat(v); } return r; }
+function framesFor(sc,key,n){ const skip=new Set(); for(const s of skipRules(key)){
+    if(s.frame>=n) continue; if(s.when==='always' || (s.when==='white'&&bakedWhite(sc,key,s.frame)) || (s.when==='red'&&bakedRed(sc,key,s.frame))) skip.add(s.frame); }
+  if(skip.size) ANIM_SKIPPED[key]=[...skip];
+  const out=[]; for(let i=0;i<n;i++) if(!skip.has(i)) out.push({key,frame:i}); return out; }
 function windupFlash(sc,spr,key){ if(!WINDUP_FLASH[key]) return; spr.setTint(0xff6a6a); sc.time.delayedCall(110,()=>{ if(spr.active) spr.clearTint(); }); }
+// windup telegraph motion: a lean/swell pulse so low-motion windup sheets still read as a wind-up
+function windupLean(sc,spr,ms=260){ if(spr._lean) return; spr._lean=true; const sx=spr.scaleX, sy=spr.scaleY;
+  sc.tweens.add({targets:spr,scaleX:sx*1.1,scaleY:sy*.93,angle:-6*(spr.flipX?-1:1),duration:ms,yoyo:true,ease:'Sine.inOut',onComplete:()=>{ spr._lean=false; if(spr.active){ spr.setAngle(0); spr.scaleX=sx; spr.scaleY=sy; } }}); }
 function hasAnim(sc, base, state){ return sc.anims.exists(base+'_'+state); }
 
 // ---- Object pool (particles, bullets, floating text) to keep GC/alloc out of the frame loop

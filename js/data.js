@@ -3,6 +3,10 @@ const U_SPEED = 55;   // px per "unit/sec" for movement speeds
 const U_RANGE = 28;   // px per range unit
 // LORE: Augustin's diary pages unlock only after their boss (story order). Other fragments drop at FRAG_DROP_CHANCE per kill (max 1 per wave).
 const FAST_WAVE_T = 10;   // ?fast=1 wave length (BUG-008); ?gold=N sets starting balloons
+// Animation frame skips for known art defects. Each skip only applies while the frame still matches 'when'
+// (a frame-content check), so it silently does nothing once Drax ships a cleaned sheet. when: 'white' | 'red' | 'always'
+// Keys may use '*' wildcards. Hit sheets open on a baked solid-white flash frame (E6/E8/E14/cousins...), which reads as a white silhouette.
+const ANIM_FRAME_SKIPS = { '*_death':[{frame:0, when:'white'}], '*_hit':[{frame:0, when:'white'}] };   // currently skips: cousin1/cousin2/E2/A2 death f0 and 28 hit f0
 const LORE_GATES = { frag_03:'E5', frag_04:'E15', frag_14:'E20' };
 const FRAG_DROP_CHANCE = 0.012;
 const BOSS_HP_MULT = 12;

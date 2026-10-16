@@ -25,7 +25,7 @@ class Boot extends Phaser.Scene {
         let n = v.frameCount || (this.textures.get(k).frameTotal-1);
         // windup sheets whose last frame is a baked solid-red flash: drop that frame; the engine pulses a red multiply-tint instead (keeps detail, no red block)
         if(/_windup$/.test(k) && n>2 && bakedRed(this,k,n-1)){ n--; WINDUP_FLASH[k]=1; }
-        this.anims.create({key:k,frames:this.anims.generateFrameNumbers(k,{start:0,end:n-1}),frameRate:v.frameRate||8,repeat:(v.loop===true)?-1:(v.loop===false)?0:(ONE_SHOT.test(k)?0:-1)}); }
+        this.anims.create({key:k,frames:framesFor(this,k,n),frameRate:v.frameRate||8,repeat:(v.loop===true)?-1:(v.loop===false)?0:(ONE_SHOT.test(k)?0:-1)}); }
       Lore.apply(this.cache.json.get('lore')); this.scene.start(QS.has('showcase')?'Showcase':'Menu'); });
     this.load.start();
   }
@@ -305,7 +305,8 @@ class Showcase extends Phaser.Scene {
         this.state.setText(k?`${st}  (${k}, ${this.anims.get(k).frames.length}f @ ${this.anims.get(k).frameRate}fps)`:`${st}  (no sheet — still sprite)`);
         this.spr.clearTint(); this.spr.off('animationcomplete');
         if(k){ this.spr.play(k,true); refit(this.spr);
-          if(st==='windup'){ const back=animFor(this,it.base,it.base==='truck'?'move':'idle'); this.spr.play({key:k,repeat:1}); this.spr.once('animationcomplete',()=>{ if(!this.spr) return; windupFlash(this,this.spr,k); if(back){ this.spr.play(back); refit(this.spr); } }); }   // telegraph twice (ends on the sheet's baked red flash), then back to the loop
+          if(st==='hit'){ this.spr.play({key:k,repeat:2,repeatDelay:110}); }
+          if(st==='windup'){ windupLean(this,this.spr,300); const back=animFor(this,it.base,it.base==='truck'?'move':'idle'); this.spr.play({key:k,repeat:1}); this.spr.once('animationcomplete',()=>{ if(!this.spr) return; windupFlash(this,this.spr,k); if(back){ this.spr.play(back); refit(this.spr); } }); }   // telegraph twice (ends on the sheet's baked red flash), then back to the loop
  }   // death plays once and holds its last frame
         else { this.spr.anims.stop(); this.spr.setTexture(it.base); } }); t+=d; });
     this.time.delayedCall(t*1000+300,()=>this.next()); }
